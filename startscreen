@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+. ~/.keychain/`uname -n`-sh
+
+screen -ls | grep "There is a screen" && screen -D -R
+screen -ls | grep "No Sockets found" && screen -c ~/.screenrc-startup

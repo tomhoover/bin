@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+BACKUPDIR="${HOME}/backups/getmail"
+
+cd ${HOME}/.getmail
+rcfiles=""
+for file in rc-* ; do
+  MAILDIRPATH=`echo ${file} | sed -e 's/rc-//' -e 's|:|/|' `
+  mkdir -p $BACKUPDIR/$MAILDIRPATH/{cur,new,tmp}
+  rcfiles="$rcfiles --rcfile $file"
+done
+exec /usr/local/bin/getmail $rcfiles $@

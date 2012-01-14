@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+. ~/.keychain/`uname -n`-sh
+
+cd ${HOME}/src/GIT/${1}
+rake preview
