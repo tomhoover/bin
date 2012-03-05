@@ -1,13 +1,21 @@
 #!/bin/bash
+[[ "`hostname`" = "manuel" ]] || exit
+
 set -e
 
 BACKUPDIR="${HOME}/backups/getmail"
 
 cd ${HOME}/.getmail
+[ -f "getmail.lock" ] && echo "" && echo "WARNING: Lock file exists..." && echo "" && exit
+touch getmail.lock
+
 rcfiles=""
 for file in rc-* ; do
   MAILDIRPATH=`echo ${file} | sed -e 's/rc-//' -e 's|:|/|' `
   mkdir -p $BACKUPDIR/$MAILDIRPATH/{cur,new,tmp}
   rcfiles="$rcfiles --rcfile $file"
 done
-exec /usr/local/bin/getmail $rcfiles $@
+
+#exec /usr/local/bin/getmail $rcfiles $@
+/usr/local/bin/getmail $rcfiles $@
+rm ${HOME}/.getmail/getmail.lock
