@@ -1,0 +1,38 @@
+#!/bin/bash
+[[ "`uname`" = "Darwin" ]] || exit
+
+brew update
+brew doctor
+brew list
+
+brew install fdupes
+brew install gawk
+brew install getmail	
+brew install gnupg
+brew install keychain
+brew install rbenv
+brew install ruby-build
+brew install s3cmd
+brew install wget
+
+# build Avidemux-2.5.6 stable
+#   http://www.avidemux.org/smf/index.php?topic=9960.msg53651#msg53651
+brew install pkg-config
+brew install cmake
+brew install aften
+brew -v install qt
+
+cd /usr/local/Library/Formula && wget -N https://raw.github.com/2bits/homebrew/newAdm/Library/Formula/avidemux.rb
+#brew rm -f avidemux
+brew -v install --use-llvm avidemux
+
+# To build or upgrade the lasted unstable revision past 2.5.6
+#brew rm -f avidemux
+#brew install --use-llvm --HEAD avidemux
+
+# Info On Building 2.6
+#cd /usr/local/Library/Formula && wget -N https://raw.github.com/2bits/homebrew/newAdm3/Library/Formula/avidemux3.rb
+#brew rm -f avidemux3
+#brew -v install -d --use-llvm avidemux3
+
+brew linkapps
