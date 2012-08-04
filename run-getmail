@@ -5,10 +5,10 @@ set -e
 
 BACKUPDIR="${HOME}/backups/getmail"
 
-cd ${HOME}/.getmail
-[ -f "getmail.lock" ] && echo "" && echo "WARNING: Lock file exists..." && echo "" && exit
-touch getmail.lock
+[ -f "/tmp/getmail.lock" ] && echo "" && echo "WARNING: Lock file exists..." && echo "" && exit
+touch /tmp/getmail.lock
 
+cd ${HOME}/.getmail
 rcfiles=""
 for file in rc-* ; do
   MAILDIRPATH=`echo ${file} | sed -e 's/rc-//' -e 's|:|/|' `
@@ -18,4 +18,4 @@ done
 
 #exec /usr/local/bin/getmail $rcfiles $@
 /usr/local/bin/getmail $rcfiles $@
-rm ${HOME}/.getmail/getmail.lock
+rm /tmp/getmail.lock
