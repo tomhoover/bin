@@ -1,0 +1,5 @@
+#!/bin/bash
+[[ "`uname`" = "Darwin" ]] || exit
+
+cd ${HOME}/Library/LaunchAgents && ln -sf ../../bin/LaunchAgents/us.t0m.*.plist .
+
