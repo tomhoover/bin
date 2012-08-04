@@ -3,17 +3,9 @@
 
 brew update
 brew doctor
-brew list
+brew upgrade
 
-brew install fdupes
-brew install gawk
-brew install getmail	
-brew install gnupg
-brew install keychain
-brew install rbenv
-brew install ruby-build
-brew install s3cmd
-brew install wget
+brew install exiftool fdupes gawk getmail gnupg keychain midnight-commander rbenv ruby-build s3cmd wget
 
 # build Avidemux-2.5.6 stable
 #   http://www.avidemux.org/smf/index.php?topic=9960.msg53651#msg53651
@@ -31,8 +23,12 @@ brew -v install --use-llvm avidemux
 #brew install --use-llvm --HEAD avidemux
 
 # Info On Building 2.6
-#cd /usr/local/Library/Formula && wget -N https://raw.github.com/2bits/homebrew/newAdm3/Library/Formula/avidemux3.rb
+cd /usr/local/Library/Formula && wget -N https://raw.github.com/2bits/homebrew/newAdm3/Library/Formula/avidemux3.rb
 #brew rm -f avidemux3
-#brew -v install -d --use-llvm avidemux3
+brew -v install -d --use-llvm avidemux3
 
 brew linkapps
+
+brew list
+# 120730 ariel:  a52dec aften avidemux avidemux3 cmake exiftool faac faad2 fdupes fribidi gawk getmail gettext glib gnupg keychain lame libdca libffi libogg libvorbis libvpx mad midnight-commander oniguruma opencore-amr pcre pkg-config qt rbenv readline ruby-build s-lang s3cmd sqlite two-lame wget x264 xvid xz yasm
+
