@@ -1,4 +1,6 @@
 #!/bin/bash
+[[ "`uname`" = "Darwin" ]] || exit
+
 # mount.sh
 
 # found on the limetech.com forum at:
@@ -28,30 +30,36 @@
 #                                                                             #
 ###############################################################################
 
+
 #-----------------------------#
 # Required for share mounting #
 #-----------------------------#
 
 # Script Location
-SCRIPTLOCATION="/Scripts"
+SCRIPTLOCATION="/Users/tom/bin"
+
+[[ -f ${HOME}/.SECRETS ]] && . ${HOME}/.SECRETS
 
 # Username for server
-USERNAME="username"
+USERNAME="username"				# you can set your username here, or
+USERNAME=${MOUNTAFP_USERNAME:-$USERNAME}	#  set the variable MOUNTAFP_USERNAME in ~/.SECRET
 
 # Password for server, check notes
-PASSWORD="password"
+PASSWORD="password"				# you can set your password here, or
+PASSWORD=${MOUNTAFP_PASSWORD:-$PASSWORD}	#  set the variable MOUNTAFP_PASSWORD in ~/.SECRET
 
 # IP Address/hostname for ping
-PING="192.168.0.100"
+PING="192.168.0.99"
 
 # Hostname for server. Try sername.local, hostname or IP
-HOSTNAME="Storage.local"
+HOSTNAME="NAS"
 
 # Protocol in lowercase, afp or smb
 PROTOCOL="afp"
 
 # Shares, check notes
-SHARES="Documentaries Storage HD%20Movies Movies Music TV"
+#SHARES="Archive BackupNAS Movies Music TV%20Shows"
+SHARES="Music"
 
 
 #-----------------------------#
@@ -70,7 +78,7 @@ ITUNESQUIT="TRUE"
 #-----------------------------#
 
 # Do you want to use Wake On Lan, TRUE or FALSE
-WAKE="TRUE"
+WAKE="FALSE"
 
 # The starting hour to attempt WOL, only if unavailable via ping. Must be 24 hour time without minutes
 HOURSTART="17"
