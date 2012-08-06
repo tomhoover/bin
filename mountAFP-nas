@@ -59,7 +59,7 @@ PROTOCOL="afp"
 
 # Shares, check notes
 #SHARES="Archive BackupNAS Movies Music TV%20Shows"
-SHARES="Music"
+SHARES="BackupNAS Music"
 
 
 #-----------------------------#
