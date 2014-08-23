@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>us.t0m.mountAFP-nas</string>
+	<string>us.t0m.mountSMB-nas</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/Users/tom/bin/mountAFP-nas</string>
+		<string>/Users/tom/bin/mountSMB-nas</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>

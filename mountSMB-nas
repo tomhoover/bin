@@ -6,7 +6,7 @@
 # found on the limetech.com forum at:
 #	discussion: http://lime-technology.com/forum/index.php?topic=10274.0
 #	zip file:   http://lime-technology.com/forum/index.php?action=dlattach;topic=10274.0;attach=9412
-# renamed from mount.sh to mountAFP-nas
+# renamed from mount.sh to mountSMB-nas
 
 ###############################################################################
 # SET YOUR PREFS HERE - READ BELOW BEFORE RUNNING SCRIPT                      #
@@ -42,24 +42,24 @@ SCRIPTLOCATION="/Users/tom/bin"
 
 # Username for server
 USERNAME="username"				# you can set your username here, or
-USERNAME=${MOUNTAFP_USERNAME:-$USERNAME}	#  set the variable MOUNTAFP_USERNAME in ~/.SECRETS
+USERNAME=${MOUNTSMB_USERNAME:-$USERNAME}	#  set the variable MOUNTSMB_USERNAME in ~/.SECRETS
 
 # Password for server, check notes
 PASSWORD="password"				# you can set your password here, or
-PASSWORD=${MOUNTAFP_PASSWORD:-$PASSWORD}	#  set the variable MOUNTAFP_PASSWORD in ~/.SECRETS
+PASSWORD=${MOUNTSMB_PASSWORD:-$PASSWORD}	#  set the variable MOUNTSMB_PASSWORD in ~/.SECRETS
 
 # IP Address/hostname for ping
-PING="192.168.0.99"
+PING="192.168.2.99"
 
 # Hostname for server. Try sername.local, hostname or IP
-HOSTNAME="NAS"
+HOSTNAME="nas"
 
 # Protocol in lowercase, afp or smb
-PROTOCOL="afp"
+PROTOCOL="smb"
 
 # Shares, check notes
 #SHARES="Archive BackupNAS Movies Music TV%20Shows"
-SHARES="BackupNAS Music"
+SHARES="Archive BackupNAS Media backups"
 
 
 #-----------------------------#
