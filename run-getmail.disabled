@@ -1,9 +1,11 @@
 #!/bin/bash
+#[[ "`hostname`" = "ariel" ]] || exit
 [[ "`hostname`" = "manuel" ]] || exit
 
 set -e
 
-BACKUPDIR="${HOME}/backups/getmail"
+#BACKUPDIR="${HOME}/backups/getmail"
+BACKUPDIR="/Volumes/BackupNAS/getmail"
 
 [ -f "/tmp/getmail.lock" ] && echo "" && echo "WARNING: Lock file exists..." && echo "" && exit
 touch /tmp/getmail.lock
