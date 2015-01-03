@@ -42,8 +42,21 @@ brew install python3 --with-brewed-openssl
 ## brew -v install -d --use-llvm avidemux3
 
 brew linkapps
+brew cleanup
+
+# http://gillesfabio.github.io/homebrew-cask-homepage/
+# https://github.com/caskroom/homebrew-cask
+# http://caskroom.io
+brew tap phinze/homebrew-cask
+brew install brew-cask
+brew upgrade brew-cask
+
+brew cleanup && brew cask cleanup
 
 brew list
+
+exit
+
 ## 120730 ariel: a52dec aften avidemux avidemux3 cmake exiftool faac faad2 fdupes fribidi gawk getmail gettext glib gnupg keychain lame libdca libffi libogg libvorbis libvpx mad midnight-commander oniguruma opencore-amr pcre pkg-config qt rbenv readline ruby-build s-lang s3cmd sqlite two-lame wget x264 xvid xz yasm
 
 ## 13128 ariel: 
@@ -72,4 +85,12 @@ brew list
 #duplicity		gawk			gettext			keychain		librsync		openssl			python			readline		s3cmd			wget
 
 ## 140823 ariel:
-autoconf bash-completion duplicity exiftool faac fdupes ffmpeg gawk gdbm getmail gettext glib gnupg keychain lame libffi libpng librsync libssh2 midnight-commander openssl pkg-config popt python python3 rbenv readline ruby-build s-lang s3cmd sqlite ssh-copy-id wget x264 xvid xz youtube-dl
+# autoconf bash-completion duplicity exiftool faac fdupes ffmpeg gawk gdbm getmail gettext glib gnupg keychain lame libffi libpng librsync libssh2 midnight-commander openssl pkg-config popt python python3 rbenv readline ruby-build s-lang s3cmd sqlite ssh-copy-id wget x264 xvid xz youtube-dl
+
+## 140823 rMBP
+# bash-completion		fdupes			getmail			gnupg			libpng			midnight-commander	popt			readline		sqlite			xz
+# duplicity		gawk			gettext			keychain		librsync		openssl			python			s-lang			ssh-copy-id
+# exiftool		gdbm			glib			libffi			libssh2			pkg-config		python3			s3cmd			wget
+
+## 150102 rMBP
+# autoconf bash-completion brew-cask duplicity exiftool fdupes gawk gdbm getmail gettext glib gnupg keychain libffi libpng librsync libssh2 midnight-commander mr openssl pkg-config popt python python3 rbenv readline ruby-build s-lang s3cmd sleepwatcher sqlite ssh-copy-id tree vcsh wget xz
