@@ -59,7 +59,7 @@ PROTOCOL="smb"
 
 # Shares, check notes
 #SHARES="Archive BackupNAS Movies Music TV%20Shows"
-SHARES="Archive BackupNAS Media backups"
+SHARES="Media tmp"
 
 
 #-----------------------------#
@@ -67,10 +67,10 @@ SHARES="Archive BackupNAS Media backups"
 #-----------------------------#
 
 # Do you want iTunes open, TRUE or FALSE
-ITUNES="TRUE"
+ITUNES="FALSE"
 
 # Do you want iTunes to quit if server unavailable & iTunes open is set FALSE, TRUE or FALSE
-ITUNESQUIT="TRUE"
+ITUNESQUIT="FALSE"
 
 
 #-----------------------------#
