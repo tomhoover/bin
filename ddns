@@ -1,0 +1,13 @@
+#!/bin/bash
+
+[ `which cli53` ] || pip install cli53
+
+FILE="$HOME/tmp/lastip"
+LASTIP=`cat $FILE`
+WAN=`dig +short myip.opendns.com @resolver1.opendns.com`
+
+if [[ "$LASTIP" != "$WAN" ]]; then
+	echo "IP changed from $LASTIP to $WAN"
+	echo $WAN > $FILE
+	cli53 rrcreate --replace --ttl 300 t0m.us @ A $WAN
+fi
