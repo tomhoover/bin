@@ -1,6 +1,7 @@
 #!/bin/bash
 
-[ `which cli53` ] || pip install cli53
+[ `which cli53` ] || sudo pip install cli53
+[ -d $HOME/tmp ] || mkdir -p $HOME/tmp
 
 FILE="$HOME/tmp/lastip"
 LASTIP=`cat $FILE`
