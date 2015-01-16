@@ -1,9 +1,9 @@
 #!/bin/bash
 
 [ `which cli53` ] || sudo pip install cli53
-[ -d $HOME/tmp ] || mkdir -p $HOME/tmp
+#[ -d $HOME/tmp ] || mkdir -p $HOME/tmp
 
-FILE="$HOME/tmp/lastip"
+FILE="$HOME/Dropbox/lastip"
 LASTIP=`cat $FILE`
 WAN=`dig +short myip.opendns.com @resolver1.opendns.com`
 
