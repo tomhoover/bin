@@ -36,7 +36,7 @@
 
 EMAIL_SUBJECT_PREFIX="bethel SnapRAID - "
 EMAIL_ADDRESS="tom@hisword.net"
-DEL_THRESHOLD=20
+DEL_THRESHOLD=50
 CONTENT_FILE="/var/snapraid/content"
 PARITY_FILE=`cat /etc/snapraid.conf | grep snapraid.parity | head -n 1 | cut -d " " -f2`
 LOG_FILE="/var/log/snapraid.log"
@@ -98,7 +98,7 @@ if [ $DEL_COUNT -gt 0 -o $ADD_COUNT -gt 0 -o $MOVE_COUNT -gt 0 -o $UPDATE_COUNT 
     if [ $DEL_COUNT -gt $DEL_THRESHOLD ]; then
         # YES, lets inform user and not proceed with the sync just in case
         echo "Number of deleted files ($DEL_COUNT) exceeded threshold ($DEL_THRESHOLD). NOT proceeding with sync job. Please run sync manually if this is not an error condition." >> $TMP_OUTPUT
-    /usr/bin/mutt -s "$EMAIL_SUBJECT_PREFIX WARNING - Number of deleted files ($DEL_COUNT) exceeded threshold ($DEL_THRESHOLD)" "$EMAIL_ADDRESS" < $TMP_OUTPUT
+    /usr/bin/mutt -s "$EMAIL_SUBJECT_PREFIX WARNING - Number of deleted files ($DEL_COUNT) exceeded threshold ($DEL_THRESHOLD)" -a $TMP_OUTPUT -- "$EMAIL_ADDRESS"
     echo "WARNING - Deleted files ($DEL_COUNT) exceeded threshold ($DEL_THRESHOLD). Check $TMP_OUTPUT for details. NOT proceeding with sync job."
     else
         # NO, delete threshold not reached, lets run the sync job
@@ -114,7 +114,6 @@ if [ $DEL_COUNT -gt 0 -o $ADD_COUNT -gt 0 -o $MOVE_COUNT -gt 0 -o $UPDATE_COUNT 
 
         # cleanup email body
         egrep -v ^[[:digit:]]+ $TMP_OUTPUT | /usr/bin/mutt -s "$EMAIL_SUBJECT_PREFIX Sync Job COMPLETED" -a $TMP_OUTPUT -- "$EMAIL_ADDRESS"
-        #/usr/bin/mutt -s "$EMAIL_SUBJECT_PREFIX Sync Job COMPLETED" "$EMAIL_ADDRESS" < $TMP_OUTPUT
 
         # Run Scrub
         if [ $RUN_SCRUB = "true" ]; then
@@ -140,7 +139,6 @@ if [ $DEL_COUNT -gt 0 -o $ADD_COUNT -gt 0 -o $MOVE_COUNT -gt 0 -o $UPDATE_COUNT 
 
                # cleanup email body
                egrep -v ^[[:digit:]]+ $TMP_OUTPUT | /usr/bin/mutt -s "$EMAIL_SUBJECT_PREFIX Full Scrub COMPLETED" -a $TMP_OUTPUT -- "$EMAIL_ADDRESS"
-               #/usr/bin/mutt -s "$EMAIL_SUBJECT_PREFIX Full Scrub COMPLETED" "$EMAIL_ADDRESS" < $TMP_OUTPUT
 
                $SNAPRAID_BIN status > $TMP_OUTPUT
                /usr/bin/mutt -s "$EMAIL_SUBJECT_PREFIX Status" "$EMAIL_ADDRESS" < $TMP_OUTPUT
