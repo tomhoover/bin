@@ -36,7 +36,7 @@
 
 EMAIL_SUBJECT_PREFIX="bethel SnapRAID - "
 EMAIL_ADDRESS="tom@hisword.net"
-DEL_THRESHOLD=50
+DEL_THRESHOLD=65
 CONTENT_FILE="/var/snapraid/content"
 PARITY_FILE=`cat /etc/snapraid.conf | grep snapraid.parity | head -n 1 | cut -d " " -f2`
 LOG_FILE="/var/log/snapraid.log"
