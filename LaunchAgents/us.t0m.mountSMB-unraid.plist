@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>us.t0m.mountSMB-nas</string>
+	<string>us.t0m.mountSMB-unraid</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/Users/tom/bin/mountSMB-nas</string>
+		<string>/Users/tom/bin/mountSMB-unraid</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
