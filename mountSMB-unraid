@@ -42,24 +42,24 @@ SCRIPTLOCATION="/Users/tom/bin"
 
 # Username for server
 USERNAME="username"				# you can set your username here, or
-USERNAME=${MOUNTSMB_USERNAME:-$USERNAME}	#  set the variable MOUNTSMB_USERNAME in ~/.SECRETS
+USERNAME=${MOUNT_unraid_USERNAME:-$USERNAME}	#  set the variable MOUNTSMB_USERNAME in ~/.SECRETS
 
 # Password for server, check notes
 PASSWORD="password"				# you can set your password here, or
-PASSWORD=${MOUNTSMB_PASSWORD:-$PASSWORD}	#  set the variable MOUNTSMB_PASSWORD in ~/.SECRETS
+PASSWORD=${MOUNT_unraid_PASSWORD:-$PASSWORD}	#  set the variable MOUNTSMB_PASSWORD in ~/.SECRETS
 
 # IP Address/hostname for ping
-PING="192.168.2.99"
+PING="192.168.2.90"
 
 # Hostname for server. Try sername.local, hostname or IP
-HOSTNAME="nas"
+HOSTNAME="unraid"
 
 # Protocol in lowercase, afp or smb
 PROTOCOL="smb"
 
 # Shares, check notes
 #SHARES="Archive BackupNAS Movies Music TV%20Shows"
-SHARES="Media tmp"
+SHARES="backups Media%20-%20Originals Movies TV%20Shows Vault"
 
 
 #-----------------------------#
