@@ -1,0 +1,28 @@
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>KeepAlive</key>
+    <dict>
+        <key>AfterInitialDemand</key>
+        <true/>
+
+        <key>SuccessfulExit</key>
+        <false/>
+
+        <key>Crashed</key>
+        <true/>
+    </dict>
+
+    <key>Label</key>
+    <string>us.t0m.resiliosync</string>
+
+    <key>Program</key>
+    <string>/Applications/Resilio Sync.app/Contents/MacOS/Resilio Sync</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StartInterval</key>
+    <integer>3600</integer>
+</dict>
+</plist>
