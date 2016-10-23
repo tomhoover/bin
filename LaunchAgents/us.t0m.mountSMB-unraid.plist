@@ -6,7 +6,7 @@
 	<string>us.t0m.mountSMB-unraid</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/Users/tom/bin/mountSMB-unraid</string>
+		<string>/Users/tom/bin/mountSMB-unraid.sh</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
