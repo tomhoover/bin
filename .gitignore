@@ -1,2 +1,5 @@
 clean-github-pr.py
 fixssh
+diff-highlight
+diff-so-fancy
+libexec/diff-so-fancy.pl
