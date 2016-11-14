@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>us.t0m.grab_packt</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/node</string>
+    <string>/Users/tom/src/github.com/draconar/grab_packt/server.js</string>
+  </array>
+
+  <key>Nice</key>
+  <integer>1</integer>
+
+  <key>StartInterval</key>
+  <integer>86400</integer>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardErrorPath</key>
+  <string>/tmp/grab_packt.err</string>
+
+  <key>StandardOutPath</key>
+  <string>/tmp/grab_packt.out</string>
+</dict>
+</plist>
