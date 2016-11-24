@@ -9,8 +9,9 @@ case "${FILENAME}" in
     *\.md ) ;;
     * ) FILENAME="${FILENAME}.md" ;;
 esac
-if [ -f "${SOURCE}/content/post/${FILENAME}" ]; then
-    vim "${SOURCE}/content/post/${FILENAME}"
+#if [ -f "${SOURCE}/content/post/*-${FILENAME}" ]; then
+if ls ${SOURCE}/content/post/*-${FILENAME} 1> /dev/null 2>&1; then
+    vim ${SOURCE}/content/post/*-${FILENAME}
 else
-    cd "${SOURCE}" && hugo new "post/${FILENAME}" --editor vim
+    cd "${SOURCE}" && hugo new "post/$(date '+%Y-%m-%d')-${FILENAME}" --editor vim
 fi
