@@ -4,7 +4,7 @@
 set -e
 
 SOURCE="$HOME/src/tomhoover-hugo"
-FILENAME=`echo "$*" | tr "[:blank:]" "-" | tr "[:upper:]" "[:lower:]"`
+FILENAME=$(echo "$*" | tr -d "[:punct:]" | tr "[:blank:]" "-" | tr "[:upper:]" "[:lower:]")
 case "${FILENAME}" in
     *\.md ) ;;
     * ) FILENAME="${FILENAME}.md" ;;
