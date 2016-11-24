@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit immediately on error.
+set -e
+
 PATH=$PATH:/usr/local/bin
 FILE="$HOME/Dropbox/lastip"
 LASTIP=`cat $FILE`

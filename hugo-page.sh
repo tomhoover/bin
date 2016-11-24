@@ -1,4 +1,8 @@
 #!/bin/sh
+
+# Exit immediately on error.
+set -e
+
 SOURCE="$HOME/src/tomhoover-hugo"
 FILENAME=`echo "$*" | tr "[:blank:]" "-" | tr "[:upper:]" "[:lower:]"`
 case "${FILENAME}" in

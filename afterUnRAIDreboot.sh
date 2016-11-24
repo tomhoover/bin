@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit immediately on error.
+set -e
+
 #ssh root@unraid echo "export TERM=linux" >> .bash_profile
 ssh-copy-id root@unraid
 ssh root@unraid 'cat .ssh/authorized_keys'

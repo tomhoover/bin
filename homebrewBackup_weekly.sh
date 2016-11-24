@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit immediately on error.
+set -e
+
 # shellcheck disable=SC1090
 . "$HOME/.keychain/$HOSTNAME-sh"
 /usr/local/bin/brew list > ~/.config/homebrew/brew.installed

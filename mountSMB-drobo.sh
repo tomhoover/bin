@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Exit immediately on error.
+set -e
+
 [[ "`uname`" = "Darwin" ]] || exit
 
 # mount.sh

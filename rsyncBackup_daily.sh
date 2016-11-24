@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Exit immediately on error.
 set -e
 
 . $HOME/.keychain/$HOSTNAME-sh
