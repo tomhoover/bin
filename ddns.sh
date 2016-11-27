@@ -21,5 +21,12 @@ if [[ "$LASTIP" != "$WAN" ]]; then
 	echo $WAN > $FILE
 #	${CLI53} rrcreate --replace --ttl 300 t0m.us @ A $WAN	# previous command (for python cli53)
 #	${CLI53} rrcreate --replace t0m.us '@ 300 A' ${WAN}	# won't work--space must be inside single quote to work
-	${CLI53} rrcreate --replace t0m.us '@ 300 A '${WAN}
+if [[ "$HOSTNAME" == "unraid" ]]; then
+        ${CLI53} rrcreate --replace t0m.us '@ 300 A '${WAN}
+    else
+        ${CLI53} rrcreate --replace t0m.us ${HOSTNAME}' 300 A '${WAN}
+    fi
 fi
+
+# https://github.com/barnybug/cli53
+
