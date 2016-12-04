@@ -22,8 +22,9 @@ echo ""
 
 echo "===== copy .boto & bootstrap.sh"
 ssh root@unraid 'mkdir -p Dropbox'
+ssh root@unraid 'touch Dropbox/lastip'
 scp ~/.boto root@unraid:
-scp ~/src/bootstrap/bootstrap.sh root@unraid:
+scp ~/.dotfiles/script/bootstrap root@unraid:bootstrap.sh
 ssh root@unraid 'ls -al'
 echo ""
 
