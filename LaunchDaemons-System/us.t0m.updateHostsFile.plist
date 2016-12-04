@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>us.t0m.updateHostsFile</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>rsync</string>
+        <string>-u</string>
+        <string>/Users/tom/src/github.com/stevenblack/hosts/alternates/porn/hosts</string>
+        <string>/etc</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StartInterval</key>
+    <integer>3600</integer>
+
+  <key>StandardErrorPath</key>
+  <string>/tmp/updateHostsFile.err</string>
+
+  <key>StandardOutPath</key>
+  <string>/tmp/updateHostsFile.out</string>
+</dict>
+</plist>
