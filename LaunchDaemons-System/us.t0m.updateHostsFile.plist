@@ -9,7 +9,7 @@
     <array>
         <string>rsync</string>
         <string>-u</string>
-        <string>/Users/tom/src/github.com/stevenblack/hosts/alternates/porn/hosts</string>
+        <string>/Users/tom/src/github.com/stevenblack/hosts/alternates/tch/hosts</string>
         <string>/etc</string>
     </array>
 
