@@ -10,7 +10,7 @@ fixPermissions()
     cd "$1" && pwd
     find . -type d -exec chmod 775 {} \;
     find . -type f -exec chmod 664 {} \;
-    chown -R tom *
+    chown -R tom:users -- *
 }
 
 fixPermissions "/mnt/user/Movies"
