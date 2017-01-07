@@ -2,10 +2,10 @@
 # requires https://github.com/StevenBlack/hosts
 
 cd ~/src/github.com/stevenblack/hosts/ || exit
+git pull --rebase --autostash
 cp ~/.config/hosts/* .
 #./makeHosts
 python3 updateHostsFile.py -a -o alternates/tch -e porn
-cat blacklist >> alternates/tch/hosts
 git checkout hosts
 git checkout readmeData.json
 
