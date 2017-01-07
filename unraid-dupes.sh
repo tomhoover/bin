@@ -30,8 +30,10 @@ grep -v \/\.AppleDouble\/ /mnt/disk1/dupes_tmp0 \
 	| grep -v \/mnt\/disk.\/Music\/iTunes\/iTunes\ Media\/Music\/Ronnie\ Dunn\/ \
 	| grep -v \/mnt\/disk.\/Photos\/Aperture\ Library.aplibrary\/ \
 	| grep -v \/mnt\/disk.\/Photos\/mitzi_Pictures\/Photos\ Library.photoslibrary\/ \
-	| grep -v \/mnt\/disk.\/vdisks\/ \
+	| grep -v \/mnt\/disk.\/annex \
+	| grep -v \/mnt\/disk.\/backups\/SuperDuper\/ \
 	| grep -v \/mnt\/disk.\/dupes \
+	| grep -v \/mnt\/disk.\/vdisks\/ \
 	> /mnt/disk1/dupes_tmp1
 #	| grep -v \.BUP\"$ \
 #	| grep -v \.IFO\"$ \
