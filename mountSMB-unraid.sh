@@ -63,7 +63,7 @@ PROTOCOL="smb"
 
 # Shares, check notes
 #SHARES="Archive BackupNAS Movies Music TV%20Shows"
-SHARES="backups Media%20-%20Originals Movies TV%20Shows Vault"
+SHARES="annex backups Media%20-%20Originals Movies PlayOn Vault"
 
 
 #-----------------------------#
