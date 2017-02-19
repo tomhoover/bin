@@ -1,7 +1,9 @@
 #!/bin/sh
 
-# Exit immediately on error.
-set -e
+# set -e: exit script immediately upon error
+# set -u: treat unset variables as an error
+# set -o pipefail: cause a pipeline to fail, if any command within it fails
+set -eu -o pipefail
 
 # shellcheck disable=SC1090
 . "$HOME/.keychain/$(hostname -s)-sh"
