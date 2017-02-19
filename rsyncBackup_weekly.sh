@@ -11,61 +11,62 @@ echo " ---------------"
 echo "| tom_Documents |"
 echo " ---------------"
 cd /Users/tom && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
-				Documents/ tom@nas:/mnt/DroboFS/Shares/rsync/tom_Documents/
+				Documents/ tom@drobo:/mnt/DroboFS/Shares/rsync/tom_Documents/
+
 echo ""
 echo " ---------------"
 echo "| tom_Downloads |"
 echo " ---------------"
 cd /Users/tom && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
-				Downloads/ tom@nas:/mnt/DroboFS/Shares/rsync/tom_Downloads/
+				Downloads/ tom@drobo:/mnt/DroboFS/Shares/rsync/tom_Downloads/
 echo ""
 echo " -----------"
 echo "| tom_Music |"
 echo " -----------"
 cd /Users/tom && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
-				Music/ tom@nas:/mnt/DroboFS/Shares/rsync/tom_Music/
+				Music/ tom@drobo:/mnt/DroboFS/Shares/rsync/tom_Music/
 echo ""
 echo " --------------"
 echo "| tom_Pictures |"
 echo " --------------"
 cd /Users/tom && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
-				Pictures/ tom@nas:/mnt/DroboFS/Shares/rsync/tom_Pictures/
+				Pictures/ tom@drobo:/mnt/DroboFS/Shares/rsync/tom_Pictures/
 echo ""
 echo " -------"
 echo "| tom_b |"
 echo " -------"
 cd /Volumes && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
 				--exclude=.DocumentRevisions-V100 --exclude=.MobileBackups --exclude=.Trashes --exclude=.Spotlight-V100 \
-				b/ tom@nas:/mnt/DroboFS/Shares/rsync/tom_b/
+				b/ tom@drobo:/mnt/DroboFS/Shares/rsync/tom_b/
 
 echo ""
 echo " --------------"
 echo "| RAID_Archive |"
 echo " --------------"
 cd /Volumes/RAID10 && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
-				Archive/ tom@nas:/mnt/DroboFS/Shares/rsync/RAID10_Archive/
+				Archive/ tom@drobo:/mnt/DroboFS/Shares/rsync/RAID10_Archive/
 echo ""
 echo " ----------------"
 echo "| RAID_Downloads |"
 echo " ----------------"
 cd /Volumes/RAID10 && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
-				Downloads/ tom@nas:/mnt/DroboFS/Shares/rsync/RAID10_Downloads/
+				Downloads/ tom@drobo:/mnt/DroboFS/Shares/rsync/RAID10_Downloads/
 echo ""
 echo " ------------"
 echo "| RAID_Music |"
 echo " ------------"
 cd /Volumes/RAID10 && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
-				Music/ tom@nas:/mnt/DroboFS/Shares/rsync/RAID10_Music/
+				Music/ tom@drobo:/mnt/DroboFS/Shares/rsync/RAID10_Music/
 echo ""
 echo " ---------------"
 echo "| RAID_Pictures |"
 echo " ---------------"
 cd /Volumes/RAID10 && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
-				Pictures/ tom@nas:/mnt/DroboFS/Shares/rsync/RAID10_Pictures/
+				Pictures/ tom@drobo:/mnt/DroboFS/Shares/rsync/RAID10_Pictures/
 echo ""
 echo " --------------"
 echo "| RAID_backups |"
 echo " --------------"
 cd /Volumes/RAID10 && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
-				backups/ tom@nas:/mnt/DroboFS/Shares/rsync/RAID10_backups/
+				backups/ tom@drobo:/mnt/DroboFS/Shares/rsync/RAID10_backups/
 
