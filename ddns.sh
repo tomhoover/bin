@@ -24,8 +24,8 @@ if [[ "$LASTIP" != "$WAN" ]]; then
 	echo "IP changed from $LASTIP to $WAN"
 	echo "$WAN" > "$FILE"
 
-# shellcheck disable=SC2086
-if [[ "$HOSTNAME" == "unraid" ]]; then
+    # shellcheck disable=SC2086
+    if [[ "$HOSTNAME" == "unraid" ]]; then
     #   ${CLI53} rrcreate --replace --ttl 300 t0m.us @ A $WAN	# previous command (for python cli53)
     #   ${CLI53} rrcreate --replace t0m.us '@ 300 A' ${WAN}	# won't work--space must be inside single quote to work
         ${CLI53} rrcreate --replace t0m.us '@ 300 A '${WAN}
