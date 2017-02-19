@@ -2,7 +2,9 @@
 # requires https://github.com/StevenBlack/hosts
 
 cd ~/src/github.com/stevenblack/hosts/ || exit
-git pull --rebase --autostash
+#git pull --rebase --autostash
+git reset --hard HEAD
+git pull
 cp ~/.config/hosts/* .
 #./makeHosts
 python3 updateHostsFile.py -a -o alternates/tch -e porn
