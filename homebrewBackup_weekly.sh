@@ -5,12 +5,10 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
+GIT=/usr/local/bin/git
+
 # shellcheck disable=SC1090
 . "$HOME/.keychain/$(hostname -s)-sh"
-/usr/local/bin/brew list > "$HOME/.config/homebrew/brew.installed"
-/usr/local/bin/brew cask list > "$HOME/.config/homebrew/cask.installed"
-/usr/local/bin/brew bundle dump --global --force
-/usr/local/bin/vcsh homebrew add "$HOME/.Brewfile"
-/usr/local/bin/vcsh homebrew add "$HOME/.config/homebrew/*"
-/usr/local/bin/vcsh homebrew commit -m "$(date)"
-/usr/local/bin/vcsh homebrew push
+
+/usr/local/bin/brew bundle dump --force --file="$HOME/.homebrew-brewfile/Brewfile"
+cd "$HOME/.homebrew-brewfile" && $GIT add Brewfile && $GIT commit -m "$(date)" && $GIT push
