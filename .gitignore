@@ -2,4 +2,5 @@ clean-github-pr.py
 fixssh
 diff-highlight
 diff-so-fancy
+git-annex-remote-rclone
 libexec/diff-so-fancy.pl
