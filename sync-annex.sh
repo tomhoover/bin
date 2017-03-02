@@ -158,6 +158,21 @@ elif [ "$1" = "fsck" ] && [ "$2" = "remotes" ] ; then
         fsckRemotes ~/annex amazon "$3"
         fsckRemotes ~/annex hubic "$3"
     fi
+elif [ "$1" = "fsck" ] && [ "$2" = "all" ] ; then
+    if [ "$(hostname -s)" = "ariel" ]; then
+        listAnnex /Volumes/RAID10/annex "$1"
+        listAnnex ~/annex "$1"
+        fsckRemotes /Volumes/RAID10/annex drobo "$3"
+        fsckRemotes /Volumes/RAID10/annex manuel "$3"
+        #fsckRemotes /Volumes/RAID10/annex origin "$3"
+        #fsckRemotes ~/annex drobo "$3"
+        #fsckRemotes ~/annex manuel "$3"
+        #fsckRemotes ~/annex origin "$3"
+    elif [ "$(hostname -s)" = "unraid" ]; then
+        listAnnex ~/annex "$1"
+        fsckRemotes ~/annex amazon "$3"
+        fsckRemotes ~/annex hubic "$3"
+    fi
 else
     if [ "$(hostname -s)" = "ariel" ] ; then listAnnex /Volumes/RAID10/annex "$1" ; fi
     listAnnex ~/annex "$1"
