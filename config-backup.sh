@@ -10,9 +10,9 @@ if [ $EUID != 0 ]; then
 fi
 
 if [ "$(hostname -s)" = ariel ]; then
-    CONFIG_DIR=/Users/tom/.config-backup
+    CONFIG_DIR=/Users/tom/.config-backup/ariel
 elif [ "$(hostname -s)" = lemuel ]; then
-    CONFIG_DIR=/root/.config-backup
+    CONFIG_DIR=/root/.config-backup/lemuel
 else
     exit
 fi
