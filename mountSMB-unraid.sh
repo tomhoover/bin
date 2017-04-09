@@ -67,6 +67,7 @@ PROTOCOL="smb"
 #SHARES="Archive BackupNAS Movies Music TV%20Shows"
 SHARES="annex backups Media%20-%20Originals Movies PlayOn Vault"
 
+MOUNT="$HOME/mnt/$HOSTNAME"
 
 #-----------------------------#
 # Required for iTunes opening #
@@ -105,7 +106,7 @@ MACADDRESS="002fd0760ef9"
 
 
 # Mountpoint - Don't edit this unless you know what you're doing.
-MOUNT="/Volumes"
+#MOUNT="/Volumes"
 
 # Check if server is available
 if ( ping -q -c 5 $PING ); then
