@@ -69,6 +69,8 @@ SHARES="arq"
 
 MOUNT="$HOME/mnt/$HOSTNAME"
 
+for dir in $MOUNT/*/ ; do rmdir "${dir}" || true ; done
+
 #-----------------------------#
 # Required for iTunes opening #
 #-----------------------------#

@@ -69,6 +69,8 @@ SHARES="annex backups Media%20-%20Originals Movies PlayOn Vault"
 
 MOUNT="$HOME/mnt/$HOSTNAME"
 
+for dir in $MOUNT/*/ ; do rmdir "${dir}" || true ; done
+
 #-----------------------------#
 # Required for iTunes opening #
 #-----------------------------#
