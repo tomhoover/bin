@@ -79,6 +79,7 @@ cd "$HOME/annex/$1" && cat >> .gitattributes <<EOF
 ._* annex.largefiles=nothing
 ._.DS_Store annex.largefiles=nothing
 .gitconfig_* annex.largefiles=nothing
+.gitignore annex.largefiles=nothing
 EOF
 cd "$HOME/annex/$1" && git add .gitattributes && git commit -m 'initial commit' && git annex sync
 echo ""
