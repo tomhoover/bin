@@ -102,7 +102,7 @@ fsckAnnex()
 fsckRemotes()
 {
     echo ""
-    cd "$1" && for DIR in *
+    cd "$1" && for DIR in */
     do
         syncAnnex "$1/$DIR"
         cd "$1/$DIR" || exit
@@ -117,7 +117,7 @@ fsckRemotes()
 listAnnex()
 {
     echo ""
-    cd "$1" && for DIR in *
+    cd "$1" && for DIR in */
     do
         if [ "$2" = "config" ] || [ "$2" = "configs" ] ; then
             saveConfig "$1/$DIR"
