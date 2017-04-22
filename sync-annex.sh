@@ -74,7 +74,8 @@ fsckAnnex()
 {
     echo ""
     START=$(cat /tmp/sync-annex-start)
-    END=$((START+21600))                # 6 hrs
+    #END=$((START+21600))                # 6 hrs
+    END=$((START+14400))                # 4 hrs
     NOW=$(date +%s)
 
     if [ "$NOW" -gt "$END" ] ; then return ; fi
