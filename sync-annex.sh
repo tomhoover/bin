@@ -30,7 +30,9 @@ saveConfig()
         SUFFIX="$(hostname -s)"
     fi
     cp .git/config ".gitconfig_$SUFFIX"
-    git annex add ".gitconfig_$SUFFIX"
+    if [ "$(hostname -s)" = "ariel" ]; then
+        git annex add ".gitconfig_$SUFFIX"
+    fi
     echo ""
 }
 
