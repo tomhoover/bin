@@ -157,7 +157,7 @@ elif [ "$1" = "fsck" ] && [ "$2" = "remotes" ] ; then
         #fsckRemotes ~/annex manuel "$3"
         #fsckRemotes ~/annex origin "$3"
     elif [ "$(hostname -s)" = "unraid" ]; then
-        fsckRemotes ~/annex amazon "$3"
+#        fsckRemotes ~/annex amazon "$3"
         fsckRemotes ~/annex gdrive "$3"
         fsckRemotes ~/annex hubic "$3"
     fi
@@ -173,7 +173,7 @@ elif [ "$1" = "fsck" ] && [ "$2" = "all" ] ; then
         #fsckRemotes ~/annex origin "$3"
     elif [ "$(hostname -s)" = "unraid" ]; then
         listAnnex ~/annex "$1"
-        fsckRemotes ~/annex amazon "$3"
+#        fsckRemotes ~/annex amazon "$3"
         fsckRemotes ~/annex gdrive "$3"
         fsckRemotes ~/annex hubic "$3"
     fi
