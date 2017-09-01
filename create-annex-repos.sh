@@ -56,7 +56,7 @@ cd "$HOME/annex/$1" && \
     git remote add drobo "drobo.local:/mnt/DroboFS/Shares/annex/$1.git" && \
     git remote add manuel "manuel.local:annex/$1.git" && \
     #git remote add origin "manuel.local:annex/$1.git" && \
-    git config remote.manuel.annex-ignore true && \
+    #git config remote.manuel.annex-ignore true && \
     git config remote.unraid.annex-shell git-annex.linux/git-annex-shell
 echo "     to RAID10..."
 cd "/Volumes/RAID10/annex/$1" && \
@@ -65,7 +65,7 @@ cd "/Volumes/RAID10/annex/$1" && \
     git remote add drobo "drobo.local:/mnt/DroboFS/Shares/annex/$1.git" && \
     git remote add manuel "manuel.local:annex/$1.git" && \
     #git remote add origin "manuel.local:annex/$1.git" && \
-    git config remote.manuel.annex-ignore true && \
+    #git config remote.manuel.annex-ignore true && \
     git config remote.unraid.annex-shell git-annex.linux/git-annex-shell
 echo ""
 echo "=================================================="
@@ -86,23 +86,23 @@ echo ""
 echo "=================================================="
 echo ""
 
-echo "===== Adding special remotes ====="
-echo ""
-echo "     to ariel..."
-cd "$HOME/annex/$1" && git annex initremote amazon type=external externaltype=rclone target=amazon-annex prefix="annex-$1" chunk=50MiB encryption=shared rclone_layout=lower mac=HMACSHA512 && git annex sync
-echo "     to RAID10..."
-cd "/Volumes/RAID10/annex/$1" && git annex enableremote amazon && git annex sync
-echo "     to unraid..."
-# shellcheck disable=SC1078
-# shellcheck disable=SC1079
-# shellcheck disable=SC2086
-ssh tom@unraid bash -c "'
-source .bash_profile
-cd "annex/$1" && git annex enableremote amazon && git annex sync
-'"
-echo ""
-echo "=================================================="
-echo ""
+#echo "===== Adding special remotes ====="
+#echo ""
+#echo "     to ariel..."
+#cd "$HOME/annex/$1" && git annex initremote amazon type=external externaltype=rclone target=amazon-annex prefix="annex-$1" chunk=50MiB encryption=shared rclone_layout=lower mac=HMACSHA512 && git annex sync
+#echo "     to RAID10..."
+#cd "/Volumes/RAID10/annex/$1" && git annex enableremote amazon && git annex sync
+#echo "     to unraid..."
+## shellcheck disable=SC1078
+## shellcheck disable=SC1079
+## shellcheck disable=SC2086
+#ssh tom@unraid bash -c "'
+#source .bash_profile
+#cd "annex/$1" && git annex enableremote amazon && git annex sync
+#'"
+#echo ""
+#echo "=================================================="
+#echo ""
 
 echo "===== set wanted files ====="
 echo ""
@@ -110,7 +110,7 @@ cd "$HOME/annex/$1" && \
     git annex wanted ariel standard && git annex group ariel manual && \
     git annex wanted RAID10 "not (inallgroup=backup and inallgroup=client)" && \
     git annex wanted unraid standard && git annex group unraid backup && \
-    git annex wanted amazon standard && git annex group amazon backup && \
+#    git annex wanted amazon standard && git annex group amazon backup && \
     git annex wanted drobo standard && git annex group drobo manual && \
     git annex wanted manuel standard && git annex group manuel manual && \
     #git annex wanted origin standard && git annex group origin manual && \
