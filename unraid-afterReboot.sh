@@ -26,14 +26,12 @@ scp ~/bin/ddns.sh root@unraid:/etc/cron.hourly
 ssh root@unraid 'ls -l /etc/cron.hourly'
 echo ""
 
-echo "===== copy .boto & bootstrap.sh"
+echo "===== copy .boto & bootstrap.sh to root"
 ssh root@unraid 'mkdir -p Dropbox'
 ssh root@unraid 'touch Dropbox/lastip'
 scp ~/.boto root@unraid:
 scp ~/.dotfiles/script/bootstrap root@unraid:bootstrap.sh
-scp ~/.dotfiles/script/bootstrap tom@unraid:bootstrap.sh
 ssh root@unraid 'ls -al'
-ssh tom@unraid 'ls -al'
 echo ""
 
 echo "===== diff /etc/passwd /boot/config/passwd"
@@ -42,7 +40,13 @@ echo ""
 
 echo "home directory should be /mnt/cache/appdata/home/tom"
 echo ""
-ssh root@unraid 'tail /etc/passwd'
-echo ""
+#ssh root@unraid 'tail /etc/passwd'
+#echo ""
 
-echo "ssh to unraid and execute bootstrap.sh"
+read -n 1 -s -r -p "Verify array has been started, and press any key to continue"
+
+echo "===== copy bootstrap.sh to tom"
+scp ~/.dotfiles/script/bootstrap tom@unraid:bootstrap.sh
+ssh tom@unraid 'ls -al'
+
+echo "ssh to unraid (both root & tom) and execute bootstrap.sh"
