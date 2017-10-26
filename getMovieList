@@ -1,0 +1,31 @@
+#!/bin/sh
+
+FILE=$HOME/Dropbox/txt/nvALT/MovieList.txt
+DBFILE=$HOME/Dropbox/Public/MovieList.txt
+MOVIEDIR="$HOME/annex/movies"
+
+cd "$MOVIEDIR" || exit
+
+{   echo "Amazon Prime" ; echo "============" ; find . -iname '*.amzn' | sed -e 's/.amzn$//' -e 's/__/: /' -e 's/^\.\///' ; echo "" ; \
+    echo "Apple TV" ;     echo "========" ;     find . -iname '*.atv' | sed -e 's/.atv$//' -e 's/__/: /' -e 's/^\.\///' ;   echo "" ; \
+    echo "VUDU" ;         echo "====" ;         find . -iname '*.vudu' | sed -e 's/.vudu$//' -e 's/__/: /' -e 's/^\.\///' ; echo "" ; } > "$FILE"
+
+{ echo "Plex" ; echo "====" ; } >> "$FILE"
+#ls ./* | grep -v ^$ | grep -v ^0- | grep -v 2encode | grep -v 2edit | grep -v Icon | grep -v "retired:" | grep -v \.amzn$ | grep -v \.atv$ | grep -v \.vudu$ | grep -v \.edl$ | grep -v \.btsd$ | sed -e 's/.bts$//' -e 's/.btsv$//' -e 's/.rsls$//' -e 's/.rslsv$//' -e 's/.plex$//' -e 's/.m4v$//' -e 's/.mp4$//' -e 's/.mpg$//' -e 's/.mpeg$//' -e 's/.mkv//' -e 's/__/: /' -e 's/^\.\///' | sort -u >> "$FILE"
+#find . /Users/tom/mnt/unraid/Movies \( ! -regex '.*/\..*' \) | grep -v ^$ | grep -v ^\.$ | grep -v ^0- | grep -v 2encode | grep -v 2edit | grep -v Icon | grep -v "retired:" | grep -v \.amzn$ | grep -v \.atv$ | grep -v \.vudu$ | grep -v \.edl$ | grep -v \.btsd$ | sed -e 's/.bts$//' -e 's/.btsv$//' -e 's/.rsls$//' -e 's/.rslsv$//' -e 's/.plex$//' -e 's/.m4v$//' -e 's/.mp4$//' -e 's/.mpg$//' -e 's/.mpeg$//' -e 's/.mkv//' -e 's/__/: /' -e 's/^\.\///' | sort -u >> "$FILE"
+find . /Users/tom/mnt/unraid/Movies/0-TV /Users/tom/mnt/unraid/Movies/2edit \( ! -regex '.*/\..*' \) \
+    | grep -v ^/Users/tom/mnt/unraid/Movies/0-TV$ | grep -v ^/Users/tom/mnt/unraid/Movies/2edit$ \
+    | grep -v ^$ | grep -v ^\.$ | grep -v \.amzn$ | grep -v \.atv$ | grep -v \.vudu$ | grep -v \.edl$ | grep -v \.btsd$ | grep -v \.log$ | grep -v \.txt$ \
+    | sed -e 's/.bts$//' -e 's/.btsv$//' -e 's/.rsls$//' -e 's/.rslsv$//' -e 's/.plex$//' -e 's/.m4v$//' -e 's/.mp4$//' -e 's/.mpg$//' -e 's/.mpeg$//' -e 's/.mkv//' -e 's/__/: /' -e 's/_ /: /' -e 's/^\.\///' \
+          -e 's/\/Users\/tom\/mnt\/unraid\/Movies\/0-TV\/\(.*\)/\1 [TV with commercials]/' -e 's/\/Users\/tom\/mnt\/unraid\/Movies\/2edit\/\(.*\)/\1 [2edit]/' \
+    | sort -u >> "$FILE"
+
+echo "" >> "$FILE"
+
+cp "$FILE" "$DBFILE"
+
+cd "/Volumes/RAID10/Media/cTivo/Movies" && \
+    { echo "in work: /Volumes/RAID10/z_Media/cTivo/Movies" ; echo "=============================================" ; find . | grep -v ^\.$ | sed -e 's/^\.\///' 2>/dev/null ; echo "" ; } >> "$FILE"
+
+cd "/Volumes/RAID10/z_Media/Batch Rip/Batch Rip Movies" && \
+    { echo "in work: /Volumes/RAID10/z_Media/Batch Rip/Batch Rip Movies" ; echo "===========================================================" ; find . | grep -v ^\.$ | grep -v .DS_Store | sed -e 's/^\.\///' 2>/dev/null ; echo "" ; } >> "$FILE"
