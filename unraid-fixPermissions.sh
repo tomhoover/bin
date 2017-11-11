@@ -18,4 +18,6 @@ fixPermissions()
 fixPermissions "/mnt/user/Movies"
 fixPermissions "/mnt/user/TV"
 fixPermissions "/mnt/user/Media"
+fixPermissions "/mnt/user/Music"
+fixPermissions "/mnt/user/Photos"
 #fixPermissions "/mnt/user/PlayOn"
