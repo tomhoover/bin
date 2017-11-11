@@ -12,10 +12,10 @@ fixPermissions()
     cd "$1" && pwd
     find . -type d -exec chmod 775 {} \;
     find . -type f -exec chmod 664 {} \;
-    chown -R tom:users -- *
+    chown -R nobody:users -- *
 }
 
 fixPermissions "/mnt/user/Movies"
-fixPermissions "/mnt/user/TV Shows"
-fixPermissions "/mnt/user/PlayOn"
+fixPermissions "/mnt/user/TV"
 fixPermissions "/mnt/user/Media"
+#fixPermissions "/mnt/user/PlayOn"
