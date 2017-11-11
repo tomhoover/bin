@@ -45,6 +45,7 @@ echo ""
 
 read -n 1 -s -r -p "Verify array has been started, and press any key to continue"
 
+echo ""
 echo "===== copy bootstrap.sh to tom"
 scp ~/.dotfiles/script/bootstrap tom@unraid:bootstrap.sh
 ssh tom@unraid 'ls -al'
