@@ -21,9 +21,15 @@ echo "===== download dig"
 ssh root@unraid 'curl -L https://github.com/sequenceiq/docker-alpine-dig/releases/download/v9.10.2/dig.tgz|tar -xzv -C /usr/local/bin/'
 echo ""
 
-echo "===== copy ddns.sh to /etc/cron.hourly"
+echo "===== copy scripts to /etc/cron.hourly"
 scp ~/bin/ddns.sh root@unraid:/etc/cron.hourly
+scp ~/bin/unraid-hourlyFixPermissions.sh root@unraid:/etc/cron.hourly
 ssh root@unraid 'ls -l /etc/cron.hourly'
+echo ""
+
+echo "===== copy scripts to /etc/cron.weekly"
+scp ~/bin/unraid-fixPermissions.sh root@unraid:/etc/cron.weekly
+ssh root@unraid 'ls -l /etc/cron.weekly'
 echo ""
 
 echo "===== copy .boto & bootstrap.sh to root"
@@ -40,8 +46,8 @@ echo ""
 
 echo "home directory should be /mnt/cache/appdata/home/tom"
 echo ""
-#ssh root@unraid 'tail /etc/passwd'
-#echo ""
+ssh root@unraid 'tail /etc/passwd'
+echo ""
 
 read -n 1 -s -r -p "Verify array has been started, and press any key to continue"
 

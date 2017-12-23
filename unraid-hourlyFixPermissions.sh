@@ -15,10 +15,9 @@ fixPermissions()
 #    chown -R nobody:users -- *
 }
 
-#fixPermissions "/mnt/user/Movies"
-#fixPermissions "/mnt/user/TV"
 #fixPermissions "/mnt/user/Media"
 #fixPermissions "/mnt/user/Music"
 #fixPermissions "/mnt/user/Photos"
+fixPermissions "/mnt/user/Plex"
 fixPermissions "/mnt/user/Media - Originals/MCEB_in/cTivo"
-#fixPermissions "/mnt/user/PlayOn"
+fixPermissions "/mnt/user/PlayOn"
