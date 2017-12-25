@@ -5,6 +5,8 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
+read -n 1 -s -r -p "Settings/SSH, stop SSH daemon, set 'password authentication' to 'yes', apply"
+
 echo ""
 echo "===== (root) copy authorized_keys, config & github_rsa to .ssh"
 echo "  NOTE: you may have to enter root password twice"
@@ -57,3 +59,7 @@ scp ~/.dotfiles/script/bootstrap tom@unraid:bootstrap.sh
 ssh tom@unraid 'ls -al'
 
 echo "ssh to unraid (both root & tom) and execute bootstrap.sh"
+
+echo ""
+read -n 1 -s -r -p "Settings/SSH, stop SSH daemon, set 'password authentication' to 'no', apply"
+
