@@ -29,6 +29,11 @@ scp ~/bin/unraid-hourlyFixPermissions.sh root@unraid:/etc/cron.hourly
 ssh root@unraid 'ls -l /etc/cron.hourly'
 echo ""
 
+echo "===== copy scripts to /etc/cron.daily"
+scp ~/bin/getMovieList.sh root@unraid:/etc/cron.daily
+ssh root@unraid 'ls -l /etc/cron.weekly'
+echo ""
+
 echo "===== copy scripts to /etc/cron.weekly"
 scp ~/bin/unraid-fixPermissions.sh root@unraid:/etc/cron.weekly
 ssh root@unraid 'ls -l /etc/cron.weekly'
