@@ -22,4 +22,4 @@ fixPermissions "/mnt/user/Plex"
 fixPermissions "/mnt/user/Media - Originals/MCEB_in/"
 fixPermissions "/mnt/user/PlayOn"
 
-docker exec -it plex ls -l / | grep "drwxrwxrwx.*transcode" || docker exec -it plex chmod 777 /transcode
+#docker exec -it plex ls -l / | grep "drwxrwxrwx.*transcode" || docker exec -it plex chmod 777 /transcode
