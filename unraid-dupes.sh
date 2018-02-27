@@ -28,6 +28,7 @@ grep -v \/\.AppleDouble\/ /mnt/disk1/dupes_tmp0 \
 	| grep -v \/mnt\/disk.\/Photos\/mitzi_Pictures\/Photos\ Library.photoslibrary\/ \
 	| grep -v \/mnt\/disk.\/annex \
 	| grep -v \/mnt\/disk.\/backups\/SuperDuper\/ \
+	| grep -v \/mnt\/disk.\/backups\/merged\/arielBackups\/RAID10\/Pictures\/Aperture\ Library.aplibrary\/ \
 	| grep -v \/mnt\/disk.\/dupes \
 	| grep -v \/mnt\/disk.\/resilio-sync\/bridgett_ \
 	| grep -v \/mnt\/disk.\/resilio-sync\/mitzi_Pictures\/Photos\ Library.photoslibrary\/ \
