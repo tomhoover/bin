@@ -29,16 +29,7 @@ if [[ "$LASTIP" != "$WAN" ]]; then
     #   ${CLI53} rrcreate --replace --ttl 300 t0m.us @ A $WAN	# previous command (for python cli53)
     #   ${CLI53} rrcreate --replace t0m.us '@ 300 A' ${WAN}	# won't work--space must be inside single quote to work
         ${CLI53} rrcreate --replace t0m.us '@ 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'www 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'grafana 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'heimdall 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'nzbget 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'ombi 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'portainer 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'radarr 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'sonarr 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'tautulli 300 A '${WAN}
-        ${CLI53} rrcreate --replace t0m.us 'transmission 300 A '${WAN}
+    #   ${CLI53} rrcreate --replace t0m.us 'www 300 A '${WAN}
     else
         ${CLI53} rrcreate --replace t0m.us ${HOSTNAME}' 300 A '${WAN}
     fi
