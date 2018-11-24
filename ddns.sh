@@ -10,7 +10,7 @@ FILE="$HOME/Dropbox/lastip"
 
 DIRNAME="$(dirname $FILE)"
 if ! [ -d ${DIRNAME} ] ; then 
-    mkdir -p 0700 ${DIRNAME}
+    mkdir -pm 0700 ${DIRNAME}
     touch ${FILE}
 fi
 
