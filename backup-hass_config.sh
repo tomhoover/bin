@@ -4,9 +4,10 @@
 # set -u: treat unset variables as an error
 set -eu
 
-MOUNTPOINT=/mnt/user/appdata/home-assistant
-BACKUPDIR=/mnt/user/backups/hass_config
-FILENAME=$(date +%Y%m%d-%H%M%S).tgz
+MOUNTPOINT=/home/tom/appdata/hass
+BACKUPDIR=/mnt/backups/hass
+VERSION=`cat /home/tom/appdata/hass/.HA_VERSION`
+FILENAME=$(date +%Y%m%d-%H%M%S)-$VERSION.tgz
 
 cd $MOUNTPOINT || exit
 
