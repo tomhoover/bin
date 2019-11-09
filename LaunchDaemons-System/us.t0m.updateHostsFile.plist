@@ -19,10 +19,10 @@
     <key>StartInterval</key>
     <integer>3600</integer>
 
-  <key>StandardErrorPath</key>
-  <string>/tmp/updateHostsFile.err</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/updateHostsFile.err</string>
 
-  <key>StandardOutPath</key>
-  <string>/tmp/updateHostsFile.out</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/updateHostsFile.out</string>
 </dict>
 </plist>
