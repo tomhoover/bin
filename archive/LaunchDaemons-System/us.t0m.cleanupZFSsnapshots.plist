@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>us.t0m.cleanupZFSsnapshots</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/tom/bin/cleanupZFSsnapshots.sh</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>01</integer>
+        <key>Minute</key>
+        <integer>02</integer>
+    </dict>
+
+    <key>StandardErrorPath</key>
+    <string>/tmp/cleanupZFSsnapshots.err</string>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/cleanupZFSsnapshots.out</string>
+</dict>
+</plist>
