@@ -65,7 +65,8 @@ PROTOCOL="smb"
 
 # Shares, check notes
 #SHARES="Archive BackupNAS Movies Music TV%20Shows"
-SHARES="backups Media%20-%20Originals PlayOn Plex Vault"
+#SHARES="backups Media%20-%20Originals PlayOn Plex Vault"
+SHARES="backups PlayOn"
 
 MOUNT="$HOME/mnt/$HOSTNAME"
 
