@@ -11,4 +11,4 @@ GIT=/usr/local/bin/git
 . "$HOME/.keychain/$(hostname -s)-sh"
 
 /usr/local/bin/brew bundle dump --force --file="$HOME/.homebrew-brewfile/Brewfile"
-cd "$HOME/.homebrew-brewfile" && $GIT add Brewfile && $GIT commit -m "$(date)" && $GIT push
+cd "$HOME/.homebrew-brewfile" && $GIT add Brewfile && $GIT commit -m "$(date)" && $GIT push origin; $GIT push gitolite
