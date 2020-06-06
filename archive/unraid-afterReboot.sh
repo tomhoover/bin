@@ -5,15 +5,15 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
-read -n 1 -s -r -p "Settings/SSH, stop SSH daemon, set 'password authentication' to 'yes', apply"
+#read -n 1 -s -r -p "Settings/SSH, stop SSH daemon, set 'password authentication' to 'yes', apply"
 
 echo ""
-echo "===== (root) copy authorized_keys, config & github_rsa to .ssh"
-echo "  NOTE: you may have to enter root password twice"
+echo "===== (root) copy ssh config & private keys to .ssh"
+#echo "  NOTE: you may have to enter root password twice"
 echo ""
 ssh root@unraid 'mkdir -p .ssh && chmod 700 .ssh && ls -al'
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@unraid
-ssh root@unraid 'cat .ssh/authorized_keys'
+#ssh-copy-id -i ~/.ssh/id_rsa.pub root@unraid
+#ssh root@unraid 'cat .ssh/authorized_keys'
 scp ~/.ssh/config root@unraid:.ssh
 scp ~/.ssh/github_rsa root@unraid:.ssh
 scp ~/.ssh/restic_rsa root@unraid:.ssh
@@ -43,10 +43,11 @@ scp ~/bin/unraid-fixPermissions.sh root@unraid:/etc/cron.weekly
 ssh root@unraid 'ls -l /etc/cron.weekly'
 echo ""
 
-echo "===== copy .SECRETS, .boto & bootstrap.sh to root"
-ssh root@unraid 'mkdir -p Dropbox'
-ssh root@unraid 'touch Dropbox/lastip'
+echo "===== copy .SECRETS, .extra, .boto & bootstrap.sh to root"
+#ssh root@unraid 'mkdir -p Dropbox'
+#ssh root@unraid 'touch Dropbox/lastip'
 scp ~/.SECRETS root@unraid:
+scp ~/.extra root@unraid:
 scp ~/.boto root@unraid:
 scp ~/.dotfiles/script/bootstrap root@unraid:bootstrap.sh
 ssh root@unraid 'ls -al'
@@ -58,19 +59,42 @@ echo ""
 echo "===== copy bootstrap.sh to tom"
 scp ~/.dotfiles/script/bootstrap tom@unraid:bootstrap.sh
 ssh tom@unraid 'ls -al'
-
 echo ""
-read -n 1 -s -r -p "Settings/SSH, stop SSH daemon, set 'password authentication' to 'no', apply"
 
-echo ""
+#read -n 1 -s -r -p "Settings/SSH, stop SSH daemon, set 'password authentication' to 'no', apply"
+
+#echo ""
 
 echo "===== diff /etc/passwd /boot/config/passwd"
-ssh root@unraid 'diff /etc/passwd /boot/config/passwd || cp /boot/config/passwd /etc/passwd'
+#ssh root@unraid 'diff /etc/passwd /boot/config/passwd || cp /boot/config/passwd /etc/passwd'
+ssh root@unraid 'usermod --home /mnt/cache/home/tom tom'
 echo ""
 
-echo "home directory should be /mnt/cache/appdata/home/tom"
+echo "home directory should be /mnt/cache/home/tom"
 echo ""
 ssh root@unraid 'tail /etc/passwd'
 
 echo ""
 echo "ssh to unraid (both root & tom) and execute bootstrap.sh"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
