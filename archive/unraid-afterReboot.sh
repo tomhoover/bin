@@ -76,25 +76,3 @@ ssh root@unraid 'tail /etc/passwd'
 
 echo ""
 echo "ssh to unraid (both root & tom) and execute bootstrap.sh"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
