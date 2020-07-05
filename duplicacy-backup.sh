@@ -43,7 +43,7 @@ if [ "$(hostname -s)" = "pvhost2" ]; then
     backupRepository /root
     backupRepository /usr/local
     backupRepository /home/tom
-    chown -R 101000:101000 /mnt/bindmounts/duplicacy_backups
+    chown -R 101002:101002 /mnt/bindmounts/duplicacy_backups
     cd /root || exit
 
     echo "# Copy to Backblaze..."
