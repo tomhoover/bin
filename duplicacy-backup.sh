@@ -25,17 +25,19 @@ backupRepository()
     echo "# Done"
 }
 
-if [ "$(hostname -s)" = "ariel" ]; then
+if [ "$(whoami)" = "root" ] && [ "$(hostname -s)" = "ariel" ]; then
     # DUPLICACY="/Users/tom/bin/duplicacy"
     backupRepository /etc
+elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "ariel" ]; then
+    # DUPLICACY="/Users/tom/bin/duplicacy"
     backupRepository /Users/tom
-    backupRepository /Volumes/RAID10/Music
-    backupRepository /Volumes/RAID10/Photos
-elif [ "$(hostname -s)" = "theophilus" ]; then
+elif [ "$(whoami)" = "root" ] && [ "$(hostname -s)" = "theophilus" ]; then
     # backupRepository /etc
     # backupRepository /root
-    backupRepository /home/tom
     # backupRepository /usr/local
+elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "theophilus" ]; then
+elif [ "$(hostname -s)" = "theophilus" ]; then
+    backupRepository /home/tom
 fi
 
 if [ "$(hostname -s)" = "pvhost2" ]; then
