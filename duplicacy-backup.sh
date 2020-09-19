@@ -16,6 +16,9 @@ backupRepository()
 
     DATETIME=$(date "+%Y%m%d-%H%M%S")
 
+    echo ""
+    echo "### backupRepository $1 ###"
+
     echo "# Delete old logs..."
     find ./$DUPLICACY_LOGS -name "*.log" -type f -mtime +14 -delete
     echo "# Done"
@@ -32,11 +35,11 @@ elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "ariel" ]; then
     # DUPLICACY="/Users/tom/bin/duplicacy"
     backupRepository /Users/tom
 elif [ "$(whoami)" = "root" ] && [ "$(hostname -s)" = "theophilus" ]; then
+    echo ""
     # backupRepository /etc
     # backupRepository /root
     # backupRepository /usr/local
 elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "theophilus" ]; then
-elif [ "$(hostname -s)" = "theophilus" ]; then
     backupRepository /home/tom
 fi
 
@@ -48,15 +51,18 @@ if [ "$(hostname -s)" = "pvhost2" ]; then
     chown -R 101002:101002 /mnt/bindmounts/duplicacy_backups
     cd /root || exit
 
-    echo "# Copy to Backblaze..."
+    echo ""
+    echo "### Copy to Backblaze... ###"
     $DUPLICACY -log copy -from default -to b2 -threads 20 | tee "$DUPLICACY_LOGS/$DATETIME-copy-b2.log"
     echo "# Done"
 
-    echo "# Copy to OneDrive..."
+    echo ""
+    echo "### Copy to OneDrive... ###"
     $DUPLICACY -log copy -from default -to onedrive -threads 20 | tee "$DUPLICACY_LOGS/$DATETIME-copy-onedrive.log"
     echo "# Done"
 
-    echo "# Prune Backups..."
+    echo ""
+    echo "### Prune Backups... ###"
     # $DUPLICACY -log prune                   -all -keep 0:360 -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune.log"
     $DUPLICACY -log prune                   -all -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune.log"
     $DUPLICACY -log prune -storage b2       -all -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune-b2.log"
