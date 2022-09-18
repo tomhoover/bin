@@ -5,10 +5,7 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
-GIT=/usr/local/bin/git
+. "$HOME/.keychain/$(hostname)-sh"
 
-# shellcheck disable=SC1090
-. "$HOME/.keychain/$(hostname -s)-sh"
-
-/usr/local/bin/brew bundle dump --force --file="$HOME/.homebrew-brewfile/Brewfile"
-cd "$HOME/.homebrew-brewfile" && $GIT add Brewfile && $GIT commit -m "$(date)" && $GIT push origin; $GIT push gitolite
+brew bundle dump --force --file="$HOME/.homebrew-brewfile/Brewfile.$(hostname -s)"
+cd "$HOME/.homebrew-brewfile" && git commit -am "$(date)" && git push origin; git push gitolite
