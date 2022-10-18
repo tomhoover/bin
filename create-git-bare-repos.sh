@@ -10,21 +10,27 @@ if [ $# -eq 0  ]; then
 fi
 
 echo "===== Creating $1.git bare repos ====="
-echo ""
-echo "     bethel..."
-ssh tom@bethel bash -c "'
-cd git && mkdir "$1.git" && cd "$1.git" && pwd
-git init --bare
-'"
-echo ""
-echo "     drobo..."
-ssh tom@drobo bash -c "'
-cd git && mkdir "$1.git" && cd "$1.git" && pwd
-git init --bare
-'"
+# echo ""
+# echo "     bethel..."
+# ssh tom@bethel bash -c "'
+# cd git && mkdir "$1.git" && cd "$1.git" && pwd
+# git init --bare
+# '"
+# echo ""
+# echo "     drobo..."
+# ssh tom@drobo bash -c "'
+# cd git && mkdir "$1.git" && cd "$1.git" && pwd
+# git init --bare
+# '"
 echo ""
 echo "     gabriel..."
 ssh tom@gabriel bash -c "'
+cd git && mkdir "$1.git" && cd "$1.git" && pwd
+git init --bare
+'"
+echo ""
+echo "     synology..."
+ssh tom@synology bash -c "'
 cd git && mkdir "$1.git" && cd "$1.git" && pwd
 git init --bare
 '"
