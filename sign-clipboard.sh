@@ -1,1 +1,0 @@
-../src/github.com/kasparsd/pgp-quick/clearsign-clipboard
