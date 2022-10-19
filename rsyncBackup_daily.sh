@@ -8,48 +8,43 @@ set -u -o pipefail
 
 . $HOME/.keychain/$(hostname)-sh
 
+dow=$(date +%-a)
+
 echo ""
 
 cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
-    --exclude=".DS_Store" \
-    --exclude=".TemporaryItems" \
-    --exclude=".Trashes" \
-    --exclude=".fseventsd" \
+    --exclude='$RECYCLE.BIN' --exclude='$Recycle.Bin' --exclude='.AppleDB' --exclude='.AppleDesktop' \
+    --exclude='.AppleDouble' --exclude='.com.apple.timemachine.supported' --exclude='.dbfseventsd' \
+    --exclude='.DocumentRevisions-V100*' --exclude='.DS_Store' --exclude='.fseventsd' \
+    --exclude='.PKInstallSandboxManager' --exclude='.Spotlight*' --exclude='.SymAV*' --exclude='.symSchedScanLockxz' \
+    --exclude='.TemporaryItems' --exclude='.Trash*' --exclude='.vol' --exclude='.VolumeIcon.icns' \
+    --exclude='Desktop DB' --exclude='Desktop DF' --exclude='hiberfil.sys' --exclude='lost+found' \
+    --exclude='Network Trash Folder' --exclude='pagefile.sys' --exclude='Recycled' --exclude='RECYCLER' \
+    --exclude='System Volume Information' --exclude='Temporary Items' --exclude='Thumbs.db' \
     --exclude="/.SynologyDrive/" \
-    --exclude="/.Trash/" \
     --exclude="/.config-backup/" \
     --exclude="/.config-backup2/" \
     --exclude="/.config/op/op-daemon.sock" \
-    --exclude="/.dbfseventsd" \
     --exclude="/.dropbox/" \
     --exclude="/.duplicacy/cache/" \
     --exclude="/.duplicacy2/cache/" \
     --exclude="/.gnupg/S.dirmngr" \
     --exclude="/Arq" \
+    --exclude="/Library/Application Support/Adobe/Acrobat/DC/Reader/Synchronizer/Commands" \
+    --exclude="/Library/Application Support/Adobe/Acrobat/DC/Reader/Synchronizer/Notification" \
+    --exclude="/Library/Application Support/FileProvider/2B7D15E9-4FC7-46AC-B137-40469D621B32/wharf/tombstone/a" \
     --exclude="/Library/Application Support/iTerm2/iterm2-daemon-1.socket" \
     --exclude="/Library/Arq/Cache.noindex/" \
     --exclude="/Library/Caches/" \
     --exclude="/Library/CloudStorage/OneDrive-Personal/" \
     --exclude="/Library/Containers/com.apple.Safari/Data/Library/Caches/" \
     --exclude="/Library/Containers/com.apple.mail/Data/DataVaults/" \
+    --exclude="/Library/Developer/Xcode/GPUToolsAgent.sock" \
     --exclude="/Library/Group Containers/" \
     --exclude="/Library/Logs/" \
-    --exclude="/Library/Mobile Documents/com~apple~CloudDocs/.Trash/" \
     --exclude="/OneDrive/" \
     --exclude="/data/" \
     tom/ tom@BLUEIRIS:/mnt/e/rsync/$(hostname -s)/tom/ |grep -v '/$'
-
-#     --exclude="/Library/" \
-#     --exclude=".cache/darktable" \
-#     --exclude=".cache/icedtea-web" \
-#     --exclude=".cache/inkscape" \
-#     --exclude=".cache/neosnippet" \
-#     --exclude=".dbfseventsd" \
-#     --exclude="/System/Library/Templates/Data/private/var/db/dslocal/nodes/Default/" \
-#     --exclude="/System/Volumes/Data/.DocumentRevisions-V100" \
-#     --exclude="/System/Volumes/Data/.dbfseventsd" \
-#     --exclude="/System/Volumes/Data/.file" \
-#     --exclude="/System/Volumes/Data/Users/tom/.gnupg/S.dirmngr" \
 
 echo ""
 
@@ -57,12 +52,15 @@ echo " ------------------------------"
 echo "| bethel_easystore to blueiris |"
 echo " ------------------------------"
 
-[[ $(hostname -s) = "bethel" ]] && cd /Volumes && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
-    --exclude=".DS_Store" \
-    --exclude=".dbfseventsd" \
-    --exclude=".fseventsd" \
-    --exclude=".TemporaryItems" \
-    --exclude=".Trashes" \
+[[ $(hostname -s) = "bethel" ]] && [[ dow = 'Wed' ]] && cd /Volumes && /opt/homebrew/bin/rsync -Pavzh --delete --delete-excluded \
+    --exclude='$RECYCLE.BIN' --exclude='$Recycle.Bin' --exclude='.AppleDB' --exclude='.AppleDesktop' \
+    --exclude='.AppleDouble' --exclude='.com.apple.timemachine.supported' --exclude='.dbfseventsd' \
+    --exclude='.DocumentRevisions-V100*' --exclude='.DS_Store' --exclude='.fseventsd' \
+    --exclude='.PKInstallSandboxManager' --exclude='.Spotlight*' --exclude='.SymAV*' --exclude='.symSchedScanLockxz' \
+    --exclude='.TemporaryItems' --exclude='.Trash*' --exclude='.vol' --exclude='.VolumeIcon.icns' \
+    --exclude='Desktop DB' --exclude='Desktop DF' --exclude='hiberfil.sys' --exclude='lost+found' \
+    --exclude='Network Trash Folder' --exclude='pagefile.sys' --exclude='Recycled' --exclude='RECYCLER' \
+    --exclude='System Volume Information' --exclude='Temporary Items' --exclude='Thumbs.db' \
     --exclude="/Arq" \
     easystore/ tom@BLUEIRIS:/mnt/e/rsync/bethel/easystore/ |grep -v '/$'
 
