@@ -6,7 +6,7 @@
 set -eu -o pipefail
 
 # shellcheck source=/dev/null
-. "$HOME"/.keychain/"$HOSTNAME"-sh
+. "$HOME"/.keychain/"$(hostname)"-sh
 
 echo " ---------------"
 echo "| tom_Documents |"

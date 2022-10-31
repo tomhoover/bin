@@ -3,8 +3,6 @@
 command -v bc > /dev/null || { echo "bc was not found. Please install bc."; exit 1; }
 { command -v drill > /dev/null && dig=drill; } || { command -v dig > /dev/null && dig=dig; } || { echo "dig was not found. Please install dnsutils."; exit 1; }
 
-
-
 NAMESERVERS=$(grep ^nameserver /etc/resolv.conf | cut -d " " -f 2 | sed 's/\(.*\)/&#&/')
 
 PROVIDERS="
@@ -25,7 +23,6 @@ PROVIDERS="
 # Domains to test. Duplicated domains are ok
 DOMAINS2TEST="www.google.com amazon.com facebook.com www.youtube.com www.reddit.com  wikipedia.org twitter.com gmail.com www.google.com whatsapp.com"
 
-
 totaldomains=0
 printf "%-18s" ""
 for d in $DOMAINS2TEST; do
@@ -34,7 +31,6 @@ for d in $DOMAINS2TEST; do
 done
 printf "%-8s" "Average"
 echo ""
-
 
 for p in $NAMESERVERS $PROVIDERS; do
     pip=${p%%#*}
@@ -58,6 +54,5 @@ for p in $NAMESERVERS $PROVIDERS; do
 
     echo "  $avg"
 done
-
 
 exit 0;

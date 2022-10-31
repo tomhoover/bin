@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 [[ "$(uname)" = "Darwin" ]] || exit
 
 cd "${HOME}/Library/LaunchAgents" && ln -sf ../../bin/LaunchAgents/*.plist .

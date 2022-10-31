@@ -8,13 +8,33 @@ repos:
     - id: end-of-file-fixer
     - id: check-yaml
     - id: check-added-large-files
+    - id: check-executables-have-shebangs
+    - id: check-shebang-scripts-are-executable
+    - id: check-symlinks
 - repo: https://github.com/psf/black
   rev: 22.10.0
   hooks:
     - id: black
       language_version: python3.9
-- repo: https://github.com/koalaman/shellcheck-precommit
-  rev: v0.8.0
+
+- repo: https://github.com/tomhoover/pre-commit-hooks
+  rev: 3.0.0
   hooks:
+    - id: forbid-binary
+    - id: script-must-have-extension
     - id: shellcheck
-#     args: ["--severity=warning"]  # Optionally only show errors and warnings
+#    - id: shfmt
+
+- repo: https://github.com/tomhoover/pre-commit-hooks
+  rev: 3.0.0
+  hooks:
+    - id: script-must-have-extension
+      name: Local policy is to use .sh extension for shell scripts
+      types: [shell, executable]
+
+# the following was disabled, as it required docker to be running
+# - repo: https://github.com/koalaman/shellcheck-precommit
+#   rev: v0.8.0
+#   hooks:
+#     - id: shellcheck
+# #     args: ["--severity=warning"]  # Optionally only show errors and warnings

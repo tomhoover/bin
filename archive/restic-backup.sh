@@ -5,7 +5,6 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
-# shellcheck source=/dev/null
 [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
 
 # removed export RESTIC_REPOSITORY=sftp:restic.drobo:restic in ~/.exports

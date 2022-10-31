@@ -6,7 +6,7 @@
 	<string>us.t0m.getmail</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/Users/tom/bin/run-getmail</string>
+		<string>/Users/tom/bin/run-getmail.sh</string>
 	</array>
 	<key>RunAtLoad</key>
 	<false/>
