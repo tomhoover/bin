@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# shellcheck disable=all
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
@@ -7,5 +8,5 @@ set -eu -o pipefail
 
 VERSION=$(ls -1 /usr/local/Cellar/mosh | tail -n 1)
 
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /usr/local/Cellar/mosh/$VERSION/bin/mosh-server
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp /usr/local/Cellar/mosh/$VERSION/bin/mosh-server
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /usr/local/Cellar/mosh/"$VERSION"/bin/mosh-server
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp /usr/local/Cellar/mosh/"$VERSION"/bin/mosh-server

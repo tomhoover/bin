@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
@@ -12,8 +12,8 @@ case "${FILENAME}" in
     * ) FILENAME="${FILENAME}.md" ;;
 esac
 #if [ -f "${SOURCE}/content/post/*-${FILENAME}" ]; then
-if ls ${SOURCE}/content/post/*-${FILENAME} 1> /dev/null 2>&1; then
-    vim ${SOURCE}/content/post/*-${FILENAME}
+if ls "${SOURCE}"/content/post/*-"${FILENAME}" 1> /dev/null 2>&1; then
+    vim "${SOURCE}"/content/post/*-"${FILENAME}"
 else
     cd "${SOURCE}" && hugo new "post/$(date '+%Y-%m-%d')-${FILENAME}" --editor vim
 fi

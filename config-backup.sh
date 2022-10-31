@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # set -e: exit script immediately upon error
 set -e
@@ -22,7 +22,7 @@ cd "$CONFIG_DIR" && git pull --rebase --autostash
 
 if [ "$1" != ""  ] ; then echo "$1" >> "$CONFIG_LIST" ; fi
 sort -uo "$CONFIG_LIST" "$CONFIG_LIST"
-rsync -av --files-from=$CONFIG_LIST / "$CONFIG_DIR/"
+rsync -av --files-from="$CONFIG_LIST" / "$CONFIG_DIR/"
 cd "$CONFIG_DIR" && git add . && git commit -m "$(date)" && git push
 
 tree -aI .git "$CONFIG_DIR/.."

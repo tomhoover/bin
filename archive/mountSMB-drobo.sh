@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# shellcheck disable=all
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
@@ -120,7 +121,7 @@ if ( ping -q -c 5 $PING ); then
 
 	do
 
-		# Parse spaces for mkdir	
+		# Parse spaces for mkdir
 		SPACESHARE=$(echo $s|sed "s/%20/ /g")
 
 		# Check to see if mount doesn't exist, then mounts either AFP or SMB.
@@ -149,7 +150,7 @@ if ( ping -q -c 5 $PING ); then
 						AVAILABLE="FALSE"
 
 					fi
-						
+
 				fi
 
 			elif [ $PROTOCOL == "afp" ]; then
@@ -173,7 +174,7 @@ if ( ping -q -c 5 $PING ); then
 						AVAILABLE="FALSE"
 
 					fi
-						
+
 				fi
 
 			fi
@@ -183,8 +184,8 @@ if ( ping -q -c 5 $PING ); then
 			echo "$SPACESHARE already mounted"
 
 		fi
-	
-	done	
+
+	done
 
 else
 
@@ -197,7 +198,7 @@ else
 
 	do
 
-		# Parse spaces for umount	
+		# Parse spaces for umount
 		SPACESHARE=$(echo $s|sed "s/%20/ /g")
 
 		# Check to see if mount exists, then unmount
@@ -211,7 +212,7 @@ else
 	done
 
 	if [ $WAKE == "TRUE" ]; then
-	
+
 		if [[ $DATE -ge $HOURSTART && $DATE -lt $HOUREND ]] || [ $1 == "wake" ]; then
 
 			echo "Waking Server"
@@ -223,14 +224,14 @@ else
 
 fi
 
-# Opens iTunes if TRUE and Server 
+# Opens iTunes if TRUE and Server
 if [ $ITUNES == "TRUE" ] && [ $AVAILABLE == "TRUE" ]; then
 
 	if (! ps ax | grep -v grep | grep -v iTunesHelper | grep /Applications/iTunes.app/Contents/MacOS/iTunes > /dev/null ); then
 
 	echo "Attempting to open iTunes"
 	open /Applications/iTunes.app/
-		
+
 	fi
 
 else
@@ -241,5 +242,5 @@ else
 	osascript -e 'tell application "iTunes" to quit'
 
 	fi
-		
+
 fi

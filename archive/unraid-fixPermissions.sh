@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 [ "$(hostname -s)" = unraid  ] || exit
 

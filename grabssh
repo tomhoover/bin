@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env sh
+# shellcheck disable=all
+
 # SSH-Agent forwarding breaks when screen is re-attached on a different host
 # http://www.deadman.org/sshscreen.html
 #alias Attach='grabssh ; screen -d -R'

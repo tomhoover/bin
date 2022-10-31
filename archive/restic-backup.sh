@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
-[[ -f ${HOME}/.SECRETS ]] && . ${HOME}/.SECRETS
+# shellcheck source=/dev/null
+[[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
 
 # removed export RESTIC_REPOSITORY=sftp:restic.drobo:restic in ~/.exports
 #restic -r $RESTIC_REPOSITORY init
@@ -31,7 +32,7 @@ if [ "$(hostname -s)" = "ariel" ] ; then
     ${RESTIC} backup \
         -r ${REPO} \
         -o b2.connections=50 \
-        --exclude-file=$HOME/.config/restic/ariel.exclude \
+        --exclude-file="$HOME"/.config/restic/ariel.exclude \
         ~ /Volumes/RAID10/Photos
     ${RESTIC} -r ${REPO} check
     ${RESTIC} -r ${REPO} snapshots
@@ -43,7 +44,7 @@ if [ "$(hostname -s)" = "ariel" ] ; then
     # ${RESTIC} -r ${REPO} rebuild-index
     ${RESTIC} backup \
         -r ${REPO} \
-        --exclude-file=$HOME/.config/restic/ariel.exclude \
+        --exclude-file="$HOME"/.config/restic/ariel.exclude \
         ~ /Volumes/RAID10/Photos
     ${RESTIC} -r ${REPO} check
     ${RESTIC} -r ${REPO} snapshots

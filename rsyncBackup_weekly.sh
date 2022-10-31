@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
-. $HOME/.keychain/$HOSTNAME-sh
+# shellcheck source=/dev/null
+. "$HOME"/.keychain/"$HOSTNAME"-sh
 
 echo " ---------------"
 echo "| tom_Documents |"
@@ -69,4 +70,3 @@ echo "| RAID_backups |"
 echo " --------------"
 cd /Volumes/RAID10 && rsync -avzh --delete --rsync-path=/mnt/DroboFS/Shares/DroboApps/rsync/bin/rsync \
 				backups/ tom@drobo:/mnt/DroboFS/Shares/rsync/RAID10_backups/
-

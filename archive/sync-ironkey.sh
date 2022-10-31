@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 cd /Volumes/IRONKEY8 || exit
 

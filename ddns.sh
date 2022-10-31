@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# shellcheck disable=all
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
@@ -9,7 +10,7 @@ PATH=$PATH:/usr/local/bin
 FILE="$HOME/Dropbox/lastip"
 
 DIRNAME="$(dirname $FILE)"
-if ! [ -d ${DIRNAME} ] ; then 
+if ! [ -d ${DIRNAME} ] ; then
     mkdir -pm 0700 ${DIRNAME}
     touch ${FILE}
 fi

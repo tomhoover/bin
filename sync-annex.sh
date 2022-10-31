@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # set -e: exit script immediately upon error
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
@@ -40,7 +40,7 @@ contains()
 {
     string="$1"
     substring="$2"
-    if test "${string#*$substring}" != "$string"
+    if test "${string#*"$substring"}" != "$string"
     then
         return 0    # $substring is in $string
     else

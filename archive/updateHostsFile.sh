@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env sh
+
 # requires https://github.com/StevenBlack/hosts
 
 cd ~/src/github.com/stevenblack/hosts/ || exit

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # set -e: exit script immediately upon error
 # set -o pipefail: cause a pipeline to fail, if any command within it fails

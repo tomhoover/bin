@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 #[ "$(hostname -s)" = unraid  ] || exit
 
@@ -40,9 +40,9 @@ find . ! -empty -type f -links 1 -iname '*.jpg' -print0 | xargs -0 -I {} exiftoo
 exit
 
 #exiftool image.jpg -all= -o - | md5 -
-exiftool -all= -o - | md5 -
--print0 | xargs -0 md5 -r > ./photoDupes.txt
-find . ! -empty -type f -links 1 -iname '*.jpg' -print0 | xargs -0 md5 -r > ./photoDupes.txt
+#exiftool -all= -o - | md5 -
+#-print0 | xargs -0 md5 -r > ./photoDupes.txt
+#find . ! -empty -type f -links 1 -iname '*.jpg' -print0 | xargs -0 md5 -r > ./photoDupes.txt
 
 exit
 

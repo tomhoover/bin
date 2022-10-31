@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# shellcheck disable=SC2016
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
@@ -6,7 +7,8 @@
 # set -eu -o pipefail
 set -u -o pipefail
 
-. $HOME/.keychain/$(hostname)-sh
+# shellcheck source=/dev/null
+. "$HOME"/.keychain/"$(hostname)"-sh
 
 dow=$(date +%-a)
 
@@ -44,7 +46,7 @@ cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
     --exclude="/Library/Logs/" \
     --exclude="/OneDrive/" \
     --exclude="/data/" \
-    tom/ tom@BLUEIRIS:/mnt/e/rsync/$(hostname -s)/tom/ |grep -v '/$'
+    tom/ tom@BLUEIRIS:/mnt/e/rsync/"$(hostname -s)"/tom/ |grep -v '/$'
 
 echo ""
 
@@ -52,7 +54,7 @@ echo " ------------------------------"
 echo "| bethel_easystore to blueiris |"
 echo " ------------------------------"
 
-[[ $(hostname -s) = "bethel" ]] && [[ dow = 'Wed' ]] && cd /Volumes && /opt/homebrew/bin/rsync -Pavzh --delete --delete-excluded \
+[[ $(hostname -s) = "bethel" ]] && [[ $dow = 'Wed' ]] && cd /Volumes && /opt/homebrew/bin/rsync -Pavzh --delete --delete-excluded \
     --exclude='$RECYCLE.BIN' --exclude='$Recycle.Bin' --exclude='.AppleDB' --exclude='.AppleDesktop' \
     --exclude='.AppleDouble' --exclude='.com.apple.timemachine.supported' --exclude='.dbfseventsd' \
     --exclude='.DocumentRevisions-V100*' --exclude='.DS_Store' --exclude='.fseventsd' \

@@ -1,4 +1,5 @@
-#!/bin/bash
-[[ "`uname`" = "Darwin" ]] || exit
+#!/usr/bin/env bash
 
-echo "`date '+%Y-%m-%d %H:%M:%S'`" >> "/Users/tom/.lastSuperDuperBackupDate"
+[[ "$(uname)" = "Darwin" ]] || exit
+
+date '+%Y-%m-%d %H:%M:%S' >> "/Users/tom/.lastSuperDuperBackupDate"

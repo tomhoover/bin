@@ -1,5 +1,6 @@
-#!/bin/bash
-[[ "`uname`" = "Darwin" ]] || exit
+#!/usr/bin/env bash
+
+[[ "$(uname)" = "Darwin" ]] || exit
 
 # uncomment the following to install from scratch
 #ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
@@ -20,22 +21,22 @@ brew install python3 --with-brewed-openssl
 ## #brew install urlview
 ## #brew install notmuch
 ## #brew install msmtp
-## 
+##
 ## # build Avidemux-2.5.6 stable
 ## #   http://www.avidemux.org/smf/index.php?topic=9960.msg53651#msg53651
 ## brew install pkg-config
 ## brew install cmake
 ## brew install aften
 ## brew -v install qt
-## 
+##
 ## cd /usr/local/Library/Formula && wget -N https://raw.github.com/2bits/homebrew/newAdm/Library/Formula/avidemux.rb
 ## #brew rm -f avidemux
 ## brew -v install --use-llvm avidemux
-## 
+##
 ## # To build or upgrade the lasted unstable revision past 2.5.6
 ## #brew rm -f avidemux
 ## #brew install --use-llvm --HEAD avidemux
-## 
+##
 ## # Info On Building 2.6
 ## cd /usr/local/Library/Formula && wget -N https://raw.github.com/2bits/homebrew/newAdm3/Library/Formula/avidemux3.rb
 ## #brew rm -f avidemux3
@@ -59,7 +60,7 @@ exit
 
 ## 120730 ariel: a52dec aften avidemux avidemux3 cmake exiftool faac faad2 fdupes fribidi gawk getmail gettext glib gnupg keychain lame libdca libffi libogg libvorbis libvpx mad midnight-commander oniguruma opencore-amr pcre pkg-config qt rbenv readline ruby-build s-lang s3cmd sqlite two-lame wget x264 xvid xz yasm
 
-## 13128 ariel: 
+## 13128 ariel:
 #a52dec			duplicity		frei0r			gnupg			libdca			libtool			mu			orc			rbenv-gem-rehash	speex			wget
 #aften			exiftool		fribidi			graphviz		libffi			libvo-aacenc		mutt			pcre			readline		sqlite			x264
 #autoconf		faac			gawk			imagemagick		libgpg-error		libvorbis		notmuch			pkg-config		rsync			ssh-copy-id		xapian

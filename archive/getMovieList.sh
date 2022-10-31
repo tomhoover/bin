@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 if [ "$(hostname -s)" = "unraid" ]; then
 
@@ -12,7 +12,9 @@ if [ "$(hostname -s)" = "unraid" ]; then
         echo "Movies Anywhere" ;     echo "==============" ;     find . -iname '*.many' | sed -e 's/.many$//' -e 's/__/: /' -e 's/^\.\///' ;   echo "" ; \
         echo "VUDU" ;         echo "====" ;         find . -iname '*.vudu' | sed -e 's/.vudu$//' -e 's/__/: /' -e 's/^\.\///' ; echo "" ; } > "$FILE"
 
-    { echo "Plex" ; echo "====" ; } >> "$FILE"
+    # shellcheck disable=SC2129
+    { echo "Plex"; echo "===="; } >> "$FILE"
+
     find .  \( ! -regex '.*/\..*' \) \
         | grep -v ^$ | grep -v ^\.$ | grep -v \.amzn$ | grep -v \.atv$ | grep -v \.many$ | grep -v \.vudu$ | grep -v \.edl$ | grep -v \.log$ | grep -v \.txt$ \
         | sed -e 's/.rsls$//' -e 's/.rslsv$//' -e 's/.plex$//' -e 's/.m4v$//' -e 's/.mp4$//' -e 's/.mpg$//' -e 's/.mpeg$//' -e 's/.mkv//' -e 's/__/: /' -e 's/_ /: /' -e 's/^\.\///' \
@@ -28,7 +30,7 @@ fi
 
 if [ "$(hostname -s)" = "ariel" ]; then
 
-    scp root@unraid:Dropbox/MovieList.txt $HOME/Dropbox/txt/nvALT
+    scp root@unraid:Dropbox/MovieList.txt "$HOME"/Dropbox/txt/nvALT
 
     FILE=$HOME/Dropbox/txt/nvALT/MovieList.txt
     DBFILE=$HOME/Dropbox/Public/MovieList.txt

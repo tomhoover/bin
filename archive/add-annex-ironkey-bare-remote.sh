@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env sh
+# shellcheck disable=all
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error

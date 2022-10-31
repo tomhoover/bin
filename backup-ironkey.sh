@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
