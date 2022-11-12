@@ -25,10 +25,9 @@ cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
     --exclude='Desktop DB' --exclude='Desktop DF' --exclude='hiberfil.sys' --exclude='lost+found' \
     --exclude='Network Trash Folder' --exclude='pagefile.sys' --exclude='Recycled' --exclude='RECYCLER' \
     --exclude='System Volume Information' --exclude='Temporary Items' --exclude='Thumbs.db' \
-    --exclude=".git" \
-    --exclude=".sync/Archive" \
+    --exclude=".git" --exclude=".sync/Archive" \
     --exclude="/.SynologyDrive/" \
-    --exclude="/.cache" \
+    --exclude="/.cache/" \
     --exclude="/.config-backup/" \
     --exclude="/.config-backup2/" \
     --exclude="/.config/op/op-daemon.sock" \
@@ -37,23 +36,23 @@ cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
     --exclude="/.duplicacy/cache/" \
     --exclude="/.duplicacy2/cache/" \
     --exclude="/.gnupg/S.dirmngr" \
-    --exclude="/.pyenv/versions" \
-    --exclude="/Backup" \
-    --exclude="/Drive/Backup" \
+    --exclude="/.pyenv/cache/" \
+    --exclude="/.pyenv/versions/" \
+    --exclude="/Backup/" \
+    --exclude="/Drive/Backup/" \
     --exclude="/Downloads/" \
     --exclude="/Library/" \
     --exclude="/OneDrive" \
-    --exclude="/Resilio Sync" \
-    --exclude="/data" \
-    --exclude="/gpg.git" \
-    --exclude="/ha" \
-    --exclude="/ibto" \
-    --exclude="/logs" \
-    --exclude="/pkg" \
-    --exclude="/private" \
-    --exclude="/src" \
-    --exclude="/tmp" \
-    --exclude="/tmux-config" \
+    --exclude="/Resilio Sync/" \
+    --exclude="/data/" \
+    --exclude="/gpg.git/" \
+    --exclude="/ha/" \
+    --exclude="/ibto/" \
+    --exclude="/logs/" \
+    --exclude="/pkg/" \
+    --exclude="/private/" \
+    --exclude="/tmp/" \
+    --exclude="/tmux-config/" \
     tom/ tom@BLUEIRIS:/mnt/e/rsync/"$(hostname -s)"/tom/ |grep -v '/$'
 
 echo ""

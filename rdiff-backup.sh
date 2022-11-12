@@ -12,6 +12,18 @@ set -u -o pipefail
 # shellcheck source=/dev/null
 . "$HOME"/.keychain/"$(hostname)"-sh
 
+# verbosity levels:
+#  -v0 No information given
+#  -v1 Fatal Errors displayed
+#  -v2 Warnings
+#  -v3 Important notes, and maybe later some global statistics (default)
+#  -v4 Some global settings, miscellaneous messages (obsolete)
+#  -v5 Mentions which files were changed, and other info
+#  -v6 More information on each file processed (obsolete)
+#  -v7 More information on various things (obsolete)
+#  -v8 Debug, without timestamp
+#  -v9 Also debug, but with timestamp
+
 echo ""
 echo "***** rdiff-backup /Users/tom to blueiris_external *****"
 rdiff-backup -v5 --print-statistics \
@@ -23,17 +35,19 @@ rdiff-backup -v5 --print-statistics \
     --exclude='**/Desktop DB' --exclude='**/Desktop DF' --exclude='**/hiberfil.sys' --exclude='**/lost+found' \
     --exclude='**/Network Trash Folder' --exclude='**/pagefile.sys' --exclude='**/Recycled' --exclude='**/RECYCLER' \
     --exclude='**/System Volume Information' --exclude='**/Temporary Items' --exclude='**/Thumbs.db' \
+    --exclude="**/.sync/Archive" \
     --exclude="**/.SynologyDrive" \
     --exclude="**/.cache" \
     --exclude="**/.config-backup" \
     --exclude="**/.config-backup2" \
     --exclude="**/.config/op/op-daemon.sock" \
+    --exclude="**/.config/vcsh/repo.d" \
     --exclude="**/.dropbox" \
     --exclude="**/.duplicacy/cache" \
     --exclude="**/.duplicacy2/cache" \
     --exclude="**/.gnupg/S.dirmngr" \
+    --exclude="**/.pyenv/cache" \
     --exclude="**/.pyenv/versions" \
-    --exclude="**/.sync/Archive" \
     --exclude="**/Backup" \
     --exclude="**/Drive/Backup" \
     --exclude="**/Downloads" \
@@ -47,10 +61,9 @@ rdiff-backup -v5 --print-statistics \
     --exclude="**/logs" \
     --exclude="**/pkg" \
     --exclude="**/private" \
-    --exclude="**/src" \
     --exclude="**/tmp" \
     --exclude="**/tmux-config" \
-    /Users/tom tom@BLUEIRIS::/mnt/e/rdiff-backup/"$(hostname -s)"/tom
+    /Users/tom tom@BLUEIRIS::/mnt/e/rdiff-backup/"$(hostname -s)"/tom |grep -v '^Incrementing mirror file'
 
 echo ""
 echo "***** remove rdiff-backups older than 1 year *****"

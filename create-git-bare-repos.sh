@@ -31,7 +31,7 @@ git init --bare
 '"
 echo ""
 echo "     synology..."
-ssh tom@synology bash -c "'
+ssh tom@SYNOLOGY bash -c "'
 cd git && mkdir "$1.git" && cd "$1.git" && pwd
 git init --bare
 '"
