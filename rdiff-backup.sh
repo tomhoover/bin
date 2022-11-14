@@ -26,7 +26,7 @@ set -u -o pipefail
 
 echo ""
 echo "***** rdiff-backup \$HOME to zz_rdiff-backups *****"
-rdiff-backup -v5 --print-statistics --remote-schema 'ssh -C %s /usr/local/bin/rdiff-backup --server' \
+rdiff-backup --print-statistics --remote-schema 'ssh -C %s /usr/local/bin/rdiff-backup --server' \
     --exclude='**/$RECYCLE.BIN' --exclude='**/$Recycle.Bin' --exclude='**/.AppleDB' --exclude='**/.AppleDesktop' \
     --exclude='**/.AppleDouble' --exclude='**/.com.apple.timemachine.supported' --exclude='**/.dbfseventsd' \
     --exclude='**/.DocumentRevisions-V100*' --exclude='**/.DS_Store' --exclude='**/.fseventsd' \
