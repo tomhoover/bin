@@ -25,8 +25,8 @@ set -u -o pipefail
 #  -v9 Also debug, but with timestamp
 
 echo ""
-echo "***** rdiff-backup /Users/tom to blueiris_external *****"
-rdiff-backup -v5 --print-statistics \
+echo "***** rdiff-backup \$HOME to zz_rdiff-backups *****"
+rdiff-backup -v5 --print-statistics --remote-schema 'ssh -C %s /usr/local/bin/rdiff-backup --server' \
     --exclude='**/$RECYCLE.BIN' --exclude='**/$Recycle.Bin' --exclude='**/.AppleDB' --exclude='**/.AppleDesktop' \
     --exclude='**/.AppleDouble' --exclude='**/.com.apple.timemachine.supported' --exclude='**/.dbfseventsd' \
     --exclude='**/.DocumentRevisions-V100*' --exclude='**/.DS_Store' --exclude='**/.fseventsd' \
@@ -48,6 +48,8 @@ rdiff-backup -v5 --print-statistics \
     --exclude="**/.gnupg/S.dirmngr" \
     --exclude="**/.pyenv/cache" \
     --exclude="**/.pyenv/versions" \
+    --exclude="**/.rbenv/cache" \
+    --exclude="**/.rbenv/versions" \
     --exclude="**/Backup" \
     --exclude="**/Drive/Backup" \
     --exclude="**/Downloads" \
@@ -63,12 +65,18 @@ rdiff-backup -v5 --print-statistics \
     --exclude="**/private" \
     --exclude="**/tmp" \
     --exclude="**/tmux-config" \
-    /Users/tom tom@BLUEIRIS::/mnt/e/rdiff-backup/"$(hostname -s)"/tom |grep -v '^Incrementing mirror file'
+    /Users/tom tom@SYNOLOGY::/volume1/zz_rdiff-backups/"$(hostname -s)"/tom
+
+# echo ""
+# echo "***** rdiff-backup /Users/tom to blueiris_external *****"
+# rdiff-backup -v5 --print-statistics \
+#     /Users/tom tom@BLUEIRIS::/mnt/e/rdiff-backup/"$(hostname -s)"/tom |grep -v '^Incrementing mirror file'
 
 echo ""
 echo "***** remove rdiff-backups older than 1 year *****"
 
 # rdiff-backup -–force -–remove-older-than 15W /backup/
-rdiff-backup --remove-older-than 1Y tom@BLUEIRIS::/mnt/e/rdiff-backup/"$(hostname -s)"/tom
+rdiff-backup --remove-older-than 1Y --remote-schema 'ssh -C %s /usr/local/bin/rdiff-backup --server' tom@SYNOLOGY::/volume1/zz_rdiff-backups/"$(hostname -s)"/tom
+# rdiff-backup --remove-older-than 1Y tom@BLUEIRIS::/mnt/e/rdiff-backup/"$(hostname -s)"/tom
 
 echo ""
