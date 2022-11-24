@@ -12,7 +12,7 @@ set -u -o pipefail
 # shellcheck source=/dev/null
 . "$HOME"/.keychain/"$(hostname)"-sh
 
-# dow=$(date +%-a)
+dow=$(date +%-a)
 
 echo ""
 echo "***** rsync /Users/tom to blueiris_external *****"
@@ -61,8 +61,7 @@ echo " ------------------------------"
 echo "| bethel_easystore to blueiris |"
 echo " ------------------------------"
 
-# [[ $(hostname -s) = "bethel" ]] && [[ $dow = 'Thu' ]] && cd /Volumes && /opt/homebrew/bin/rsync -Pavzh --delete --delete-excluded \
-[[ $(hostname -s) = "bethel" ]] && cd /Volumes && /opt/homebrew/bin/rsync -Pavzh --delete --delete-excluded \
+[[ $(hostname -s) = "bethel" ]] && [[ $dow = 'Thu' ]] && cd /Volumes && /opt/homebrew/bin/rsync -Pavzh --delete --delete-excluded \
     --exclude='$RECYCLE.BIN' --exclude='$Recycle.Bin' --exclude='.AppleDB' --exclude='.AppleDesktop' \
     --exclude='.AppleDouble' --exclude='.com.apple.timemachine.supported' --exclude='.dbfseventsd' \
     --exclude='.DocumentRevisions-V100*' --exclude='.DS_Store' --exclude='.fseventsd' \
