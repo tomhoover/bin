@@ -17,5 +17,6 @@ do
     echo "$f"
     sudo launchctl bootout system /Library/LaunchDaemons/"$f"
     sudo launchctl bootstrap system /Library/LaunchDaemons/"$f"
-    sudo launchctl list |grep us.t0m
 done
+
+sudo launchctl list |grep us.t0m
