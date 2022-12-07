@@ -22,11 +22,5 @@
     <string>/tmp/mosh-firewall.stdout</string>
     <key>StandardErrorPath</key>
     <string>/tmp/mosh-firewall.stderr</string>
-    <key>UserName</key>
-    <string>admin</string>
-    <key>GroupName</key>
-    <string>admin</string>
-    <key>InitGroups</key>
-    <true/>
   </dict>
 </plist>
