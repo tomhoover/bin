@@ -16,6 +16,7 @@ backupRepository()
     [[ -d $DUPLICACY_LOGS ]] || mkdir -p $DUPLICACY_LOGS
 
     DATETIME=$(date "+%Y%m%d-%H%M%S")
+    DOW=$(date +%-a)
 
     echo ""
     echo "### backupRepository $1 ###"
@@ -28,15 +29,20 @@ backupRepository()
     $DUPLICACY -log backup -stats -threads 2 | tee "$DUPLICACY_LOGS/$DATETIME-backup.log"
     echo "# Done"
 
-    echo "# Start Check..."
-    $DUPLICACY -log check -all | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
-    echo "# Done"
+    if [[ "$DOW" = 'Sun' ]]; then
+        echo "# Start Check..."
+        $DUPLICACY -log check -all | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
+        echo "# Done"
+    fi
 }
 
 if [ "$(whoami)" = "root" ] && [ "$(hostname -s)" = "ariel" ]; then
     # DUPLICACY="/Users/tom/bin/duplicacy"
     backupRepository /etc
 elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "ariel" ]; then
+    # DUPLICACY="/Users/tom/bin/duplicacy"
+    backupRepository /Users/tom
+elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "bethel" ]; then
     # DUPLICACY="/Users/tom/bin/duplicacy"
     backupRepository /Users/tom
 elif [ "$(whoami)" = "root" ] && [ "$(hostname -s)" = "theophilus" ]; then
