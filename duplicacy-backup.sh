@@ -17,6 +17,7 @@ backupRepository()
 
     DATETIME=$(date "+%Y%m%d-%H%M%S")
     DOW=$(date +%-a)
+    HR=$(date "+%H")
 
     echo ""
     echo "### backupRepository $1 ###"
@@ -29,7 +30,7 @@ backupRepository()
     $DUPLICACY -log backup -stats -threads 2 | tee "$DUPLICACY_LOGS/$DATETIME-backup.log"
     echo "# Done"
 
-    if [[ "$DOW" = 'Sun' ]]; then
+    if [[ "$DOW" = 'Sun' && "$HR" = "00" ]]; then
         echo "# Start Check..."
         $DUPLICACY -log check -all | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
         echo "# Done"
