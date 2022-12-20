@@ -3,7 +3,7 @@
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
-set -eu -o pipefail
+set -e -o pipefail
 
 DUPLICACY=duplicacy
 
@@ -16,8 +16,8 @@ backupRepository()
     [[ -d $DUPLICACY_LOGS ]] || mkdir -p $DUPLICACY_LOGS
 
     DATETIME=$(date "+%Y%m%d-%H%M%S")
-    DOW=$(date +%-a)
-    HR=$(date "+%H")
+    # DOW=$(date +%-a)
+    # HR=$(date "+%H")
 
     echo ""
     echo "### backupRepository $1 ###"
@@ -30,7 +30,8 @@ backupRepository()
     $DUPLICACY -log backup -stats -threads 2 | tee "$DUPLICACY_LOGS/$DATETIME-backup.log"
     echo "# Done"
 
-    if [[ "$DOW" = 'Sun' && "$HR" = "00" ]]; then
+    # if [[ "$DOW" = 'Sun' && "$HR" = "00" ]]; then
+    if [[ $2 = "check" ]]; then
         echo "# Start Check..."
         $DUPLICACY -log check -all | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
         echo "# Done"
@@ -38,28 +39,28 @@ backupRepository()
 }
 
 if [ "$(whoami)" = "root" ] && [ "$(hostname -s)" = "ariel" ]; then
-    # DUPLICACY="/Users/tom/bin/duplicacy"
-    backupRepository /etc
+    backupRepository /etc "$1"
 elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "ariel" ]; then
-    # DUPLICACY="/Users/tom/bin/duplicacy"
-    backupRepository /Users/tom
+    backupRepository /Users/tom "$1"
 elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "bethel" ]; then
-    # DUPLICACY="/Users/tom/bin/duplicacy"
-    backupRepository /Users/tom
+    backupRepository /Users/tom "$1"
 elif [ "$(whoami)" = "root" ] && [ "$(hostname -s)" = "theophilus" ]; then
-    echo ""
+    :
     # backupRepository /etc
     # backupRepository /root
-    # backupRepository /usr/local
+    # backupRepository /usr/local "$1"
 elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "theophilus" ]; then
-    backupRepository /home/tom
+    backupRepository /home/tom "$1"
+elif [ "$(whoami)" = "tom" ] && [ "$(hostname -s)" = "synology" ]; then
+    # DUPLICACY="/Users/tom/bin/duplicacy"
+    backupRepository /home/tom "$1"
 fi
 
 if [ "$(hostname -s)" = "pvhost2" ]; then
     backupRepository /etc
     backupRepository /root
     backupRepository /usr/local
-    backupRepository /home/tom
+    backupRepository /home/tom "$1"
     chown -R 101002:101002 /mnt/bindmounts/duplicacy_backups
     cd /root || exit
 
