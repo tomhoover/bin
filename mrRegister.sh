@@ -12,7 +12,6 @@ echo "*** Already registered with myrepos -- check for duplicate entries:"
 read -rsn 1 -p "               (press any key to continue)"
 echo ""
 
-# cd && echo '' > tmp.mrconfig && /usr/bin/grep '\[' .mrconfig src/.mrconfig src/github.com/.mrconfig data/software/github.com/.mrconfig .config/mr/* |sed -E 's/^(.*):(.*)/\2 ::: \1/' |sed -E 's/^#(.*)/\1#####/' |grep -v '^ ' |grep -v ^skip |grep -v ^.DEFAULT |sort |less
 cd && echo '' > tmp.mrconfig && /usr/bin/grep '\[' .mrconfig src/.mrconfig src/github.com/.mrconfig .config/mr/* |sed -E 's/^(.*):(.*)/\2 ::: \1/' |sed -E 's/^#(.*)/\1#####/' |grep -v '^ ' |grep -v ^skip |grep -v ^.DEFAULT |sort |less
 
 echo "#!/bin/bash" > ~/register.sh
@@ -33,7 +32,6 @@ cd && find . -path './data' -prune -o -path './.config-backup' -prune -o -path '
     grep -v '^./test' | \
     grep -v '^./tmp' | \
     sed -e 's|^./||' -e 's|/.git$||' | while read -r REPOSITORY; do
-#    grep -F "${REPOSITORY}]" ~/.mrconfig ~/src/.mrconfig ~/src/github.com/.mrconfig ~/data/software/github.com/.mrconfig ~/.config/mr/* || echo "mr -c ~/tmp.mrconfig register $REPOSITORY" >> ~/register.sh
     grep -F "${REPOSITORY}]" ~/.mrconfig ~/src/.mrconfig ~/src/github.com/.mrconfig ~/.config/mr/* || echo "mr -c ~/tmp.mrconfig register $REPOSITORY" >> ~/register.sh
 done
 
