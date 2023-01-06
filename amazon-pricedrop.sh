@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd ~/src/amazon-pricedrop || exit 0
+cd ~/src/amazon-pricedrop || exit 1
 cp all.txt all.bak
 cp price_drops.txt price_drops.bak
 cp purchases.csv purchases.bak

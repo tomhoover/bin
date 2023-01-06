@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2016
 
-pgrep -fq '^ssh -l tom .* rsync --server' && echo "An rsync process is already running." && exit 0
+pgrep -fq '^ssh -l tom .* rsync --server' && echo "An rsync process is already running." && exit 1
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
