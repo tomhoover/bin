@@ -27,7 +27,7 @@ repos:
 #    - id: fix-byte-order-marker
 #    - id: fix-encoding-pragma
     - id: name-tests-test
-    - id: requirements-txt-fixer
+#    - id: requirements-txt-fixer
 
     # json
     - id: check-json
