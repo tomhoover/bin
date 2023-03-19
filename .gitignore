@@ -1,6 +1,3 @@
-clean-github-pr.py
+.direnv/
+!.envrc
 fixssh
-diff-highlight
-diff-so-fancy
-git-annex-remote-rclone
-libexec/diff-so-fancy.pl
