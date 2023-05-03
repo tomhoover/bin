@@ -33,6 +33,13 @@ backupRepository()
     echo ""
     echo "### backupRepository $1 ###"
 
+    echo "# Backup filters, known_hosts & preferences..."
+    BACKUP_DIR="${HOME}/.duplicacy-backups${1}"
+    [[ -d ${BACKUP_DIR} ]] || mkdir -p ${BACKUP_DIR}
+    cp -a .duplicacy/{filters,known_hosts,preferences} ${BACKUP_DIR}
+    chmod -R g=,o= "${BACKUP_DIR}"
+    echo "# Done"
+
     echo "# Delete old logs..."
     find ./$DUPLICACY_LOGS -name "*.log" -type f -mtime +14 -delete
     echo "# Done"
