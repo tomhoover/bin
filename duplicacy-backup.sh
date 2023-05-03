@@ -11,11 +11,6 @@ DUPLICACY=duplicacy
 # duplicacy init -e -storage-name synology ariel-etc--synology            sftp://tom@SYNOLOGY//zz_duplicacy-backups
 # duplicacy init -e -storage-name synology bethel-etc--synology           sftp://tom@SYNOLOGY//zz_duplicacy-backups
 
-# duplicacy init -e -storage-name synology theophilus-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
-# duplicacy init -e -storage-name synology theophilus-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
-# duplicacy init -e -storage-name synology theophilus-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
-# duplicacy init -e -storage-name synology theophilus-tom--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
-
 backupRepository()
 {
     if [[ -d "$1" ]]; then
@@ -66,7 +61,7 @@ backupRepository()
 if   [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" =~ (ariel|bethel) ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     backupRepository /etc "$1"
-elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" =~ (theophilus|pvhost[0-9]*) ]]; then
+elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" == "pvhost[0-9]*" ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
@@ -76,6 +71,13 @@ elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" =~ (theophilus|pvhost[0-
     backupRepository /root
     backupRepository /usr/local
     backupRepository /home/tom "$1"
+elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" == "theophilus" ]]; then
+    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
+    ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
+    ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
+    backupRepository /etc
+    backupRepository /root
+    backupRepository /usr/local "$1"
 elif [[ "$(whoami)" == "tom" ]] && [[ "$(hostname -s)" =~ (ariel|bethel) ]]; then
     ##### cd                       && duplicacy init -e -storage-name synology                       $(hostname -s)-tom--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /Users/tom/Dropbox/tc && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M tc--synology                 sftp://tom@SYNOLOGY//zz_duplicacy-backups
@@ -83,6 +85,9 @@ elif [[ "$(whoami)" == "tom" ]] && [[ "$(hostname -s)" =~ (ariel|bethel) ]]; the
     backupRepository /Users/tom/Dropbox/tc hash
     backupRepository /Volumes/USBAC hash
     backupRepository /Users/tom "$1"
+elif [[ "$(whoami)" == "tom" ]] && [[ "$(hostname -s)" == "theophilus" ]]; then
+    ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
+    backupRepository /home/tom "$1"
 fi
 
 if [[ "$(hostname -s)" == "synology" ]]; then
@@ -137,5 +142,5 @@ if [[ "$(hostname -s)" == "synology" ]]; then
 fi
 
 # cd /volume1/archive && ~/bin/duplicacy -d -log backup -enum-only -stats | tee .duplicacy/check-filters.log
-# cd /volume1/archive/.duplicacy && grep PATTERN_EXCLUDE check-filters.log | less
-# cd /volume1/archive/.duplicacy && grep PATTERN_INCLUDE check-filters.log | less
+# cd /volume1/archive && grep PATTERN_EXCLUDE .duplicacy/check-filters.log | less
+# cd /volume1/archive && grep PATTERN_INCLUDE .duplicacy/check-filters.log | less
