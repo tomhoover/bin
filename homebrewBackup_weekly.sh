@@ -9,4 +9,4 @@ set -eu -o pipefail
 . "$HOME"/.keychain/"$(hostname)"-sh
 
 brew bundle dump --force --file="$HOME/.homebrew-brewfile/Brewfile.$(hostname -s)"
-cd "$HOME/.homebrew-brewfile" && git pull && git commit -am "$(date)" && git push origin; git push gitolite
+cd "$HOME/.homebrew-brewfile" && git pull && git commit -am "$(hostname -s) - $(date)" && git push origin; git push gitolite
