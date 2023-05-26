@@ -29,10 +29,10 @@ backupRepository()
     echo "### backupRepository $1 ###"
 
     echo "# Backup filters, known_hosts & preferences..."
-    BACKUP_DIR="${HOME}/.duplicacy-backups${1}"
+    BACKUP_DIR="${HOME}/.duplicacy-backup${1}"
     [[ -d ${BACKUP_DIR} ]] || mkdir -p ${BACKUP_DIR}
     cp -a .duplicacy/{filters,known_hosts,preferences} ${BACKUP_DIR}
-    chmod -R g=,o= "${BACKUP_DIR}"
+    chmod -R g=,o= "${HOME}/.duplicacy-backup"
     echo "# Done"
 
     echo "# Delete old logs..."
