@@ -92,7 +92,7 @@ fi
 
 if [[ "$(hostname -s)" == "synology" ]]; then
     ##### cd /volume1/archive && ~/bin/duplicacy init -e                 -storage-name synology synology-archive--synology /volume1/zz_duplicacy-backups
-    ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology blueiris synology-archive--blueiris sftp://tom@BLUEIRIS//e:/duplicacy
+    ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology bethel   synology-archive--bethel   sftp://tom@BETHEL//Volumes/exFAT/duplicacy
     ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology b2       synology-archive--b2       b2://duplicacy-tch-backup
     DUPLICACY="/var/services/homes/tom/bin/duplicacy"
     backupRepository /volume1/archive
@@ -105,9 +105,9 @@ if [[ "$(hostname -s)" == "synology" ]]; then
     backupRepository /volume1/zz_backups
 
     echo ""
-    echo "### Copy to BlueIris... ###"
+    echo "### Copy to bethel... ###"
     DATETIME=$(date "+%Y%m%d-%H%M%S")
-    $DUPLICACY -log copy -from synology -to blueiris -threads 40 | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-bi.log"
+    $DUPLICACY -log copy -from synology -to bethel -threads 40 | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-bethel.log"
     echo "# Done"
 
     echo ""
@@ -134,7 +134,7 @@ if [[ "$(hostname -s)" == "synology" ]]; then
         DATETIME=$(date "+%Y%m%d-%H%M%S")
         $DUPLICACY -log check -all -storage synology -tabular -chunks -threads 40 -persist | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
         DATETIME=$(date "+%Y%m%d-%H%M%S")
-        $DUPLICACY -log check -all -storage blueiris                                       | tee "$DUPLICACY_LOGS/$DATETIME-check-bi.log"
+        $DUPLICACY -log check -all -storage bethel                                         | tee "$DUPLICACY_LOGS/$DATETIME-check-bethel.log"
         DATETIME=$(date "+%Y%m%d-%H%M%S")
         $DUPLICACY -log check -all -storage b2                                             | tee "$DUPLICACY_LOGS/$DATETIME-check-b2.log"
         echo "# Done"
