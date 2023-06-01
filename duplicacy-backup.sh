@@ -57,7 +57,6 @@ backupRepository()
         echo ""
         echo "### Check Backups... ###"
         DATETIME=$(date "+%Y%m%d-%H%M%S")
-        # "${DUPLICACY}" -log check -all | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
         "${DUPLICACY}" -log check -all -storage synology -tabular -threads 40 -persist | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
         echo "# Done"
     fi
@@ -112,13 +111,13 @@ if [[ "$(hostname -s)" == "synology" ]]; then
     echo ""
     echo "### Copy to bethel... ###"
     DATETIME=$(date "+%Y%m%d-%H%M%S")
-    "${DUPLICACY}" -log copy -from synology -to bethel -threads 40 | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-bethel.log"
+    "${DUPLICACY}" -log copy -from synology -to bethel         | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-bethel.log"
     echo "# Done"
 
     echo ""
     echo "### Copy to Backblaze... ###"
     DATETIME=$(date "+%Y%m%d-%H%M%S")
-    "${DUPLICACY}" -log copy -from synology -to b2       -threads 4  | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-b2.log"
+    "${DUPLICACY}" -log copy -from synology -to b2 -threads 4  | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-b2.log"
     echo "# Done"
 
     # echo ""
