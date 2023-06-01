@@ -47,9 +47,9 @@ backupRepository()
     echo "# Start Backup..."
     DATETIME=$(date "+%Y%m%d-%H%M%S")
     if [[ "${2}" == "hash" ]]; then
-        $DUPLICACY -log backup -stats -threads 4 -hash | tee "$DUPLICACY_LOGS/$DATETIME-backup.log"
+        "${DUPLICACY}" -log backup -stats -threads 4 -hash | tee "$DUPLICACY_LOGS/$DATETIME-backup.log"
     else
-        $DUPLICACY -log backup -stats -threads 4       | tee "$DUPLICACY_LOGS/$DATETIME-backup.log"
+        "${DUPLICACY}" -log backup -stats -threads 4       | tee "$DUPLICACY_LOGS/$DATETIME-backup.log"
     fi
     echo "# Done"
 
@@ -57,8 +57,8 @@ backupRepository()
         echo ""
         echo "### Check Backups... ###"
         DATETIME=$(date "+%Y%m%d-%H%M%S")
-        # $DUPLICACY -log check -all | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
-        $DUPLICACY -log check -all -storage synology -tabular -threads 40 -persist | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
+        # "${DUPLICACY}" -log check -all | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
+        "${DUPLICACY}" -log check -all -storage synology -tabular -threads 40 -persist | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
         echo "# Done"
     fi
 }
@@ -112,24 +112,22 @@ if [[ "$(hostname -s)" == "synology" ]]; then
     echo ""
     echo "### Copy to bethel... ###"
     DATETIME=$(date "+%Y%m%d-%H%M%S")
-    $DUPLICACY -log copy -from synology -to bethel -threads 40 | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-bethel.log"
+    "${DUPLICACY}" -log copy -from synology -to bethel -threads 40 | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-bethel.log"
     echo "# Done"
 
     echo ""
     echo "### Copy to Backblaze... ###"
     DATETIME=$(date "+%Y%m%d-%H%M%S")
-    $DUPLICACY -log copy -from synology -to b2       -threads 4  | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-b2.log"
+    "${DUPLICACY}" -log copy -from synology -to b2       -threads 4  | grep -v "INFO SNAPSHOT_EXIST Snapshot .* already exists at the destination storage" | tee "$DUPLICACY_LOGS/$DATETIME-copy-b2.log"
     echo "# Done"
 
     # echo ""
     # echo "### Prune Backups... ###"
-    # # $DUPLICACY -log prune                   -all -keep 0:360 -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune.log"
+    # "${DUPLICACY}" -log prune                   -all -keep 0:360 -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune.log"
     # DATETIME=$(date "+%Y%m%d-%H%M%S")
-    # $DUPLICACY -log prune                   -all -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune.log"
+    # "${DUPLICACY}" -log prune                   -all -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune.log"
     # DATETIME=$(date "+%Y%m%d-%H%M%S")
-    # $DUPLICACY -log prune -storage b2       -all -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune-b2.log"
-    # DATETIME=$(date "+%Y%m%d-%H%M%S")
-    # $DUPLICACY -log prune -storage onedrive -all -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune-onedrive.log"
+    # "${DUPLICACY}" -log prune -storage b2       -all -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune-b2.log"
     # echo "# Done"
 
     if [[ "${1}" == "check" ]]; then
@@ -137,11 +135,11 @@ if [[ "$(hostname -s)" == "synology" ]]; then
         echo ""
         echo "### Check Backups... ###"
         DATETIME=$(date "+%Y%m%d-%H%M%S")
-        $DUPLICACY -log check -all -storage synology -tabular -chunks -threads 40 -persist | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
+        "${DUPLICACY}" -log check -all -storage synology -tabular -chunks -threads 40 -persist | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
         DATETIME=$(date "+%Y%m%d-%H%M%S")
-        $DUPLICACY -log check -all -storage bethel                                         | tee "$DUPLICACY_LOGS/$DATETIME-check-bethel.log"
+        "${DUPLICACY}" -log check -all -storage bethel                                         | tee "$DUPLICACY_LOGS/$DATETIME-check-bethel.log"
         DATETIME=$(date "+%Y%m%d-%H%M%S")
-        $DUPLICACY -log check -all -storage b2                                             | tee "$DUPLICACY_LOGS/$DATETIME-check-b2.log"
+        "${DUPLICACY}" -log check -all -storage b2                                             | tee "$DUPLICACY_LOGS/$DATETIME-check-b2.log"
         echo "# Done"
     fi
 fi
