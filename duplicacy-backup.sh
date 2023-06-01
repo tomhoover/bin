@@ -13,11 +13,11 @@ DUPLICACY=duplicacy
 
 backupRepository()
 {
-    if [[ -d "$1" ]]; then
-        cd "$1" || exit 1
+    if [[ -d "${1}" ]]; then
+        cd "${1}" || exit 1
     else
         echo ""
-        echo "### $1 not mounted"
+        echo "### ${1} not mounted"
         return
     fi
     chmod -R g=,o= .duplicacy
@@ -26,7 +26,7 @@ backupRepository()
     [[ -d $DUPLICACY_LOGS ]] || mkdir -p $DUPLICACY_LOGS
 
     echo ""
-    echo "### backupRepository $1 ###"
+    echo "### backupRepository ${1} ###"
 
     echo "# Backup filters, known_hosts & preferences..."
     BACKUP_DIR="${HOME}/.duplicacy-backup${1}"
@@ -41,14 +41,14 @@ backupRepository()
 
     echo "# Start Backup..."
     DATETIME=$(date "+%Y%m%d-%H%M%S")
-    if [[ $2 == "hash" ]]; then
+    if [[ "${2}" == "hash" ]]; then
         $DUPLICACY -log backup -stats -threads 4 -hash | tee "$DUPLICACY_LOGS/$DATETIME-backup.log"
     else
         $DUPLICACY -log backup -stats -threads 4       | tee "$DUPLICACY_LOGS/$DATETIME-backup.log"
     fi
     echo "# Done"
 
-    if [[ $2 == "check" ]]; then
+    if [[ "${2}" == "check" ]]; then
         echo ""
         echo "### Check Backups... ###"
         DATETIME=$(date "+%Y%m%d-%H%M%S")
@@ -60,7 +60,7 @@ backupRepository()
 
 if   [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" =~ (ariel|bethel) ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
-    backupRepository /etc "$1"
+    backupRepository /etc "${1}"
 elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" == "pvhost[0-9]*" ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
@@ -70,29 +70,29 @@ elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" == "pvhost[0-9]*" ]]; th
     backupRepository /etc
     backupRepository /root
     backupRepository /usr/local
-    backupRepository /home/tom "$1"
+    backupRepository /home/tom "${1}"
 elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" == "theophilus" ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
     backupRepository /etc
     backupRepository /root
-    backupRepository /usr/local "$1"
+    backupRepository /usr/local "${1}"
 elif [[ "$(whoami)" == "tom" ]] && [[ "$(hostname -s)" =~ (ariel|bethel) ]]; then
     ##### cd                       && duplicacy init -e -storage-name synology                       $(hostname -s)-tom--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /Users/tom/Dropbox/tc && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M tc--synology                 sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /Volumes/USBAC        && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M USBAC--synology              sftp://tom@SYNOLOGY//zz_duplicacy-backups
     backupRepository /Users/tom/Dropbox/tc hash
     backupRepository /Volumes/USBAC hash
-    backupRepository /Users/tom "$1"
+    backupRepository /Users/tom "${1}"
 elif [[ "$(whoami)" == "tom" ]] && [[ "$(hostname -s)" == "theophilus" ]]; then
     ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
-    backupRepository /home/tom "$1"
+    backupRepository /home/tom "${1}"
 fi
 
 if [[ "$(hostname -s)" == "synology" ]]; then
     ##### cd /volume1/archive && ~/bin/duplicacy init -e                 -storage-name synology synology-archive--synology /volume1/zz_duplicacy-backups
-    ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology bethel   synology-archive--bethel   sftp://tom@BETHEL//Volumes/exFAT/duplicacy
+    ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology bethel   synology-archive--bethel   sftp://tom@bethel//Volumes/exFAT/duplicacy
     ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology b2       synology-archive--b2       b2://duplicacy-tch-backup
     DUPLICACY="/var/services/homes/tom/bin/duplicacy"
     backupRepository /volume1/archive
@@ -127,7 +127,7 @@ if [[ "$(hostname -s)" == "synology" ]]; then
     # $DUPLICACY -log prune -storage onedrive -all -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune-onedrive.log"
     # echo "# Done"
 
-    if [[ $1 == "check" ]]; then
+    if [[ "${1}" == "check" ]]; then
         cd /volume1/archive || exit
         echo ""
         echo "### Check Backups... ###"
