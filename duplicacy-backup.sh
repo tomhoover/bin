@@ -5,6 +5,9 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -o pipefail
 
+# uncomment the following line to delete logs older than 14 days (you may change '14' to whatever number of days you wish to keep)
+#DELETE_LOGS=14
+
 DUPLICACY=duplicacy
 
 ##### TODO #####
@@ -23,7 +26,7 @@ backupRepository()
     chmod -R g=,o= .duplicacy
 
     DUPLICACY_LOGS=.duplicacy/logs
-    mkdir -p $DUPLICACY_LOGS
+    mkdir -p "${DUPLICACY_LOGS}"
 
     echo ""
     echo "### backupRepository ${1} ###"
@@ -35,9 +38,11 @@ backupRepository()
     chmod -R g=,o= "${HOME}/.duplicacy-backup"
     echo "# Done"
 
-    echo "# Delete old logs..."
-    find ./$DUPLICACY_LOGS -name "*.log" -type f -mtime +14 -delete
-    echo "# Done"
+    if [ "${DELETE_LOGS}" ]; then
+        echo "# Delete logs older than ${DELETE_LOGS} days old..."
+        find "./${DUPLICACY_LOGS}" -name "*.log" -type f -mtime "+${DELETE_LOGS}" -delete
+        echo "# Done"
+    fi
 
     echo "# Start Backup..."
     DATETIME=$(date "+%Y%m%d-%H%M%S")
