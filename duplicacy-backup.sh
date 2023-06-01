@@ -58,10 +58,10 @@ backupRepository()
     fi
 }
 
-if   [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" =~ (ariel|bethel) ]]; then
+if   [ "$(id -u)" -eq 0 ] && [[ "$(hostname -s)" =~ (ariel|bethel) ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     backupRepository /etc "${1}"
-elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" == "pvhost[0-9]*" ]]; then
+elif [ "$(id -u)" -eq 0 ] && [[ "$(hostname -s)" == "pvhost[0-9]*" ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
@@ -71,7 +71,7 @@ elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" == "pvhost[0-9]*" ]]; th
     backupRepository /root
     backupRepository /usr/local
     backupRepository /home/tom "${1}"
-elif [[ "$(whoami)" == "root" ]] && [[ "$(hostname -s)" == "theophilus" ]]; then
+elif [ "$(id -u)" -eq 0 ] && [[ "$(hostname -s)" == "theophilus" ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
