@@ -10,6 +10,7 @@ set -u -o pipefail
 
 # . $HOME/.keychain/$(hostname)-sh
 
+# shellcheck source=/dev/null
 [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
 
 cd "$HOME"/data/software/gh-backup || exit
