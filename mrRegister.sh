@@ -18,8 +18,9 @@ echo "#!/bin/bash" > ~/register.sh
 echo "cd /Users/tom || exit" >> ~/register.sh
 echo ""
 
-cd && find . -path './data' -prune -o -path './.config-backup' -prune -o -path './.config-backup2' -prune -o \
-    -path './Library/Containers' -prune -o -type d -name '.git' | \
+cd && find . \( -path './.config-backup' -o -path './.config-backup2' -o -path './Library/Containers' -o -path './Library/Preferences/fyne' -o -path './data' \) -prune -o -type d -name '.git' | \
+    grep -v '^./.asdf/plugins' | \
+    grep -v '^./.asdf/repository' | \
     grep -v '^./.cache/pre-commit' | \
     grep -v '^./.config-backup' | \
     grep -v '^./.config-backup2' | \
