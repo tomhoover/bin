@@ -30,4 +30,4 @@ cd && find . \( -path './.Trash' -o -path './.config-backup' -o -path './.config
     grep -v '^./pkg/mod/cache/download/git.apache.org/thrift.git' | \
     grep -v '^./test' | \
     grep -v '^./tmp' | \
-    sed -e 's|^./|~/|' -e 's|/.git$||' | sort > ~/tmp/all-git-repos.txt
+    sed -e 's|^./|~/|' -e 's|/.git$||' -e 's| |\\ |g' | sort > ~/tmp/all-git-repos.txt
