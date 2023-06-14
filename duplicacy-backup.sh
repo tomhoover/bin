@@ -8,6 +8,8 @@ set -o pipefail
 # uncomment the following line to delete logs older than 14 days (you may change '14' to whatever number of days you wish to keep)
 #DELETE_LOGS=14
 
+MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+
 DUPLICACY=duplicacy
 
 ##### TODO #####
@@ -62,10 +64,10 @@ backupRepository()
     fi
 }
 
-if   [ "$(id -u)" -eq 0 ] && [[ "$(hostname -s)" =~ (ariel|bethel) ]]; then
+if   [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     backupRepository /etc "${1}"
-elif [ "$(id -u)" -eq 0 ] && [[ "$(hostname -s)" == "pvhost[0-9]*" ]]; then
+elif [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" == "pvhost[0-9]*" ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
@@ -75,26 +77,26 @@ elif [ "$(id -u)" -eq 0 ] && [[ "$(hostname -s)" == "pvhost[0-9]*" ]]; then
     backupRepository /root
     backupRepository /usr/local
     backupRepository /home/tom "${1}"
-elif [ "$(id -u)" -eq 0 ] && [[ "$(hostname -s)" == "theophilus" ]]; then
+elif [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" == "theophilus" ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
     backupRepository /etc
     backupRepository /root
     backupRepository /usr/local "${1}"
-elif [[ "$(whoami)" == "tom" ]] && [[ "$(hostname -s)" =~ (ariel|bethel) ]]; then
+elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
     ##### cd                       && duplicacy init -e -storage-name synology                       $(hostname -s)-tom--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /Users/tom/Dropbox/tc && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M tc--synology                 sftp://tom@SYNOLOGY//zz_duplicacy-backups
     ##### cd /Volumes/USBAC        && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M USBAC--synology              sftp://tom@SYNOLOGY//zz_duplicacy-backups
     backupRepository /Users/tom/Dropbox/tc hash
     backupRepository /Volumes/USBAC hash
     backupRepository /Users/tom "${1}"
-elif [[ "$(whoami)" == "tom" ]] && [[ "$(hostname -s)" == "theophilus" ]]; then
+elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" == "theophilus" ]]; then
     ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
     backupRepository /home/tom "${1}"
 fi
 
-if [[ "$(hostname -s)" == "synology" ]]; then
+if [[ "${MYHOST}" == "synology" ]]; then
     ##### cd /volume1/archive && ~/bin/duplicacy init -e                 -storage-name synology synology-archive--synology /volume1/zz_duplicacy-backups
     ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology bethel   synology-archive--bethel   sftp://tom@bethel//Volumes/exFAT/duplicacy
     ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology b2       synology-archive--b2       b2://duplicacy-tch-backup

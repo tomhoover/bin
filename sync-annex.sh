@@ -4,6 +4,8 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -e -o pipefail
 
+MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+
 syncContentAll()
 {
     echo "     ----- sync content all -----"
@@ -27,10 +29,10 @@ saveConfig()
     if contains "$1" "/RAID10/" ; then
         SUFFIX="RAID10"
     else
-        SUFFIX="$(hostname -s)"
+        SUFFIX="${MYHOST}"
     fi
     cp .git/config ".gitconfig_$SUFFIX"
-    if [ "$(hostname -s)" = "ariel" ]; then
+    if [ "${MYHOST}" = "ariel" ]; then
         git annex add ".gitconfig_$SUFFIX"
     fi
     echo ""
@@ -139,9 +141,9 @@ listAnnex()
     done
 }
 
-if [ "$(hostname -s)" = "ariel" ]; then
-    # shellcheck disable=SC1090
-    . "$HOME/.keychain/$(hostname -s)-sh"
+if [ "${MYHOST}" = "ariel" ]; then
+    # shellcheck source=/dev/null
+    [ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
 fi
 
 echo "PATH = $PATH"
@@ -151,20 +153,20 @@ date +%s > /tmp/sync-annex-start
 if [ "$1" = "fsck" ] && [ "$2" = "ironkey" ] ; then
     fsckRemotes /Volumes/RAID10/annex ironkey "$3"
 elif [ "$1" = "fsck" ] && [ "$2" = "remotes" ] ; then
-    if [ "$(hostname -s)" = "ariel" ]; then
+    if [ "${MYHOST}" = "ariel" ]; then
         fsckRemotes /Volumes/RAID10/annex drobo "$3"
         fsckRemotes /Volumes/RAID10/annex manuel "$3"
         #fsckRemotes /Volumes/RAID10/annex origin "$3"
         #fsckRemotes ~/annex drobo "$3"
         #fsckRemotes ~/annex manuel "$3"
         #fsckRemotes ~/annex origin "$3"
-    elif [ "$(hostname -s)" = "unraid" ]; then
+    elif [ "${MYHOST}" = "unraid" ]; then
 #        fsckRemotes ~/annex amazon "$3"
         fsckRemotes ~/annex gdrive "$3"
         fsckRemotes ~/annex hubic "$3"
     fi
 elif [ "$1" = "fsck" ] && [ "$2" = "all" ] ; then
-    if [ "$(hostname -s)" = "ariel" ]; then
+    if [ "${MYHOST}" = "ariel" ]; then
         listAnnex /Volumes/RAID10/annex "$1"
         listAnnex ~/annex "$1"
         fsckRemotes /Volumes/RAID10/annex drobo "$3"
@@ -173,13 +175,13 @@ elif [ "$1" = "fsck" ] && [ "$2" = "all" ] ; then
         #fsckRemotes ~/annex drobo "$3"
         #fsckRemotes ~/annex manuel "$3"
         #fsckRemotes ~/annex origin "$3"
-    elif [ "$(hostname -s)" = "unraid" ]; then
+    elif [ "${MYHOST}" = "unraid" ]; then
         listAnnex ~/annex "$1"
 #        fsckRemotes ~/annex amazon "$3"
         fsckRemotes ~/annex gdrive "$3"
         fsckRemotes ~/annex hubic "$3"
     fi
 else
-    if [ "$(hostname -s)" = "ariel" ] ; then listAnnex /Volumes/RAID10/annex "$1" ; fi
+    if [ "${MYHOST}" = "ariel" ] ; then listAnnex /Volumes/RAID10/annex "$1" ; fi
     listAnnex ~/annex "$1"
 fi

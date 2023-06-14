@@ -5,8 +5,10 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
-# shellcheck source=/dev/null
-. "$HOME"/.keychain/"$(hostname)"-sh
+MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
-brew bundle dump --force --file="$HOME/.homebrew-brewfile/Brewfile.$(hostname -s)"
-cd "$HOME/.homebrew-brewfile" && git pull && git commit -am "$(hostname -s) - $(date)" && git push origin; git push gitea
+# shellcheck source=/dev/null
+[ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
+
+brew bundle dump --force --file="$HOME/.homebrew-brewfile/Brewfile.${MYHOST}"
+cd "$HOME/.homebrew-brewfile" && git pull && git commit -am "${MYHOST} - $(date)" && git push origin; git push gitea

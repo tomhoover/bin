@@ -8,7 +8,8 @@
 # set -eu -o pipefail
 set -u -o pipefail
 
-# . $HOME/.keychain/$(hostname)-sh
+# shellcheck source=/dev/null
+[ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
 
 # shellcheck source=/dev/null
 [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS

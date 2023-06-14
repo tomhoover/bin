@@ -6,7 +6,7 @@
 set -eu -o pipefail
 
 # shellcheck source=/dev/null
-. "$HOME"/.keychain/"$(hostname)"-sh
+[ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
 
 screen -ls | grep "There is a screen" && screen -D -R
 screen -ls | grep "No Sockets found" && screen -c ~/.screenrc-startup

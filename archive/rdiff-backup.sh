@@ -10,7 +10,7 @@ pgrep -fq '^ssh -C .* rdiff-backup --server' && echo "An rdiff-backup process is
 set -u -o pipefail
 
 # shellcheck source=/dev/null
-. "$HOME"/.keychain/"$(hostname)"-sh
+[ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
 
 # verbosity levels:
 #  -v0 No information given

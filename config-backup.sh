@@ -3,6 +3,8 @@
 # set -e: exit script immediately upon error
 set -e
 
+MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+
 if [ $EUID != 0 ]; then
     sudo -H "$0" "$@"
     exit $?
@@ -13,7 +15,7 @@ if [ ! -d "$HOME/.config-backup" ] ; then
 fi
 
 chmod 700 "$HOME/.config-backup"
-CONFIG_DIR="$HOME/.config-backup/$(hostname -s)"
+CONFIG_DIR="$HOME/.config-backup/${MYHOST}"
 mkdir -p "$CONFIG_DIR" || exit
 CONFIG_LIST=$CONFIG_DIR/config.txt
 touch "$CONFIG_LIST"

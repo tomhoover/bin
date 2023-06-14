@@ -6,7 +6,7 @@
 set -eu -o pipefail
 
 # shellcheck source=/dev/null
-. "$HOME"/.keychain/"$(hostname)"-sh
+[ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
 
 echo " ---------------"
 echo "| tom_Documents |"
@@ -61,4 +61,3 @@ echo " --------------"
 echo "| RAID_backups |"
 echo " --------------"
 cd /Volumes/RAID10 && rsync -avzh --delete backups/ tom@bethel:/mnt/rsync/RAID10_backups/
-

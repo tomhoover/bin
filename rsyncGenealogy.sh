@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1003
 
-[[ "$(bin/hostname)" = "ariel" ]] || exit
+MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+
+[[ "${MYHOST}" = "ariel" ]] || exit
 
 ## Dropbox
 # rsync datafile only if my version is newer

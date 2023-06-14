@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2016
 
+MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+
 pgrep -fq '^ssh -l tom .* rsync --server' && echo "An rsync process is already running." && exit 1
 
 # set -e: exit script immediately upon error
@@ -10,7 +12,7 @@ pgrep -fq '^ssh -l tom .* rsync --server' && echo "An rsync process is already r
 set -u -o pipefail
 
 # shellcheck source=/dev/null
-. "$HOME"/.keychain/"$(hostname)"-sh
+[ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
 
 dow=$(date +%-a)
 
@@ -53,7 +55,7 @@ cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
     --exclude="/private/" \
     --exclude="/tmp/" \
     --exclude="/tmux-config/" \
-    tom/ tom@BLUEIRIS:/mnt/e/rsync/"$(hostname -s)"/tom/ |grep -v '/$'
+    tom/ tom@BLUEIRIS:/mnt/e/rsync/"${MYHOST}"/tom/ |grep -v '/$'
 
 echo ""
 
@@ -61,7 +63,7 @@ echo " ------------------------------"
 echo "| bethel_easystore to blueiris |"
 echo " ------------------------------"
 
-[[ $(hostname -s) = "bethel" ]] && [[ $dow = 'Thu' ]] && cd /Volumes && /opt/homebrew/bin/rsync -Pavzh --delete --delete-excluded \
+[[ ${MYHOST} = "bethel" ]] && [[ $dow = 'Thu' ]] && cd /Volumes && /opt/homebrew/bin/rsync -Pavzh --delete --delete-excluded \
     --exclude='$RECYCLE.BIN' --exclude='$Recycle.Bin' --exclude='.AppleDB' --exclude='.AppleDesktop' \
     --exclude='.AppleDouble' --exclude='.com.apple.timemachine.supported' --exclude='.dbfseventsd' \
     --exclude='.DocumentRevisions-V100*' --exclude='.DS_Store' --exclude='.fseventsd' \

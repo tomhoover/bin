@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-#[[ "$(hostname)" = "ariel" ]] || exit
-[[ "$(hostname)" = "manuel" ]] || exit
+MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+
+[[ "${MYHOST}" = "ariel" ]] || exit
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
