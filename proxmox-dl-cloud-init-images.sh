@@ -14,7 +14,7 @@ function create_template() {
     # Feel free to change any of these to your liking
     qm create "$1" --name "$2" --ostype l26
     # Set networking to default bridge
-    qm set "$1" --net0 virtio,bridge=vmbr0
+    qm set "$1" --net0 virtio,bridge=vmbr0,tag=5
     # Set display to serial
     qm set "$1" --serial0 socket --vga serial0
     # Set memory, cpu, type defaults
