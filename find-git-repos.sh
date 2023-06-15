@@ -6,15 +6,15 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
-cd && find . \( -path './.config-backup' -o -path './.config-backup2' -o -path './Library/Containers' -o -path './Library/Preferences/fyne' -o -path './data' \) -prune \
+cd && find . \( -path './.Trash' -o -path './.config-backup' -o -path './.config-backup2' -o -path './Library/Containers' -o -path './Library/Preferences/fyne' -o -path './data' \) -prune \
     -o -type d -name '.git' | \
+    grep -v '^./.Trash' | \
     grep -v '^./.config-backup' | \
     grep -v '^./.config-backup2' | \
     grep -v '^./Library/Containers' | \
     grep -v '^./Library/Preferences/fyne' | \
     grep -v '^./data' | \
     grep -v '/.stversions/' | \
-    grep -v '^./.Trash/' | \
     grep -v '^./.asdf/' | \
     grep -v '^./.cache/pre-commit/' | \
     grep -v '^./.config/tmux/plugins/' | \
