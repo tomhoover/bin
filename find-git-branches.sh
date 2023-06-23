@@ -15,9 +15,9 @@ RESET=$(tput sgr0)
 
 vcsh list | while read -r REPOSITORY; do
     br=0
-    rem=2
+    rem=0
     st=0
-    if [ "$( vcsh "${REPOSITORY}" branch -vv | sed -e '/[* ]*github/d' -e '/[* ]*main/d' -e '/[* ]*master/d' )" != "" ]; then
+    if [ "$( vcsh "${REPOSITORY}" branch -avv | sed -e '/[* ]*github/d' -e '/[* ]*main/d' -e '/[* ]*master/d' )" != "" ]; then
         br=1
     fi
     if [ "$( vcsh "${REPOSITORY}" status -s )" != "" ]; then
@@ -27,7 +27,7 @@ vcsh list | while read -r REPOSITORY; do
         echo "" && echo "### ${REPOSITORY}"
         if [ $br = "1" ]; then
             echo "- Branches:"
-            vcsh "${REPOSITORY}" branch -vv
+            vcsh "${REPOSITORY}" branch -avv
         fi
         if [ $rem = "1" ]; then
             echo "- Remotes:"
@@ -49,7 +49,7 @@ cat ~/tmp/all-git-repos.txt | while read -r REPOSITORY; do
     rem=2
     st=0
     eval cd "${REPOSITORY}" || { echo ""; echo "${RED}ABORTED!${RESET} ${REPOSITORY} does not exist!"; echo ""; exit 99; }
-    if [ "$( git branch -vv | sed -e '/[* ]*github/d' -e '/[* ]*main/d' -e '/[* ]*master/d' )" != "" ]; then
+    if [ "$( git branch -avv | sed -e '/[* ]*github/d' -e '/[* ]*main/d' -e '/[* ]*master/d' )" != "" ]; then
         br=1
     fi
     if [ "$( git status -s )" != "" ]; then
@@ -59,7 +59,7 @@ cat ~/tmp/all-git-repos.txt | while read -r REPOSITORY; do
         echo "" && echo "### ${REPOSITORY}"
         if [ $br = "1" ]; then
             echo "- Branches:"
-            git branch -vv
+            git branch -avv
         fi
         if [ $rem = "1" ]; then
             echo "- Remotes:"
