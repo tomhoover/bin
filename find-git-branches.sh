@@ -15,7 +15,7 @@ RESET=$(tput sgr0)
 
 vcsh list | while read -r REPOSITORY; do
     br=0
-    rem=0
+    rem=2
     st=0
     if [ "$( vcsh "${REPOSITORY}" branch -vv | sed -e '/[* ]*github/d' -e '/[* ]*main/d' -e '/[* ]*master/d' )" != "" ]; then
         br=1
@@ -23,7 +23,7 @@ vcsh list | while read -r REPOSITORY; do
     if [ "$( vcsh "${REPOSITORY}" status -s )" != "" ]; then
         st=1
     fi
-    if [[ $br = "1" || $rem = "1" || $st = "1" ]]; then
+    if [[ $br -gt 0  || $rem -gt 0 || $st -gt 0 ]]; then
         echo "" && echo "### ${REPOSITORY}"
         if [ $br = "1" ]; then
             echo "- Branches:"
@@ -32,6 +32,9 @@ vcsh list | while read -r REPOSITORY; do
         if [ $rem = "1" ]; then
             echo "- Remotes:"
             vcsh "${REPOSITORY}" remote
+        elif [ $rem = "2" ]; then
+            echo "- Remotes:"
+            vcsh "${REPOSITORY}" remote -v
         fi
         if [ $st = "1" ]; then
             echo "- Status:"
@@ -43,7 +46,7 @@ done
 # shellcheck disable=SC2002
 cat ~/tmp/all-git-repos.txt | while read -r REPOSITORY; do
     br=0
-    rem=0
+    rem=2
     st=0
     eval cd "${REPOSITORY}" || { echo ""; echo "${RED}ABORTED!${RESET} ${REPOSITORY} does not exist!"; echo ""; exit 99; }
     if [ "$( git branch -vv | sed -e '/[* ]*github/d' -e '/[* ]*main/d' -e '/[* ]*master/d' )" != "" ]; then
@@ -52,7 +55,7 @@ cat ~/tmp/all-git-repos.txt | while read -r REPOSITORY; do
     if [ "$( git status -s )" != "" ]; then
         st=1
     fi
-    if [[ $br = "1" || $rem = "1" || $st = "1" ]]; then
+    if [[ $br -gt 0 || $rem -gt 0 || $st -gt 0 ]]; then
         echo "" && echo "### ${REPOSITORY}"
         if [ $br = "1" ]; then
             echo "- Branches:"
@@ -61,6 +64,9 @@ cat ~/tmp/all-git-repos.txt | while read -r REPOSITORY; do
         if [ $rem = "1" ]; then
             echo "- Remotes:"
             git remote
+        elif [ $rem = "2" ]; then
+            echo "- Remotes:"
+            git remote -v
         fi
         if [ $st = "1" ]; then
             echo "- Status:"
