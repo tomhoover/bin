@@ -5,4 +5,4 @@
 
 vcsh vault pull 2>/dev/null 2>&1
 vcsh vault add "*.md" 2>/dev/null
-vcsh vault commit -am "$(date '+%Y-%m-%d %H:%M')" >/dev/null 2>&1 && vcsh vault push origin
+vcsh vault commit -am "$(date '+%Y-%m-%d %H:%M')" >/dev/null 2>&1 && vcsh vault push gitea

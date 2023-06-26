@@ -46,7 +46,7 @@ done
 # shellcheck disable=SC2002
 cat ~/tmp/all-git-repos.txt | while read -r REPOSITORY; do
     br=0
-    rem=2
+    rem=0
     st=0
     eval cd "${REPOSITORY}" || { echo ""; echo "${RED}ABORTED!${RESET} ${REPOSITORY} does not exist!"; echo ""; exit 99; }
     if [ "$( git branch -avv | sed -e '/[* ]*github/d' -e '/[* ]*main/d' -e '/[* ]*master/d' )" != "" ]; then
