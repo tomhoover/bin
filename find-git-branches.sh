@@ -20,6 +20,10 @@ vcsh list | while read -r REPOSITORY; do
         if [ $br = "1" ]; then
             echo "- Branches:"
             vcsh "${REPOSITORY}" branch -avv
+            if [ "$( vcsh "${REPOSITORY}" branch -vv | sed -e '/\[/d' )" != "" ]; then
+                echo "- Local branches without remote tracking branch:"
+                vcsh "${REPOSITORY}" branch -vv | sed -e '/\[/d'
+            fi
         fi
         if [ $rem = "1" ]; then
             echo "- Remotes:"
@@ -52,6 +56,10 @@ cat ~/tmp/all-git-repos.txt | while read -r REPOSITORY; do
         if [ $br = "1" ]; then
             echo "- Branches:"
             git branch -avv
+            if [ "$( git branch -vv | sed -e '/\[/d' )" != "" ]; then
+                echo "- Local branches without remote tracking branch:"
+                git branch -vv | sed -e '/\[/d'
+            fi
         fi
         if [ $rem = "1" ]; then
             echo "- Remotes:"
