@@ -13,8 +13,8 @@ MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch
 DUPLICACY=duplicacy
 
 ##### TODO #####
-# duplicacy init -e -storage-name synology ariel-etc--synology            sftp://tom@SYNOLOGY//zz_duplicacy-backups
-# duplicacy init -e -storage-name synology bethel-etc--synology           sftp://tom@SYNOLOGY//zz_duplicacy-backups
+# duplicacy init -e -storage-name synology ariel-etc--synology            sftp://tom@synology//zz_duplicacy-backups
+# duplicacy init -e -storage-name synology bethel-etc--synology           sftp://tom@synology//zz_duplicacy-backups
 
 backupRepository()
 {
@@ -65,34 +65,34 @@ backupRepository()
 }
 
 if   [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
-    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
+    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@synology//zz_duplicacy-backups
     backupRepository /etc "${1}"
 elif [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" == "pvhost[0-9]*" ]]; then
-    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
-    ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
-    ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
-    ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
+    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@synology//zz_duplicacy-backups
+    ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@synology//zz_duplicacy-backups
+    ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@synology//zz_duplicacy-backups
+    ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology       sftp://tom@synology//zz_duplicacy-backups
     DUPLICACY="/usr/local/sbin/duplicacy"
     backupRepository /etc
     backupRepository /root
     backupRepository /usr/local
     backupRepository /home/tom "${1}"
 elif [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" == "theophilus" ]]; then
-    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
-    ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@SYNOLOGY//zz_duplicacy-backups
-    ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
+    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@synology//zz_duplicacy-backups
+    ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@synology//zz_duplicacy-backups
+    ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@synology//zz_duplicacy-backups
     backupRepository /etc
     backupRepository /root
     backupRepository /usr/local "${1}"
 elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
-    ##### cd                       && duplicacy init -e -storage-name synology                       $(hostname -s)-tom--synology sftp://tom@SYNOLOGY//zz_duplicacy-backups
-    ##### cd /Users/tom/Dropbox/tc && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M tc--synology                 sftp://tom@SYNOLOGY//zz_duplicacy-backups
-    ##### cd /Volumes/USBAC        && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M USBAC--synology              sftp://tom@SYNOLOGY//zz_duplicacy-backups
+    ##### cd                       && duplicacy init -e -storage-name synology                       $(hostname -s)-tom--synology sftp://tom@synology//zz_duplicacy-backups
+    ##### cd /Users/tom/Dropbox/tc && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M tc--synology                 sftp://tom@synology//zz_duplicacy-backups
+    ##### cd /Volumes/USBAC        && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M USBAC--synology              sftp://tom@synology//zz_duplicacy-backups
     backupRepository /Users/tom/Dropbox/tc hash
     backupRepository /Volumes/USBAC hash
     backupRepository /Users/tom "${1}"
 elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" == "theophilus" ]]; then
-    ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology       sftp://tom@SYNOLOGY//zz_duplicacy-backups
+    ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology       sftp://tom@synology//zz_duplicacy-backups
     backupRepository /home/tom "${1}"
 fi
 

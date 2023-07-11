@@ -55,7 +55,7 @@ cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
     --exclude="/private/" \
     --exclude="/tmp/" \
     --exclude="/tmux-config/" \
-    tom/ tom@BLUEIRIS:/mnt/e/rsync/"${MYHOST}"/tom/ |grep -v '/$'
+    tom/ tom@blueiris:/mnt/e/rsync/"${MYHOST}"/tom/ |grep -v '/$'
 
 echo ""
 
@@ -95,6 +95,6 @@ echo " ------------------------------"
     --exclude="/ariel2/rsync.old/System/Volumes/VM/" \
     --exclude="/ariel2/rsync.old/System/Volumes/xarts/" \
     --exclude="/tom/Databases/" \
-    easystore/ tom@BLUEIRIS:/mnt/e/rsync/bethel/easystore/ |grep -v '/$'
+    easystore/ tom@blueiris:/mnt/e/rsync/bethel/easystore/ |grep -v '/$'
 
 echo ""
