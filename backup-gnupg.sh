@@ -5,15 +5,15 @@
 set -eu
 
 KEY=gnupg
-KEY_MOUNTPOINT=/Volumes/${KEY}
-KEY_BACKUPDIR=/Volumes/backups/${KEY}
+KEY_BACKUPDIR=/Volumes/zz_backups/${KEY}
 FILENAME=$(date +%Y%m%d-%H%M%S).tgz.gpg
 
-cd $KEY_MOUNTPOINT || exit
+cd || exit
 
-if ! [ -d ${KEY_BACKUPDIR} ] ; then mkdir -p 0700 ${KEY_BACKUPDIR} ; fi
+# shellcheck disable=SC2174
+if ! [ -d ${KEY_BACKUPDIR} ] ; then mkdir -pm 0700 ${KEY_BACKUPDIR} ; fi
 
-tar -czvf - .gnupg | gpg --cipher-algo aes256 -co "$KEY_BACKUPDIR/$FILENAME"
+tar --exclude .gnupg/random_seed -czvf - .gnupg | gpg --cipher-algo aes256 -co "$KEY_BACKUPDIR/$FILENAME"
 
 # decrypt with:
 #gpg -o - xxx.tgz.gpg | tar xzvf -
