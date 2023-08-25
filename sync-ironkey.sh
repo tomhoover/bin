@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-cd /Volumes/IRONKEY8 || exit
+cd /Volumes/IRONKEY64 || exit
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
@@ -15,7 +15,8 @@ syncAnnex()
 
 syncGit()
 {
-    cd "$1" && pwd && \
+    cd "$1" && \
+    echo "***** git push ironkey: $1 *****" && \
     git push ironkey
 }
 
@@ -27,17 +28,16 @@ do
 done
 }
 
-~/bin/sync-annex.sh
+# ~/bin/sync-annex.sh
 
-echo "***** git annex sync --content: doc"
-syncAnnex /Volumes/IRONKEY8/annex/doc
+# echo "***** git annex sync --content: doc"
+# syncAnnex /Volumes/IRONKEY64/annex/doc
 
-~/bin/sync-annex.sh fsck ironkey
+# ~/bin/sync-annex.sh fsck ironkey
 
-~/bin/sync-annex.sh
+# ~/bin/sync-annex.sh
 
-echo "***** git push ironkey: .gnupg"
 syncGit ~/.gnupg
 
-echo "***** vcsh private push ironkey"
-cd && vcsh private push ironkey
+echo "***** vcsh private push ironkey *****"
+vcsh private push ironkey
