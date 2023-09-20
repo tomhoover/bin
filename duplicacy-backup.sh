@@ -67,12 +67,16 @@ backupRepository()
 if   [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@synology//zz_duplicacy-backups
     backupRepository /etc "${1}"
-elif [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" == "pvhost[0-9]*" ]]; then
-    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@synology//zz_duplicacy-backups
-    ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@synology//zz_duplicacy-backups
-    ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@synology//zz_duplicacy-backups
-    ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology       sftp://tom@synology//zz_duplicacy-backups
+elif [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ ^pvhost[0-9]$ ]]; then
+    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology       sftp://tom@synology-5//zz_duplicacy-backups
+    ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology      sftp://tom@synology-5//zz_duplicacy-backups
+    ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology sftp://tom@synology-5//zz_duplicacy-backups
+    ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology       sftp://tom@synology-5//zz_duplicacy-backups
+    ##### cd /mnt/pve/cephfs  && duplicacy init -e -storage-name synology $(hostname -s)-cephfs--synology    sftp://tom@synology-5//zz_duplicacy-backups
     DUPLICACY="/usr/local/sbin/duplicacy"
+    if [[ "${MYHOST}" == "pvhost1" ]]; then
+        backupRepository /mnt/pve/cephfs
+    fi
     backupRepository /etc
     backupRepository /root
     backupRepository /usr/local
