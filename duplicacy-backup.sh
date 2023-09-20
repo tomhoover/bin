@@ -42,7 +42,7 @@ backupRepository()
 
     if [ "${DELETE_LOGS}" ]; then
         echo "# Delete logs older than ${DELETE_LOGS} days old..."
-        find "./${DUPLICACY_LOGS}" -name "*.log" -type f -mtime "+${DELETE_LOGS}" -delete
+        find "./${DUPLICACY_LOGS}" -name "*-backup.log" -type f -mtime "+${DELETE_LOGS}" -delete
         echo "# Done"
     fi
 
