@@ -18,7 +18,7 @@
     <array>
         <string>/opt/homebrew/bin/minio</string>
         <string>server</string>
-        <string>/Volumes/exFAT/minio/</string>
+        <string>/Volumes/external/minio/</string>
         <string>--address=:9000</string>
     </array>
     <key>RunAtLoad</key>
