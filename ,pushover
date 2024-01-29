@@ -1,0 +1,9 @@
+#!/bin/bash
+# Send Pushover notification
+# Usage: ,pushover "message" "(optional) title"
+
+curl -s -F "token=${PU_TOKEN}" \
+    -F "user=${PU_USER}" \
+    -F "message=${1}" \
+    -F "title=${2}" \
+    https://api.pushover.net/1/messages.json

@@ -2,6 +2,7 @@
 indent_size = 4
 indent_style = space
 binary_next_line   = true
+function_next_line = false
 switch_case_indent = true
 
 [,{audible_convert,duplicacy-backup,rsyncGenealogy,z_checksums}]
