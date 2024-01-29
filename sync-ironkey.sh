@@ -41,3 +41,5 @@ syncGit ~/.gnupg
 
 echo "***** vcsh private push ironkey *****"
 vcsh private push ironkey
+
+rsync -avz --rsync-path=/bin/rsync --delete --delete-excluded --exclude='@eaDir' --exclude='#recycle' --exclude='#snapshot' synology:/volume1/paperless/ /Volumes/IRONKEY64/paperless/
