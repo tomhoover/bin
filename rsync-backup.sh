@@ -17,7 +17,7 @@ set -u -o pipefail
 # dow=$(date +%-a)
 
 echo ""
-echo "***** rsync /Users/tom to bethel_exFAT *****"
+echo "***** rsync /Users/tom to bethel_external *****"
 cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
     --exclude='$RECYCLE.BIN' --exclude='$Recycle.Bin' --exclude='.AppleDB' --exclude='.AppleDesktop' \
     --exclude='.AppleDouble' --exclude='.com.apple.timemachine.supported' --exclude='.dbfseventsd' \
@@ -60,7 +60,7 @@ cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
     --exclude="/private/" \
     --exclude="/tmp/" \
     --exclude="/tmux-config/" \
-    tom/ tom@bethel:/Volumes/exFAT/rsync/"${MYHOST}"/tom/ |grep -v '/$'
+    tom/ tom@bethel:/Volumes/external/rsync/"${MYHOST}"/tom/ |grep -v '/$'
 
 echo ""
 

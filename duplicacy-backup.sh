@@ -102,7 +102,7 @@ fi
 
 if [[ "${MYHOST}" == "synology" ]]; then
     ##### cd /volume1/archive && ~/bin/duplicacy init -e                 -storage-name synology synology-archive--synology /volume1/zz_duplicacy-backups
-    ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology bethel   synology-archive--bethel   sftp://tom@bethel//Volumes/exFAT/duplicacy
+    ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology bethel   synology-archive--bethel   sftp://tom@bethel//Volumes/external/duplicacy
     ##### cd /volume1/archive && ~/bin/duplicacy add  -e -bit-identical -copy synology b2       synology-archive--b2       b2://duplicacy-tch-backup
     DUPLICACY="/var/services/homes/tom/bin/duplicacy"
     backupRepository /volume1/archive
