@@ -14,11 +14,12 @@ brew bundle dump --force --file="$HOME/.homebrew-brewfile/Brewfile.${MYHOST}"
 cd "$HOME/.homebrew-brewfile" && git pull && git commit -am "${MYHOST} - $(date)" && git push origin; git push gitea
 
 if [ "$MYHOST" = "bethel" ]; then
+    VERSION_DIR="$(find /opt/homebrew/Cellar/minio -type d -depth 1 | tail -1)"
     if [ "$(find /opt/homebrew/Cellar/minio -name homebrew.mxcl.minio.plist)" ]; then
-       exit 0
+        [ ~/bin/LaunchAgents/homebrew.mxcl.minio.plist.backup -nt "$VERSION_DIR/homebrew.mxcl.minio.plist" ] || exit 0
     fi
     brew services stop minio
-    VERSION_DIR="$(find /opt/homebrew/Cellar/minio -type d -depth 1 | tail -1)"
+    mv -n "$VERSION_DIR/homebrew.mxcl.minio.plist" "$VERSION_DIR/homebrew.mxcl.minio.plist.bak"
     cp ~/bin/LaunchAgents/homebrew.mxcl.minio.plist.backup "$VERSION_DIR/homebrew.mxcl.minio.plist"
     brew services start minio
 fi
