@@ -3,7 +3,7 @@
 
 # set -e: exit script immediately upon error
 # set -u: treat unset variables as an error
-set -eu
+# set -o pipefail: cause a pipeline to fail, if any command within it fails
 
 if [ $# -eq 0  ]; then
     echo "No arguments provided"
@@ -11,28 +11,25 @@ if [ $# -eq 0  ]; then
 fi
 
 echo "===== Creating $1.git bare repos ====="
-# echo ""
-# echo "     bethel..."
-# ssh tom@bethel bash -c "'
-# cd git && mkdir "$1.git" && cd "$1.git" && pwd
-# git init --bare
-# '"
+echo ""
+echo "     bethel..."
+ssh tom@bethel git init --bare git/$1.git
 # echo ""
 # echo "     drobo..."
 # ssh tom@drobo bash -c "'
 # cd git && mkdir "$1.git" && cd "$1.git" && pwd
 # git init --bare
 # '"
-echo ""
-echo "     gabriel..."
-ssh tom@gabriel bash -c "'
-cd git && mkdir "$1.git" && cd "$1.git" && pwd
-git init --bare
-'"
-echo ""
-echo "     synology..."
-ssh tom@SYNOLOGY bash -c "'
-cd git && mkdir "$1.git" && cd "$1.git" && pwd
-git init --bare
-'"
-echo ""
+# echo ""
+# echo "     gabriel..."
+# ssh tom@gabriel bash -c "'
+# cd git && mkdir "$1.git" && cd "$1.git" && pwd
+# git init --bare
+# '"
+# echo ""
+# echo "     synology..."
+# ssh tom@SYNOLOGY bash -c "'
+# cd git && mkdir "$1.git" && cd "$1.git" && pwd
+# git init --bare
+# '"
+# echo ""
