@@ -11,7 +11,7 @@ MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch
 [ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
 
 brew bundle dump --force --file="$HOME/.homebrew-brewfile/Brewfile.${MYHOST}"
-cd "$HOME/.homebrew-brewfile" && git pull && git commit -am "${MYHOST} - $(date)" && git push origin; git push gitea
+cd "$HOME/.homebrew-brewfile" && git pull && git commit -am "${MYHOST} - $(date)" && git push origin; git push --all gitolite
 
 if [ "$MYHOST" = "bethel" ]; then
     VERSION_DIR="$(find /opt/homebrew/Cellar/minio -type d -depth 1 | tail -1)"
