@@ -49,6 +49,7 @@ cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
     --exclude="/Sync/" \
     --exclude="/Syno-Shared" \
     --exclude="/Synology" \
+    --include="/data/docker/" \
     --exclude="/data/" \
     --exclude="/dl" \
     --exclude="/doc" \
