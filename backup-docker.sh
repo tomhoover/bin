@@ -20,5 +20,9 @@ for dir in $(find -s . -maxdepth 1 -type d); do
     DATADIR=$(echo "${dir}" | sed -e 's/^\.\///')
     FILENAME=$(date +%Y%m%d-%H%M%S)--${DATADIR}.tgz
     ssh ${BACKUPHOST} "[ -d ${BACKUPDIR}/${DATADIR} ]" || ssh ${BACKUPHOST} "mkdir -pm 0700 ${BACKUPDIR}/${DATADIR}"
-    tar -czf - "${DATADIR}" | ssh ${BACKUPHOST} "cat > ${BACKUPDIR}/${DATADIR}/${FILENAME}"
+    if [ "${MYHOST}" = "bethel" ]; then
+        tar -czf "${BACKUPDIR}/${DATADIR}/${FILENAME}" "${DATADIR}"
+    else
+        tar -czf - "${DATADIR}" | ssh ${BACKUPHOST} "cat > ${BACKUPDIR}/${DATADIR}/${FILENAME}"
+    fi
 done
