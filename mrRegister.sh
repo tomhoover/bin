@@ -21,17 +21,19 @@ echo "cd /Users/tom || exit" >> ~/tmp/register.sh
 echo ""
 
 cd && time find . \( -path './Library' -o -path './data' -o -path './dl' -o -path './doc' -o -path './tmp' \) -prune -o -type d -name '.git' | \
+    grep -v '^./.ansible/roles/trfore.omada_install/' | \
+    grep -v '^./.cache/AUR/' | \
+    grep -v '^./.cache/cookiecutters/' | \
+    grep -v '^./.cache/pre-commit/' | \
+    grep -v '^./.config/tmux/plugins/' | \
+    grep -v '^./.local/share/nvim/lazy/' | \
+    grep -v '^./.vim/plugged/' | \
     grep -v '^./Library$' | \
     grep -v '^./data$' | \
     grep -v '^./dl$' | \
     grep -v '^./doc$' | \
+    grep -v '^./src/AUR/' | \
     grep -v '^./tmp$' | \
-    grep -v '^./.ansible/roles/trfore.omada_install/' | \
-    grep -v '^./.cache/cookiecutters/' | \
-    grep -v '^./.cache/pre-commit/' | \
-    grep -v '^./.local/share/nvim/lazy/' | \
-    grep -v '^./.config/tmux/plugins/' | \
-    grep -v '^./.vim/plugged/' | \
     sed -e 's|^./||' -e 's|/.git$||' | while read -r REPOSITORY; do
     grep -F "${REPOSITORY}]" ~/.mrconfig ~/src/.mrconfig ~/src/3dPrinting/.mrconfig ~/src/github.com/.mrconfig ~/.config/mr/* || echo "mr -c ~/tmp/tmp.mrconfig register '${REPOSITORY}'" >> ~/tmp/register.sh
 done
