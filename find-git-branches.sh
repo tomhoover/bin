@@ -5,6 +5,9 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
+# shellcheck source=/dev/null
+source ~/bin/COLORS
+
 vcsh list | while read -r REPOSITORY; do
     br=0
     rem=0
@@ -18,7 +21,7 @@ vcsh list | while read -r REPOSITORY; do
     if [[ $br -gt 0  || $rem -gt 0 || $st -gt 0 ]]; then
         echo "" && echo "### ${REPOSITORY}"
         if [ $br = "1" ]; then
-            echo "- Branches:"
+            echo "${CYAN}- Branches:${RESET}"
             vcsh "${REPOSITORY}" branch -avv
             if [ "$( vcsh "${REPOSITORY}" branch -vv | sed -e '/\[/d' )" != "" ]; then
                 echo "- Local branches without remote tracking branch:"
@@ -26,14 +29,14 @@ vcsh list | while read -r REPOSITORY; do
             fi
         fi
         if [ $rem = "1" ]; then
-            echo "- Remotes:"
+            echo "${CYAN}- Remotes:${RESET}"
             vcsh "${REPOSITORY}" remote
         elif [ $rem = "2" ]; then
-            echo "- Remotes:"
+            echo "${CYAN}- Remotes:${RESET}"
             vcsh "${REPOSITORY}" remote -v
         fi
         if [ $st = "1" ]; then
-            echo "- Status:"
+            echo "${CYAN}- Status:${RESET}"
             vcsh "${REPOSITORY}" status -s
         fi
     fi
@@ -54,7 +57,7 @@ cat ~/tmp/all-git-repos.txt | while read -r REPOSITORY; do
     if [[ $br -gt 0 || $rem -gt 0 || $st -gt 0 ]]; then
         echo "" && echo "### ${REPOSITORY}"
         if [ $br = "1" ]; then
-            echo "- Branches:"
+            echo "${CYAN}- Branches:${RESET}"
             git branch -avv
             if [ "$( git branch -vv | sed -e '/\[/d' )" != "" ]; then
                 echo "- Local branches without remote tracking branch:"
@@ -62,14 +65,14 @@ cat ~/tmp/all-git-repos.txt | while read -r REPOSITORY; do
             fi
         fi
         if [ $rem = "1" ]; then
-            echo "- Remotes:"
+            echo "${CYAN}- Remotes:${RESET}"
             git remote
         elif [ $rem = "2" ]; then
-            echo "- Remotes:"
+            echo "${CYAN}- Remotes:${RESET}"
             git remote -v
         fi
         if [ $st = "1" ]; then
-            echo "- Status:"
+            echo "${CYAN}- Status:${RESET}"
             git status -s
         fi
     fi

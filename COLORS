@@ -1,4 +1,5 @@
 # Usage example:
+#   # shellcheck source=/dev/null
 #   source ~/bin/COLORS
 #   echo "${RED}ABORTED!${RESET} ${REPOSITORY} does not exist!"
 
