@@ -6,10 +6,10 @@
 set -eu
 
 MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
-BACKUPDIR=/Volumes/external/backups/docker/${MYHOST}
+BACKUPDIR=/Volumes/external/backups/podman/${MYHOST}
 BACKUPHOST=bethel
 
-cd "${HOME}/data/docker" || exit
+cd "${HOME}/data/podman" || exit
 
 # TODO: find -s . -maxdepth 1 -type d | while read -r dir; do
 #  the preceding line wasn't reading thru all dirs, so I substituted the
