@@ -5,6 +5,9 @@
 # set -u: treat unset variables as an error
 set -eu
 
+# shellcheck source=/dev/null
+[ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
+
 MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
 BACKUPDIR=/Volumes/external/backups/docker/${MYHOST}
 BACKUPHOST=bethel
