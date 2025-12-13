@@ -17,7 +17,7 @@ echo "Searching for git repos..."
 cd && echo '' > ~/tmp/tmp.mrconfig && /usr/bin/grep '^\[' .mrconfig src/.mrconfig src/3dPrinting/.mrconfig src/github.com/.mrconfig .config/mr/* |sed -E 's/^(.*):(.*)/\2 ::: \1/' |sed -E 's/^#(.*)/\1#####/' |grep -v '^ ' |grep -v ^skip |grep -v ^.DEFAULT |sort |less
 
 echo "#!/bin/bash" > ~/tmp/register.sh
-echo "cd /Users/tom || exit" >> ~/tmp/register.sh
+echo "cd || exit" >> ~/tmp/register.sh
 echo ""
 
 cd && time find . \( -path './Library' -o -path './data' -o -path './dl' -o -path './doc' -o -path './tmp' \) -prune -o -type d -name '.git' | \
@@ -45,7 +45,7 @@ done
     echo "echo 'finally, edit the following to taste:'"
     echo "echo '     vi ~/tmp/tmp.mrconfig ~/.mrconfig ~/src/.mrconfig ~/src/3dPrinting/.mrconfig ~/src/github.com/.mrconfig ~/.config/mr/*'"
     echo "echo ''"
-    echo "rm -f /Users/tom/tmp/register.sh"
+    echo "rm -f $HOME/tmp/register.sh"
 } >> ~/tmp/register.sh
 
 chmod +x ~/tmp/register.sh
