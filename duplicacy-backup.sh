@@ -110,11 +110,11 @@ elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
         # backupRepository /Volumes/USBAC rsyncNet hash
     fi
     ##### cd /Users/tom/Dropbox/tc && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M tc--synology                 "${SYNOLOGY_SFTP}"
-    # tch backupRepository /Users/tom/Dropbox/tc synology hash
+    # TODO backupRepository /Users/tom/Dropbox/tc synology hash
     ##### cd /Volumes/USBAC        && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M USBAC--synology              "${SYNOLOGY_SFTP}"
-    # tch backupRepository /Volumes/USBAC synology hash
+    # TODO backupRepository /Volumes/USBAC synology hash
     ##### cd                       && duplicacy init -e -storage-name synology                       $(hostname -s)-tom--synology "${SYNOLOGY_SFTP}"
-    backupRepository /Users/tom synology "${1}"
+    # TODO backupRepository /Users/tom synology "${1}"
 
     ##### cd /Users/tom/Dropbox/tc && duplicacy init -e -storage-name rsyncNet -c 1M -max 1M -min 1M tc--rsyncNet                 "${RSYNCNET_SFTP}"
     backupRepository /Users/tom/Dropbox/tc rsyncNet hash
