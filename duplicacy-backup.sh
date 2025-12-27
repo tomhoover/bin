@@ -12,7 +12,7 @@ source ~/bin/COLORS
 [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
 
 # uncomment the following line to delete logs older than 14 days (you may change '14' to whatever number of days you wish to keep)
-#DELETE_LOGS=14
+DELETE_LOGS=30
 
 MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
@@ -62,12 +62,19 @@ backupRepository()
     fi
     echo "${MAGENTA}# Done${RESET}"
 
-    if [[ "${3}" == "check" ]]; then
+    if [[ "${3}" == "check" ]] || [[ "${3}" == "prune" ]]; then
         echo ""
-        echo "${CYAN}### Check Backups... ###${RESET}"
+        echo "${CYAN}### Check Backups on ${2}... ###${RESET}"
         DATETIME=$(date "+%Y%m%d-%H%M%S")
-        "${DUPLICACY}" -log check -all -storage "${2}" -tabular -threads 40 -persist | tee "$DUPLICACY_LOGS/$DATETIME-check.log"
-        echo "#{CYAN}# Done"
+        "${DUPLICACY}" -log check -all -storage "${2}" -fossils -resurrect -tabular -chunks -threads 20 -persist | tee "$DUPLICACY_LOGS/$DATETIME-check-${2}.log"
+        echo "${CYAN}# Done${RESET}"
+        if [[ "${3}" == "prune" ]]; then
+            echo ""
+            echo "${CYAN}### Prune Backups on ${2}... ###${RESET}"
+            DATETIME=$(date "+%Y%m%d-%H%M%S")
+            "${DUPLICACY}" -log prune -all -storage "${2}" -threads 20 -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune-${2}.log"
+            echo "${CYAN}# Done${RESET}"
+        fi
     fi
 }
 
@@ -109,6 +116,7 @@ elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
         backupRepository /Volumes/external/rsync rsyncNet
         # backupRepository /Volumes/USBAC rsyncNet hash
     fi
+
     ##### cd /Users/tom/Dropbox/tc && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M tc--synology                 "${SYNOLOGY_SFTP}"
     # TODO backupRepository /Users/tom/Dropbox/tc synology hash
     ##### cd /Volumes/USBAC        && duplicacy init -e -storage-name synology -c 1M -max 1M -min 1M USBAC--synology              "${SYNOLOGY_SFTP}"
