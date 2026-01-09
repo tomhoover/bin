@@ -5,7 +5,30 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
-cd && mr up && mr push
-cd ~/src && mr up && mr push
-cd ~/src/3dPrinting && mr up && mr push
-cd ~/src/github.com && mr up && mr push
+mrpull() {
+    mr --jobs 1 up
+}
+
+mrpush() {
+    mr --jobs 1 push
+}
+
+mrpullv() {
+    mr --verbose --jobs 1 up
+}
+
+mrpushv() {
+    mr --verbose --jobs 1 push
+}
+
+if [ $# -eq 0  ]; then
+    cd                  && mrpull && mrpush
+    cd ~/src            && mrpull && mrpush
+    cd ~/src/3dPrinting && mrpull && mrpush
+    cd ~/src/github.com && mrpull && mrpush
+else
+    cd                  && mrpullv && mrpushv
+    cd ~/src            && mrpullv && mrpushv
+    cd ~/src/3dPrinting && mrpullv && mrpushv
+    cd ~/src/github.com && mrpullv && mrpushv
+fi

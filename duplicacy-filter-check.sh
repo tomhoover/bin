@@ -5,6 +5,9 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -o pipefail
 
+# shellcheck source=/dev/null
+source ~/bin/COLORS
+
 # duplicacy -d -log backup -enum-only -stats | tee .duplicacy/check-filters.log
 # exit
 
@@ -23,5 +26,70 @@ elif [[ "${MYHOST}" == "synology" ]]; then
 fi
 
 "${DUPLICACY}" -d -log backup -storage "${1}" -enum-only -stats | tee .duplicacy/check-filters.log
-grep PATTERN_EXCLUDE .duplicacy/check-filters.log | tee .duplicacy/check-filters-excluded.log | less
-grep PATTERN_INCLUDE .duplicacy/check-filters.log | tee .duplicacy/check-filters-included.log | less
+grep PATTERN_EXCLUDE .duplicacy/check-filters.log > .duplicacy/check-filters-excluded.log
+grep PATTERN_INCLUDE .duplicacy/check-filters.log > .duplicacy/check-filters-included.log
+
+cat .duplicacy/check-filters-excluded.log \
+    |grep -v '/.git/ is excluded by pattern e:\\.(svn|git|hg)/.*\$' \
+    |grep -v '/__pycache__/ is excluded by pattern -\*/__pycache__/' \
+    |grep -v 'is excluded by pattern e:\\.(rsls|rslsa|rslsd|rslsf|rslsi|rslsp|rslss|rslsv|rslsz)\$' \
+    > .duplicacy/check-filters-excluded-minimal.log
+
+{
+    echo
+    echo "Removed from 'minimal' file:"
+    echo
+    echo '/.git/ is excluded by pattern e:\.(svn|git|hg)/.*$'
+    echo '/__pycache__/ is excluded by pattern -*/__pycache__/'
+    echo 'is excluded by pattern e:\.(rsls|rslsa|rslsd|rslsf|rslsi|rslsp|rslss|rslsv|rslsz)$'
+} >> .duplicacy/check-filters-excluded-minimal.log
+
+cat .duplicacy/check-filters-included.log \
+    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/OrcaSlicer.git/' \
+    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/QIDIStudio.git/' \
+    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/crontab.git/' \
+    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/dotfiles.git/' \
+    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/git.git/' \
+    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/mr.git/' \
+    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/private.git/' \
+    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/vault.git/' \
+    |grep -v 'PATTERN_INCLUDE Databases/' \
+    |grep -v 'PATTERN_INCLUDE Library/Application Support/DEVONthink 3/' \
+    |grep -v 'PATTERN_INCLUDE Library/Mail/V10/' \
+    |grep -v 'PATTERN_INCLUDE Library/Messages/Attachments/' \
+    |grep -v 'PATTERN_INCLUDE OrbStack/arch/' \
+    |grep -v 'PATTERN_INCLUDE OrbStack/docker/containers/' \
+    |grep -v 'PATTERN_INCLUDE OrbStack/docker/images/' \
+    |grep -v 'PATTERN_INCLUDE src.orig/' \
+    |grep -v 'PATTERN_INCLUDE src/' \
+    > .duplicacy/check-filters-included-minimal.log
+
+{
+    echo
+    echo "Removed from 'minimal' file:"
+    echo
+    echo '.config/vcsh/repo.d/OrcaSlicer.git/'
+    echo '.config/vcsh/repo.d/QIDIStudio.git/'
+    echo '.config/vcsh/repo.d/crontab.git/'
+    echo '.config/vcsh/repo.d/dotfiles.git/'
+    echo '.config/vcsh/repo.d/git.git/'
+    echo '.config/vcsh/repo.d/mr.git/'
+    echo '.config/vcsh/repo.d/private.git/'
+    echo '.config/vcsh/repo.d/vault.git/'
+    echo 'Databases/'
+    echo 'Library/Application Support/DEVONthink 3/'
+    echo 'Library/Mail/V10/'
+    echo 'Library/Messages/Attachments/'
+    echo 'OrbStack/arch/'
+    echo 'OrbStack/docker/containers/'
+    echo 'OrbStack/docker/images/'
+    echo 'src.orig/'
+    echo 'src/'
+} >> .duplicacy/check-filters-included-minimal.log
+
+rm .duplicacy/check-filters-excluded-cleaned.log 2>/dev/null
+rm .duplicacy/check-filters-included-cleaned.log 2>/dev/null
+
+echo
+echo "${RED}  vi .duplicacy/check-filters-excluded-minimal.log .duplicacy/check-filters-included-minimal.log .duplicacy/filters ~/bin/duplicacy-filter-check.sh${RESET}"
+echo
