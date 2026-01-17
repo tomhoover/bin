@@ -37,7 +37,8 @@ done
 
 echo "${RED}"
 # Remove branches that have already been merged with current branch
-git branch --merged | grep -v '\*' | grep -Ev '[/ ]+(main|master)$' | tee /tmp/merged-branches.txt | xargs -n 1 git branch -d && \
+git branch --merged | grep -v '\*' | grep -Ev '[/ ]+(main|master)$' | \
+    tee /tmp/merged-branches.txt | xargs --no-run-if-empty -n 1 git branch -d && \
     (
         echo "${CYAN}You may remove 'merged' branches from remote repos with:"
         while IFS=/ read -r REMOTE_BRANCH; do
