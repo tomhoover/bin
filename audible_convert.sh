@@ -9,35 +9,40 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -euo pipefail
 
-# shellcheck source=/dev/null
-[[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
+BOOKS="/Users/tom/data/books/audible"
+CALIBRE="/Users/tom/tmp/calibre_auto_upload"
+
+if [ ! -v AUDIBLE_ACTIVATION_BYTES ]; then
+    # shellcheck source=/dev/null
+    [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
+else
+    BOOKS="$(PWD)"
+fi
 
 # shellcheck source=/dev/null
 [[ -f ${HOME}/bin/COLORS ]] && . "${HOME}"/bin/COLORS
 
-BOOKS="/Users/tom/data/books/audible"
-CALIBRE="/Users/tom/tmp/calibre_auto_upload"
 # shellcheck disable=SC2034
 VERSION_CONTROL=numbered
 
 CP="cp"
 MV="mv"
-if [[ "$(uname)" = Darwin ]] ; then
+if [[ "$(uname)" = Darwin ]]; then
     CP="gcp"
     MV="gmv"
 fi
 
-cd ${BOOKS} || exit 1
+cd "${BOOKS}" || exit 1
 
-mkdir -p "$BOOKS/{aax,dl,m4b}"
-mkdir -p "$CALIBRE"
+mkdir -p "${BOOKS}"/{aax,dl,m4b}
+mkdir -p "${CALIBRE}"
 
 for f in dl/*.aax; do
     # does filename exist? if not, continue:
     [ -f "$f" ] || continue
 
     echo
-    if [ -f "${f%.*}.m4b" ] ; then
+    if [ -f "${f%.*}.m4b" ]; then
         echo "${BLUE}Skipping $f...${RESET}"
         continue
     fi
@@ -45,7 +50,7 @@ for f in dl/*.aax; do
     echo "${CYAN}Converting $f...${RESET}"
     echo
     ffmpeg -activation_bytes "${AUDIBLE_ACTIVATION_BYTES}" -i "$f" -codec copy "${f%.*}.m4b"
-    if [ -f "${f%.*}.m4b" ] ; then
+    if [ -f "${f%.*}.m4b" ]; then
         FILE="${f%-*}"
         echo
         echo "${MAGENTA}Copying ${f%.*}.m4b into calibre...${RESET}"
@@ -69,18 +74,18 @@ for f in dl/*.aaxc; do
     [ -f "$f" ] || continue
 
     echo
-    if [ -f "${f%.*}.m4b" ] ; then
+    if [ -f "${f%.*}.m4b" ]; then
         echo "${BLUE}Skipping $f...${RESET}"
         continue
     fi
-    if [ -f "${f%.*}.voucher" ] ; then
+    if [ -f "${f%.*}.voucher" ]; then
         AUDIBLE_KEY=$(jq --raw-output '.["content_license"]["license_response"]["key"]' "${f%.*}.voucher")
         AUDIBLE_IV=$(jq --raw-output '.["content_license"]["license_response"]["iv"]' "${f%.*}.voucher")
 
         echo "${CYAN}Converting $f...${RESET}"
         echo
         ffmpeg -audible_key "$AUDIBLE_KEY" -audible_iv "$AUDIBLE_IV" -i "$f" -codec copy "${f%.*}.m4b"
-        if [ -f "${f%.*}.m4b" ] ; then
+        if [ -f "${f%.*}.m4b" ]; then
             FILE="${f%-*}"
             echo
             echo "${MAGENTA}Copying ${f%.*}.m4b into calibre...${RESET}"
@@ -107,9 +112,12 @@ for f in dl/*.aaxc; do
     fi
 done
 
-echo
-echo "${YELLOW}Delete any backups shown below:${RESET}"
-echo
+if (find "${BOOKS}" -name '*~' | grep -q '.' || find "${CALIBRE}" -name '*~' | grep -q '.'); then
+    echo
+    echo "${YELLOW}Delete any backups shown below:${RESET}"
+    echo
 
-find "$BOOKS" -name '*~' -print
-find "$CALIBRE" -name '*~' -print
+    find "$BOOKS" -name '*~' -print
+    find "$CALIBRE" -name '*~' -print
+    echo
+fi
