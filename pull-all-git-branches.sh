@@ -40,8 +40,8 @@ echo "${RED}"
 git branch --merged | grep -v '\*' | grep -Ev '[/ ]+(main|master)$' | tee /tmp/merged-branches.txt | xargs -n 1 git branch -d && \
     (
         echo "${CYAN}You may remove 'merged' branches from remote repos with:"
-        while IFS=/ read -r REMOTE_REPO REMOTE_BRANCH; do
-            echo "     ${RED}git push ${REMOTE_REPO} --delete ${REMOTE_BRANCH}"
+        while IFS=/ read -r REMOTE_BRANCH; do
+            echo "     ${RED}git push <REMOTE_REPO> --delete ${REMOTE_BRANCH}"
         done < /tmp/merged-branches.txt
         echo
     )
