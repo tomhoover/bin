@@ -70,7 +70,6 @@ repos:
   hooks:
     - id: forbid-binary
     - id: git-check
-      exclude: '^archive/*'
     - id: script-must-have-extension
     - id: shellcheck
 #    - id: shfmt
