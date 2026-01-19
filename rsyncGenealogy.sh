@@ -18,24 +18,24 @@ cat /dev/null > /tmp/rsyncGenealogy
 
 if [ -s /tmp/rsyncGenealogy ]
 then
-	grep "^diff -r" /tmp/rsyncGenealogy |sed -e 's/^diff -r //' |tr ' ' '\n' |tee /tmp/red |while read -r REF
-	do
-	  #echo "$REF" | tee -a colorCleared.txt
-  	  label 2 "$REF"
-	done
+    grep "^diff -r" /tmp/rsyncGenealogy |sed -e 's/^diff -r //' |tr ' ' '\n' |tee /tmp/red |while read -r REF
+    do
+        #echo "$REF" | tee -a colorCleared.txt
+        label 2 "$REF"
+    done
 
-	# /\'$'\n'/ in the next line required to insert newline into sed substitution expression under BSD
-	grep "^Binary files " /tmp/rsyncGenealogy |grep " differ$" |sed -e 's/^Binary files //' -e 's/ differ$//' -e 's/ and /\'$'\n'/ |tee -a /tmp/red |while read -r REF
-	do
-  	  label 2 "$REF"
-	done
+    # /\'$'\n'/ in the next line required to insert newline into sed substitution expression under BSD
+    grep "^Binary files " /tmp/rsyncGenealogy |grep " differ$" |sed -e 's/^Binary files //' -e 's/ differ$//' -e 's/ and /\'$'\n'/ |tee -a /tmp/red |while read -r REF
+    do
+        label 2 "$REF"
+    done
 
-	grep "^Only in" /tmp/rsyncGenealogy | sed -e 's/^Only in //' -e 's/: /\//' | tee /tmp/orange | while read -r REF
-	do
-	  label 1 "$REF"
-	done
+    grep "^Only in" /tmp/rsyncGenealogy | sed -e 's/^Only in //' -e 's/: /\//' | tee /tmp/orange | while read -r REF
+    do
+        label 1 "$REF"
+    done
 else
-	cd ~/Documents/Genealogy/ && rsync -av --delete --delete-excluded --exclude '* alias' Surnames/ ../../Dropbox/_Shared/Genealogy/Surnames
-	cd ~/Documents/Genealogy/ && rsync -av --delete --delete-excluded --exclude '* alias' Places/   ../../Dropbox/_Shared/Genealogy/Places
+    cd ~/Documents/Genealogy/ && rsync -av --delete --delete-excluded --exclude '* alias' Surnames/ ../../Dropbox/_Shared/Genealogy/Surnames
+    cd ~/Documents/Genealogy/ && rsync -av --delete --delete-excluded --exclude '* alias' Places/   ../../Dropbox/_Shared/Genealogy/Places
 fi
 exit

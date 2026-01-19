@@ -11,14 +11,14 @@ set -eu -o pipefail
 # mount.sh
 
 # found on the limetech.com forum at:
-#	discussion: http://lime-technology.com/forum/index.php?topic=10274.0
-#	zip file:   http://lime-technology.com/forum/index.php?action=dlattach;topic=10274.0;attach=9412
+#       discussion: http://lime-technology.com/forum/index.php?topic=10274.0
+#       zip file:   http://lime-technology.com/forum/index.php?action=dlattach;topic=10274.0;attach=9412
 # renamed from mount.sh to mountSMB-nas
 
 ###############################################################################
 # SET YOUR PREFS HERE - READ BELOW BEFORE RUNNING SCRIPT                      #
 # RUN AT YOUR OWN RISK, MAKE BACKUPS OF YOUR DATA ALWAYS                      #
-#	   				                                      #
+#                                                                             #
 # PASSWORD: If your password contains symbols, they must be url encoded       #
 #           ie: "@" becomes "%40". To encode your password, use this site:    #
 #           http://www.opinionatedgeek.com/dotnet/tools/urlencode/Encode.aspx #
@@ -48,12 +48,12 @@ SCRIPTLOCATION="/Users/tom/bin"
 [[ -f ${HOME}/.SECRETS ]] && . ${HOME}/.SECRETS
 
 # Username for server
-USERNAME="username"				# you can set your username here, or
-USERNAME=${MOUNT_synology_USERNAME:-$USERNAME}	#  set the variable MOUNTSMB_USERNAME in ~/.SECRETS
+USERNAME="username"                             # you can set your username here, or
+USERNAME=${MOUNT_synology_USERNAME:-$USERNAME}  #  set the variable MOUNTSMB_USERNAME in ~/.SECRETS
 
 # Password for server, check notes
-PASSWORD="password"				# you can set your password here, or
-PASSWORD=${MOUNT_synology_PASSWORD:-$PASSWORD}	#  set the variable MOUNTSMB_PASSWORD in ~/.SECRETS
+PASSWORD="password"                             # you can set your password here, or
+PASSWORD=${MOUNT_synology_PASSWORD:-$PASSWORD}  #  set the variable MOUNTSMB_PASSWORD in ~/.SECRETS
 
 # IP Address/hostname for ping
 PING="10.10.10.15"
@@ -115,133 +115,133 @@ MOUNT="/System/Volumes/Data/../Data/Volumes"
 # Check if server is available
 if ( ping -q -c 5 $PING ); then
 
-	AVAILABLE="TRUE"
+        AVAILABLE="TRUE"
 
-	# Loop through shares to mount them
-	for s in $SHARES
+        # Loop through shares to mount them
+        for s in $SHARES
 
-	do
+        do
 
-		# Parse spaces for mkdir
-		SPACESHARE=$(echo $s|sed "s/%20/ /g")
+                # Parse spaces for mkdir
+                SPACESHARE=$(echo $s|sed "s/%20/ /g")
 
-		# Check to see if mount doesn't exist, then mounts either AFP or SMB.
-		if [ ! -d "$MOUNT/$SPACESHARE" ]; then
+                # Check to see if mount doesn't exist, then mounts either AFP or SMB.
+                if [ ! -d "$MOUNT/$SPACESHARE" ]; then
 
-			mkdir "$MOUNT/$SPACESHARE"
+                        mkdir "$MOUNT/$SPACESHARE"
 
-			if [ $PROTOCOL == "smb" ]; then
+                        if [ $PROTOCOL == "smb" ]; then
 
-				echo "Mounting $SPACESHARE ..."
-				mount_smbfs //$USERNAME:$PASSWORD@$HOSTNAME/$s "$MOUNT/$SPACESHARE"
+                                echo "Mounting $SPACESHARE ..."
+                                mount_smbfs //$USERNAME:$PASSWORD@$HOSTNAME/$s "$MOUNT/$SPACESHARE"
 
-				if [ ! "$?" -eq "0" ]; then
+                                if [ ! "$?" -eq "0" ]; then
 
-					if [ "$(ls -A "$MOUNT/$SPACESHARE")" ]; then
+                                        if [ "$(ls -A "$MOUNT/$SPACESHARE")" ]; then
 
-  						echo "Mount failed. Check settings/server. Could not delete $MOUNT/$SPACESHARE as it contains files. Please check."
-						echo "*************"
-						AVAILABLE="FALSE"
+                                                echo "Mount failed. Check settings/server. Could not delete $MOUNT/$SPACESHARE as it contains files. Please check."
+                                                echo "*************"
+                                                AVAILABLE="FALSE"
 
-					else
+                                        else
 
-						echo "$SPACESHARE mount failed. Check settings/server. Removing mount point."
-						echo "*************"
-						rmdir "$MOUNT/$SPACESHARE"
-						AVAILABLE="FALSE"
+                                                echo "$SPACESHARE mount failed. Check settings/server. Removing mount point."
+                                                echo "*************"
+                                                rmdir "$MOUNT/$SPACESHARE"
+                                                AVAILABLE="FALSE"
 
-					fi
+                                        fi
 
-				fi
+                                fi
 
-			elif [ $PROTOCOL == "afp" ]; then
+                        elif [ $PROTOCOL == "afp" ]; then
 
-				echo "Mounting $SPACESHARE"
-				mount_afp afp://$USERNAME:$PASSWORD@$HOSTNAME/$s "$MOUNT/$SPACESHARE"
+                                echo "Mounting $SPACESHARE"
+                                mount_afp afp://$USERNAME:$PASSWORD@$HOSTNAME/$s "$MOUNT/$SPACESHARE"
 
-				if [ ! "$?" -eq "0" ]; then
+                                if [ ! "$?" -eq "0" ]; then
 
-					if [ "$(ls -A "$MOUNT/$SPACESHARE")" ]; then
+                                        if [ "$(ls -A "$MOUNT/$SPACESHARE")" ]; then
 
-  						echo "Mount failed. Check settings/server. Could not remove $MOUNT/$SPACESHARE as it contains files. Please check."
-						echo "*************"
-						AVAILABLE="FALSE"
+                                                echo "Mount failed. Check settings/server. Could not remove $MOUNT/$SPACESHARE as it contains files. Please check."
+                                                echo "*************"
+                                                AVAILABLE="FALSE"
 
-					else
+                                        else
 
-						echo "$SPACESHARE mount failed. Check settings/server. Removing mount point."
-						echo "*************"
-						rmdir "$MOUNT/$SPACESHARE"
-						AVAILABLE="FALSE"
+                                                echo "$SPACESHARE mount failed. Check settings/server. Removing mount point."
+                                                echo "*************"
+                                                rmdir "$MOUNT/$SPACESHARE"
+                                                AVAILABLE="FALSE"
 
-					fi
+                                        fi
 
-				fi
+                                fi
 
-			fi
-		else
+                        fi
+                else
 
-			# If shares are already mounted, don't do anything
-			echo "$SPACESHARE already mounted"
+                        # If shares are already mounted, don't do anything
+                        echo "$SPACESHARE already mounted"
 
-		fi
+                fi
 
-	done
+        done
 
 else
 
-	DATE=`date +%H`
-	DATE=`echo $DATE|sed 's/^0*//'`
-	AVAILABLE="FALSE"
+        DATE=`date +%H`
+        DATE=`echo $DATE|sed 's/^0*//'`
+        AVAILABLE="FALSE"
 
-	# Loop through shares to unmount them, if mounted.
-	for s in $SHARES
+        # Loop through shares to unmount them, if mounted.
+        for s in $SHARES
 
-	do
+        do
 
-		# Parse spaces for umount
-		SPACESHARE=$(echo $s|sed "s/%20/ /g")
+                # Parse spaces for umount
+                SPACESHARE=$(echo $s|sed "s/%20/ /g")
 
-		# Check to see if mount exists, then unmount
-		if [ -d "$MOUNT/$SPACESHARE" ]; then
+                # Check to see if mount exists, then unmount
+                if [ -d "$MOUNT/$SPACESHARE" ]; then
 
-			echo "Unmounting $SPACESHARE"
-			umount "$MOUNT/$SPACESHARE"
+                        echo "Unmounting $SPACESHARE"
+                        umount "$MOUNT/$SPACESHARE"
 
-		fi
+                fi
 
-	done
+        done
 
-	if [ $WAKE == "TRUE" ]; then
+        if [ $WAKE == "TRUE" ]; then
 
-		if [[ $DATE -ge $HOURSTART && $DATE -lt $HOUREND ]] || [ $1 == "wake" ]; then
+                if [[ $DATE -ge $HOURSTART && $DATE -lt $HOUREND ]] || [ $1 == "wake" ]; then
 
-			echo "Waking Server"
-			$SCRIPTLOCATION/wolcmd $MACADDRESS $PING $SUBNET 4343
+                        echo "Waking Server"
+                        $SCRIPTLOCATION/wolcmd $MACADDRESS $PING $SUBNET 4343
 
-		fi
+                fi
 
-	fi
+        fi
 
 fi
 
 # Opens iTunes if TRUE and Server
 if [ $ITUNES == "TRUE" ] && [ $AVAILABLE == "TRUE" ]; then
 
-	if (! ps ax | grep -v grep | grep -v iTunesHelper | grep /Applications/iTunes.app/Contents/MacOS/iTunes > /dev/null ); then
+        if (! ps ax | grep -v grep | grep -v iTunesHelper | grep /Applications/iTunes.app/Contents/MacOS/iTunes > /dev/null ); then
 
-	echo "Attempting to open iTunes"
-	open /Applications/iTunes.app/
+        echo "Attempting to open iTunes"
+        open /Applications/iTunes.app/
 
-	fi
+        fi
 
 else
 
-	if [ $ITUNESQUIT == "TRUE" ]; then
+        if [ $ITUNESQUIT == "TRUE" ]; then
 
-	echo "Attempting to close iTunes"
-	osascript -e 'tell application "iTunes" to quit'
+        echo "Attempting to close iTunes"
+        osascript -e 'tell application "iTunes" to quit'
 
-	fi
+        fi
 
 fi

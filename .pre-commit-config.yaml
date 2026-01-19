@@ -1,59 +1,76 @@
 fail_fast: true
 
-# See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.4.0
+  rev: v6.0.0
   hooks:
 
     # git
     - id: check-added-large-files
     - id: check-case-conflict
+    - id: check-illegal-windows-names
     - id: check-merge-conflict
+      args: [--assume-in-merge]
     - id: check-symlinks
     - id: check-vcs-permalinks
     - id: destroyed-symlinks
     - id: detect-aws-credentials
     - id: detect-private-key
     - id: forbid-new-submodules
+    - id: forbid-submodules
+    - id: no-commit-to-branch
 
     # python
     - id: check-ast
     - id: check-builtin-literals
-    - id: check-docstring-first
     - id: debug-statements
 #    - id: double-quote-string-fixer
 #    - id: fix-byte-order-marker
-#    - id: fix-encoding-pragma
     - id: name-tests-test
 #    - id: requirements-txt-fixer
 
     # json
     - id: check-json
-#    - id: pretty-format-json
+    - id: pretty-format-json
+
+    # toml
+    - id: check-toml
+
+    # xml
+    - id: check-xml
 
     # yaml
     - id: check-yaml
 #    - id: sort-simple-yaml
 
-    # invalid files
-    - id: check-toml
-    - id: check-xml
-
     # misc
     - id: check-executables-have-shebangs
     - id: check-shebang-scripts-are-executable
     - id: end-of-file-fixer
+      exclude: 'touchSuperDuperDate.sh'
+#    - id: file-contents-sorter
+#      files:
+#      args: [--unique]
     - id: mixed-line-ending
     - id: trailing-whitespace
       args: [--markdown-linebreak-ext=md]
-    - id: no-commit-to-branch
+
+- repo: local
+  hooks:
+    - id: prevent-fixme
+      name: 'prevent FIXME'
+      language: pygrep
+      entry: '(?i)# *FIXME\b'
+      types: [text]
+      exclude: '.pre-commit-config.yaml'
 
 - repo: https://github.com/tomhoover/pre-commit-hooks
   rev: 3.0.0
   hooks:
     - id: forbid-binary
+    - id: git-check
+      exclude: '^archive/*'
     - id: script-must-have-extension
     - id: shellcheck
 #    - id: shfmt
@@ -67,12 +84,27 @@ repos:
 
 # python
 
-- repo: https://github.com/psf/black
-  rev: 23.1.0
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.14.13
   hooks:
-    - id: black
-      language_version: python3.11
-#      args: [--diff, --check]
+    - id: ruff-check
+      types_or: [ python, pyi ]
+      args: [ --fix ]
+    - id: ruff-format
+      types_or: [ python, pyi ]
+
+## the following were replaced by ruff
+## -   repo: https://github.com/pre-commit/mirrors-isort
+##     rev: v5.10.1
+##     hooks:
+##     - id: isort
+##
+## - repo: https://github.com/psf/black
+##   rev: 23.10.0
+##   hooks:
+##     - id: black
+##       language_version: python3.11
+## #      args: [--diff, --check]
 
 # - repo: https://github.com/pre-commit/mirrors-mypy
 #   rev: v1.0.0
@@ -81,21 +113,21 @@ repos:
 #       exclude: ^tests/
 #       args: [--strict]
 
-- repo: https://github.com/pre-commit/mirrors-pylint
-  rev: v3.0.0a5
-  hooks:
-    - id: pylint
-      args: [--disable=all, --enable=unused-import]
-
-# no longer needed, as black ensures pep8 compliance
-# - repo: https://github.com/pre-commit/mirrors-autopep8
-#   rev: v2.0.0
+# - repo: https://github.com/pre-commit/mirrors-pylint
+#   rev: v3.0.0a5
 #   hooks:
-#     - id: autopep8
+#     - id: pylint
+#       args: [--disable=all, --enable=unused-import]
 
-# the following was disabled, as it required docker to be running
-# - repo: https://github.com/koalaman/shellcheck-precommit
-#   rev: v0.8.0
-#   hooks:
-#     - id: shellcheck
-# #     args: ["--severity=warning"]  # Optionally only show errors and warnings
+## no longer needed, as black ensures pep8 compliance
+## - repo: https://github.com/pre-commit/mirrors-autopep8
+##   rev: v2.0.0
+##   hooks:
+##     - id: autopep8
+
+## the following was disabled, as it required docker to be running
+## - repo: https://github.com/koalaman/shellcheck-precommit
+##   rev: v0.8.0
+##   hooks:
+##     - id: shellcheck
+## #     args: ["--severity=warning"]  # Optionally only show errors and warnings
