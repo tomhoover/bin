@@ -36,6 +36,8 @@ cd /Volumes && rsync -avzh --delete \
 				b/ tom@bethel:/mnt/rsync/tom_b/
 
 exit 0
+# shellcheck disable=SC2317
+{
 echo ""
 echo " --------------"
 echo "| RAID_Archive |"
@@ -61,3 +63,4 @@ echo " --------------"
 echo "| RAID_backups |"
 echo " --------------"
 cd /Volumes/RAID10 && rsync -avzh --delete backups/ tom@bethel:/mnt/rsync/RAID10_backups/
+}
