@@ -21,14 +21,16 @@ mrpushv() {
     mr --verbose --jobs 1 push
 }
 
-if [ $# -eq 0  ]; then
+vcsh crontab pull; vcsh dotfiles pull; vcsh git pull; vcsh mr pull; vcsh private pull
+
+if [ $# -eq 0 ]; then
     cd                  && mrpull && mrpush
     cd ~/src            && mrpull && mrpush
-    cd ~/src/3dPrinting && mrpull && mrpush
     cd ~/src/github.com && mrpull && mrpush
+    # cd ~/src/3dPrinting && mrpull && mrpush
 else
     cd                  && mrpullv && mrpushv
     cd ~/src            && mrpullv && mrpushv
-    cd ~/src/3dPrinting && mrpullv && mrpushv
     cd ~/src/github.com && mrpullv && mrpushv
+    # cd ~/src/3dPrinting && mrpullv && mrpushv
 fi
