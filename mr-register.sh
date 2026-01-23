@@ -14,13 +14,18 @@ clear
 echo
 echo "Searching for git repos..."
 
-cd && echo '' > ~/tmp/tmp.mrconfig && /usr/bin/grep '^\[' .mrconfig src/.mrconfig src/3dPrinting/.mrconfig src/github.com/.mrconfig .config/mr/* |sed -E 's/^(.*):(.*)/\2 ::: \1/' |sed -E 's/^#(.*)/\1#####/' |grep -v '^ ' |grep -v ^skip |grep -v ^.DEFAULT |sort |less
+cd && echo '' > ~/tmp/tmp.mrconfig && /usr/bin/grep '^\[' ~/.mrconfig ~/src/.mrconfig ~/src/github.com/.mrconfig ~/.config/mr/* \
+    |sed -E 's/^(.*):(.*)/\2 ::: \1/' |sed -E 's/^#(.*)/\1#####/' |grep -v '^ ' |grep -v ^skip |grep -v ^.DEFAULT |sort |less
 
 echo "#!/bin/bash" > ~/tmp/register.sh
 echo "cd || exit" >> ~/tmp/register.sh
 echo ""
 
-cd && time find . \( -path './Library' -o -path './data' -o -path './dl' -o -path './doc' -o -path './tmp' \) -prune -o -type d -name '.git' | \
+cd && time find -s . \( -path './Library' -o -path './OrbStack' -o \
+    -path './data' -o -path './dl' -o -path './doc' -o -path './tmp' -o \
+    -path './git/.Spotlight-V100' -o -path './git/.Trashes' -o -path './git/.fseventsd' -o \
+    -path './src/.Spotlight-V100' -o -path './src/.TemporaryItems' -o -path './src/.Trashes' -o -path './src/.fseventsd' \) -prune -o \
+    -type d -name '.git' | \
     grep -v '^./.ansible/roles/trfore.omada_install/' | \
     grep -v '^./.cache/AUR/' | \
     grep -v '^./.cache/cookiecutters/' | \
@@ -29,25 +34,43 @@ cd && time find . \( -path './Library' -o -path './data' -o -path './dl' -o -pat
     grep -v '^./.local/share/nvim/lazy/' | \
     grep -v '^./.vim/plugged/' | \
     grep -v '^./Library$' | \
+    grep -v '^./OrbStack$' | \
     grep -v '^./data$' | \
     grep -v '^./dl$' | \
     grep -v '^./doc$' | \
+    grep -v '^./git/.Spotlight-V100$' | \
+    grep -v '^./git/.Trashes$' | \
+    grep -v '^./git/.fseventsd$' | \
+    grep -v '^./src.orig/' | \
+    grep -v '^./src/.Spotlight-V100$' | \
+    grep -v '^./src/.TemporaryItems$' | \
+    grep -v '^./src/.Trashes$' | \
+    grep -v '^./src/.fseventsd$' | \
     grep -v '^./src/AUR/' | \
     grep -v '^./tmp$' | \
     sed -e 's|^./||' -e 's|/.git$||' | while read -r REPOSITORY; do
-    grep -F "${REPOSITORY}]" ~/.mrconfig ~/src/.mrconfig ~/src/3dPrinting/.mrconfig ~/src/github.com/.mrconfig ~/.config/mr/* || echo "mr -c ~/tmp/tmp.mrconfig register '${REPOSITORY}'" >> ~/tmp/register.sh
+
+    grep -F "${REPOSITORY}]" ~/.mrconfig ~/src/.mrconfig ~/src/3dPrinting/.mrconfig ~/src/github.com/.mrconfig ~/.config/mr/* \
+        || echo "mr -c ~/tmp/tmp.mrconfig register '${REPOSITORY}' || echo '${REPOSITORY}' >> ~/tmp/no-git-remote.txt" >> ~/tmp/register.sh
 done
 
 {
     echo "sed -e 's/\/home\/tom\///' -e 's/\/Users\/tom\///' -e '/^\[\$HOME/! s/^\[/[\$HOME\//g' -e 's/^\[/~[/g' ~/tmp/tmp.mrconfig |tr '\n' '^' |tr '~' '\n' |sort |tr -s '^' |tr '^' '\n' > ~/tmp/tmp2.mrconfig"
     echo "mv ~/tmp/tmp2.mrconfig ~/tmp/tmp.mrconfig"
+    echo "if [ -f ~/tmp/no-git-remote.txt ]; then"
+    echo "    echo >> ~/tmp/tmp.mrconfig"
+    echo "    echo '##### The following repos are missing a remote:' >> ~/tmp/tmp.mrconfig"
+    echo "    echo >> ~/tmp/tmp.mrconfig"
+    echo "    cat ~/tmp/no-git-remote.txt >> ~/tmp/tmp.mrconfig"
+    echo "    rm ~/tmp/no-git-remote.txt"
+    echo "fi"
     echo "echo ''"
     echo "echo 'finally, edit the following to taste:'"
-    echo "echo '     vi ~/tmp/tmp.mrconfig ~/.mrconfig ~/src/.mrconfig ~/src/3dPrinting/.mrconfig ~/src/github.com/.mrconfig ~/.config/mr/*'"
+    echo "echo '     vi ~/tmp/tmp.mrconfig ~/.mrconfig ~/src/.mrconfig ~/src/github.com/.mrconfig ~/src/3dPrinting/.mrconfig ~/.config/mr/*'"
     echo "echo ''"
     echo "rm -f $HOME/tmp/register.sh"
 } >> ~/tmp/register.sh
 
 chmod +x ~/tmp/register.sh
 ~/tmp/register.sh
-vi ~/tmp/tmp.mrconfig ~/.mrconfig ~/src/.mrconfig ~/src/3dPrinting/.mrconfig ~/src/github.com/.mrconfig ~/.config/mr/*
+vi ~/tmp/tmp.mrconfig ~/.mrconfig ~/src/.mrconfig ~/src/github.com/.mrconfig ~/src/3dPrinting/.mrconfig ~/.config/mr/*
