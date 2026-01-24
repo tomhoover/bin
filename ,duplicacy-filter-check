@@ -91,5 +91,5 @@ rm .duplicacy/check-filters-excluded-cleaned.log 2>/dev/null
 rm .duplicacy/check-filters-included-cleaned.log 2>/dev/null
 
 echo
-echo "${RED}  vi .duplicacy/check-filters-excluded-minimal.log .duplicacy/check-filters-included-minimal.log .duplicacy/filters ~/bin/duplicacy-filter-check.sh${RESET}"
+echo "${RED}  vi .duplicacy/check-filters-excluded-minimal.log .duplicacy/check-filters-included-minimal.log .duplicacy/filters ~/bin/,duplicacy-filter-check${RESET}"
 echo

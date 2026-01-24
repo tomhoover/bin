@@ -48,7 +48,7 @@ repos:
     - id: check-executables-have-shebangs
     - id: check-shebang-scripts-are-executable
     - id: end-of-file-fixer
-      exclude: 'touchSuperDuperDate.sh'
+      exclude: ',touchSuperDuperDate'
 #    - id: file-contents-sorter
 #      files:
 #      args: [--unique]
@@ -65,26 +65,52 @@ repos:
       types: [text]
       exclude: '.pre-commit-config.yaml'
 
+#- repo: https://github.com/tomhoover/pre-commit-hooks
+#  rev: 3.0.0
+#  hooks:
+#    - id: forbid-binary
+#    - id: git-check
+#    - id: script-must-have-extension
+#    - id: shellcheck
+#    - id: shfmt
+
+#- repo: https://github.com/tomhoover/pre-commit-hooks
+#  hooks:
+#    - id: script-must-have-extension
+#      name: Local policy is to use .sh extension for shell scripts
+#      types: [shell, executable]
+
 - repo: https://github.com/tomhoover/pre-commit-hooks
+#  rev: master  # or specific git tag
   rev: 3.0.0
   hooks:
+#    - id: bundler-audit
+    - id: check-mailmap
+#    - id: fasterer
     - id: forbid-binary
-    - id: git-check
-    - id: script-must-have-extension
+#    - id: forbid-space-in-indent
+    - id: git-check  # Configure in .gitattributes
+#    - id: git-dirty  # Configure in .gitignore
+#    - id: markdownlint # Configure in .mdlrc
+#    - id: reek
+#    - id: require-ascii
+#    - id: rubocop
     - id: shellcheck
 #    - id: shfmt
 
-- repo: https://github.com/tomhoover/pre-commit-hooks
-  rev: 3.0.0
-  hooks:
+  # google shell style guide:
+    # Libraries must have a .sh extension and should not be executable
     - id: script-must-have-extension
-      name: Local policy is to use .sh extension for shell scripts
+      types: [shell, non-executable]
+    # Executables should have no extension (strongly preferred)
+    - id: script-must-not-have-extension
       types: [shell, executable]
+      exclude: 'archive/'
 
 # python
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.14.13
+  rev: v0.14.14
   hooks:
     - id: ruff-check
       types_or: [ python, pyi ]

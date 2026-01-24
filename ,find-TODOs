@@ -18,7 +18,7 @@ find . \( -path './Library' -o -path './OrbStack' -o -path './data' -o -path './
     grep -v '^./.vim/plugged/' | \
     grep -v '^./Library$' | \
     grep -v '^./OrbStack$' | \
-    grep -v '^./bin/find-TODOs.sh$' | \
+    grep -v '^./bin/,find-TODOs$' | \
     grep -v '^./data$' | \
     grep -v '^./dl$' | \
     grep -v '^./doc$' | \
@@ -77,7 +77,7 @@ done < "$HOME/tmp/all-git-repos.txt" | \
     grep -v '^.ansible/roles/trfore.omada_install/.pylintrc:' | \
     grep -v '^.ansible/roles/trfore.omada_old/.pylintrc:' | \
     grep -v '^Binary file .* matches' | \
-    grep -v '^bin/find-TODOs.sh:' | \
+    grep -v '^bin/,find-TODOs:' | \
     grep -v '^src/3dPrinting/github.com/julie777/Compatible-Bins/' | \
     grep -v '^src/git.spwhitton.name/dotfiles/' | \
     grep -v '^src/github.com/tomhoover/addons-source/' | \

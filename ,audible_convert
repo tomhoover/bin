@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# DeDRMs all audiobooks downloaded with audible_dl.sh
+# DeDRMs all audiobooks downloaded with bin/,audible_dl
 # Imports all *.pdf files, as well as generated *.m4b files, into Calibre
 # Moves all files to ./aax & ./m4b
 
