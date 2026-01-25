@@ -1,3 +1,4 @@
+default_install_hook_types: [pre-commit, pre-push, pre-rebase]
 fail_fast: true
 
 # See https://pre-commit.com/hooks.html for more hooks
@@ -20,6 +21,7 @@ repos:
     - id: forbid-new-submodules
     - id: forbid-submodules
     - id: no-commit-to-branch
+      stages: [pre-commit, pre-merge-commit, pre-rebase]
 
     # python
     - id: check-ast
