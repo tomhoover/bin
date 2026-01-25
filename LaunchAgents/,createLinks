@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+MYHOST=$(uname -n | sed 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
+
 [[ "$(uname)" = "Darwin" ]] || exit
 
 cd "${HOME}/Library/LaunchAgents" || exit
@@ -16,5 +18,11 @@ for f in us.t0m.*.plist; do
     sudo launchctl bootout system /Library/LaunchDaemons/"$f"
     sudo launchctl bootstrap system /Library/LaunchDaemons/"$f"
 done
+
+if [ "$MYHOST" = "bethel" ]; then
+    sudo cp /Users/tom/bin/LaunchDaemons-System/us.t0m.sanoid.plist.bethel /Library/LaunchDaemons/us.t0m.sanoid.plist
+    sudo launchctl bootout system /Library/LaunchDaemons/us.t0m.sanoid.plist
+    sudo launchctl bootstrap system /Library/LaunchDaemons/us.t0m.sanoid.plist
+fi
 
 sudo launchctl list | grep us.t0m
