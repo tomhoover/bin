@@ -41,25 +41,25 @@
 # 1946	Ubuntu 22.10 x64		x64	ubuntu
 # 1968	OpenBSD 7.2 x64			x64	openbsd
 
-read -rsn 1 -p "(A)rch, (D)ebian 11, (F)edora 37, or (U)buntu 22.04 " choice;
+read -rsn 1 -p "(A)rch, (D)ebian 11, (F)edora 37, or (U)buntu 22.04 " choice
 
 case $choice in
-    a|A)
+    a | A)
         # 535	Arch Linux x64			x64	archlinux
         ID=535
         NAME=arch
         ;;
-    d|D)
+    d | D)
         # 477	Debian 11 x64 (bullseye)	x64	debian
         ID=477
         NAME=debian
         ;;
-    f|F)
+    f | F)
         # 1929	Fedora 37 x64			x64	fedora
         ID=1929
         NAME=fedora
         ;;
-    u|U)
+    u | U)
         # 1743	Ubuntu 22.04 LTS x64		x64	ubuntu
         ID=1743
         NAME=ubuntu
@@ -78,7 +78,7 @@ vultr-cli instance create \
     --os=${ID} \
     --plan=vhp-1c-1gb-amd \
     --region=dfw \
-    --ssh-keys=68ce220c-d2c8-4dfb-b989-f3c7d57f04c8 \
+    --ssh-keys=68ce220c-d2c8-4dfb-b989-f3c7d57f04c8
 
 sleep 10
 ~/bin/update-vultr-hosts.sh

@@ -10,7 +10,7 @@ PATH=$PATH:/usr/local/bin
 FILE="$HOME/Dropbox/lastip"
 
 DIRNAME="$(dirname $FILE)"
-if ! [ -d ${DIRNAME} ] ; then
+if ! [ -d ${DIRNAME} ]; then
     mkdir -pm 0700 ${DIRNAME}
     touch ${FILE}
 fi
@@ -20,7 +20,7 @@ WAN="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 
 if [[ "$LASTIP" != "$WAN" ]]; then
     echo "IP changed from $LASTIP to $WAN"
-    echo "$WAN" > "$FILE"
+    echo "$WAN" >"$FILE"
 
     if [[ "$HOSTNAME" == "unraid" ]]; then
         [[ -f /root/.boto ]] && . /root/.boto

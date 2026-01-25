@@ -9,94 +9,88 @@ set -eu -o pipefail
 cd || exit
 
 {
-find . \( -path './Library' -o -path './OrbStack' -o -path './data' -o -path './dl' -o -path './doc' -o -path './tmp' \
-    -o -path '**/.Trashes' -o -path '**/.fseventsd' -o -path '**/.Spotlight-V100' -o -path '**/.TemporaryItems' \) -prune \
-    -o -type f -name '*TODO*' | \
-    grep -v '^./.local/share/mise/installs/python/' | \
-    grep -v '^./.local/share/nvim/lazy/' | \
-    grep -v '^./.local/share/uv/python/' | \
-    grep -v '^./.vim/plugged/' | \
-    grep -v '^./Library$' | \
-    grep -v '^./OrbStack$' | \
-    grep -v '^./bin/,find-TODOs$' | \
-    grep -v '^./data$' | \
-    grep -v '^./dl$' | \
-    grep -v '^./doc$' | \
-    grep -v '^./fin/hledger/hoover/bin/edit-TODOs.sh$' | \
-    grep -v '^./git/.Spotlight-V100$' | \
-    grep -v '^./git/.Trashes$' | \
-    grep -v '^./git/.fseventsd$' | \
-    grep -v '^./pkg/mod/google.golang.org/' | \
-    grep -v '^./src/.Spotlight-V100$' | \
-    grep -v '^./src/.TemporaryItems$' | \
-    grep -v '^./src/.Trashes$' | \
-    grep -v '^./src/.fseventsd$' | \
-    grep -v '^./src/3dPrinting/github.com/julie777/Compatible-Bins/TODO.txt$' | \
-    grep -v '^./src/github.com/ArchiveBox/ArchiveBox/' | \
-    grep -v '^./src/github.com/boxofsnoo/Fairmount/TODO.txt$' | \
-    grep -v '^./src/github.com/gramps-project/gramps/TODO$' | \
-    grep -v '^./src/github.com/jimsalterjrs/sanoid/packages/debian/TODO$' | \
-    grep -v '^./src/github.com/sahib/rmlint/gui/TODO$' | \
-    grep -v '^./src/homelab/ansible/templates/TODO.passwords.txt.j2$' | \
-    grep -v '^./src/homelab/ansible/templates/TODO.upgradeable.txt.j2$' | \
-    grep -v '^./tmp$' | \
-    sort | sed -e 's/$/:1:filename/'
-    # sort | sed -e 's/$/:1:filename/' > "$HOME/tmp/all-TODOs.txt"
+    find . \( -path './Library' -o -path './OrbStack' -o -path './data' -o -path './dl' -o -path './doc' -o -path './tmp' \
+        -o -path '**/.Trashes' -o -path '**/.fseventsd' -o -path '**/.Spotlight-V100' -o -path '**/.TemporaryItems' \) -prune \
+        -o -type f -name '*TODO*' \
+        | grep -v '^./.local/share/mise/installs/python/' \
+        | grep -v '^./.local/share/nvim/lazy/' \
+        | grep -v '^./.local/share/uv/python/' \
+        | grep -v '^./.vim/plugged/' \
+        | grep -v '^./Library$' \
+        | grep -v '^./OrbStack$' \
+        | grep -v '^./bin/,find-TODOs$' \
+        | grep -v '^./data$' \
+        | grep -v '^./dl$' \
+        | grep -v '^./doc$' \
+        | grep -v '^./fin/hledger/hoover/bin/edit-TODOs.sh$' \
+        | grep -v '^./git/.Spotlight-V100$' \
+        | grep -v '^./git/.Trashes$' \
+        | grep -v '^./git/.fseventsd$' \
+        | grep -v '^./pkg/mod/google.golang.org/' \
+        | grep -v '^./src/.Spotlight-V100$' \
+        | grep -v '^./src/.TemporaryItems$' \
+        | grep -v '^./src/.Trashes$' \
+        | grep -v '^./src/.fseventsd$' \
+        | grep -v '^./src/3dPrinting/github.com/julie777/Compatible-Bins/TODO.txt$' \
+        | grep -v '^./src/github.com/ArchiveBox/ArchiveBox/' \
+        | grep -v '^./src/github.com/boxofsnoo/Fairmount/TODO.txt$' \
+        | grep -v '^./src/github.com/gramps-project/gramps/TODO$' \
+        | grep -v '^./src/github.com/jimsalterjrs/sanoid/packages/debian/TODO$' \
+        | grep -v '^./src/github.com/sahib/rmlint/gui/TODO$' \
+        | grep -v '^./src/homelab/ansible/templates/TODO.passwords.txt.j2$' \
+        | grep -v '^./src/homelab/ansible/templates/TODO.upgradeable.txt.j2$' \
+        | grep -v '^./tmp$' \
+        | sort | sed -e 's/$/:1:filename/'
 
-find Vault/ -type f -name '*TODO*' | \
-    sort | sed -e 's/$/:1:filename/'
-    # sort | sed -e 's/$/:1:filename/' >> "$HOME/tmp/all-TODOs.txt"
+    find Vault/ -type f -name '*TODO*' \
+        | sort | sed -e 's/$/:1:filename/'
 
-find Vault/todo -type f | \
-    sort | sed -e 's/$/:1:filename/'
-    # sort | sed -e 's/$/:1:filename/' >> "$HOME/tmp/all-TODOs.txt"
+    find Vault/todo -type f \
+        | sort | sed -e 's/$/:1:filename/'
 
-while IFS= read -r REPOSITORY; do
-    # echo " *** ${REPOSITORY}"
-    if [[ "${REPOSITORY}" = "~/OrbStack/docker/"* ]] \
-        || [[ "${REPOSITORY}" = "~/src.orig/"* ]] \
-        || [[ "${REPOSITORY}" = "~/src/3dPrinting/makerworld.com/"* ]] \
-        || [[ "${REPOSITORY}" = "~/src/3dPrinting/thingiverse.com/"* ]] \
-        || [ "${REPOSITORY}" = "~/fin/" ] \
-    ; then
-        # echo "   skipped ${REPOSITORY}"
-        continue
-    fi
-    # echo " *** ${REPOSITORY#~\/}"
-    /usr/bin/grep -Hnr --exclude-dir=".git" "TODO" "${REPOSITORY#~\/}" || true
-done < "$HOME/tmp/all-git-repos.txt" | \
-    grep -Ev '^src/github.com/[A-Za-su-z]+.*' | \
-    grep -Ev '^src/github.com/t[A-Za-np-z]+.*' | \
-    grep -Ev '^src/github.com/to[A-Za-ln-z]+.*' | \
-    grep -v '/.direnv/' | \
-    grep -v '/.pylintrc:' | \
-    grep -v '^.ansible/TODO.upgradeable.*.txt:1:ansible-playbook' | \
-    grep -v '^.ansible/roles/community.general/community.general/' | \
-    grep -v '^.ansible/roles/grml-config/files/.zshrc:' | \
-    grep -v '^.ansible/roles/trfore.mongodb_install/.pylintrc:' | \
-    grep -v '^.ansible/roles/trfore.omada_install/.pylintrc:' | \
-    grep -v '^.ansible/roles/trfore.omada_old/.pylintrc:' | \
-    grep -v '^Binary file .* matches' | \
-    grep -v '^bin/,find-TODOs:' | \
-    grep -v '^src/3dPrinting/github.com/julie777/Compatible-Bins/' | \
-    grep -v '^src/git.spwhitton.name/dotfiles/' | \
-    grep -v '^src/github.com/tomhoover/addons-source/' | \
-    grep -v '^src/github.com/tomhoover/fsnotes/' | \
-    grep -v '^src/github.com/tomhoover/jekyll-tomhoover/_sass/' | \
-    grep -v '^src/github.com/tomhoover/jekyll-tomhoover/assets/' | \
-    grep -v '^src/homelab/ansible/_apt_upgradeable.yml:' | \
-    grep -v '^src/homelab/ansible/bootstrap-pve.yml:' | \
-    grep -v '^src/homelab/ansible/templates/TODO.passwords.txt.j2:1:' | \
-    grep -v '^src/homelab/ansible/templates/TODO.upgradeable.txt.j2:1:' | \
-    grep -v '^src/mqttwarn/' | \
-    grep -v '^src/python-learning/automate/PythonStdioGames/' | \
-    grep -v '^src/zLinux-bin/PocketWisherman-2.0.0/' | \
-    grep -v '^src/zLinux-bin/birdseye.py:' | \
-    grep -v '^src/zLinux-bin/chrome-linux/resources/inspector/' | \
-    grep -v '^src/zLinux-bin/todo.sh:' | \
-    sort
-    # sort >> "$HOME/tmp/all-TODOs.txt"
-} > "$HOME/tmp/all-TODOs.txt"
+    while IFS= read -r REPOSITORY; do
+        if [[ "${REPOSITORY}" = "~/OrbStack/docker/"* ]] \
+            || [[ "${REPOSITORY}" = "~/src.orig/"* ]] \
+            || [[ "${REPOSITORY}" = "~/src/3dPrinting/makerworld.com/"* ]] \
+            || [[ "${REPOSITORY}" = "~/src/3dPrinting/thingiverse.com/"* ]] \
+            || [ "${REPOSITORY}" = "~/fin/" ] \
+            ; then
+            # echo "   skipped ${REPOSITORY}"
+            continue
+        fi
+        /usr/bin/grep -Hnr --exclude-dir=".git" "TODO" "${REPOSITORY#~\/}" || true
+    done <"$HOME/tmp/all-git-repos.txt" \
+        | grep -Ev '^src/github.com/[A-Za-su-z]+.*' \
+        | grep -Ev '^src/github.com/t[A-Za-np-z]+.*' \
+        | grep -Ev '^src/github.com/to[A-Za-ln-z]+.*' \
+        | grep -v '/.direnv/' \
+        | grep -v '/.pylintrc:' \
+        | grep -v '^.ansible/TODO.upgradeable.*.txt:1:ansible-playbook' \
+        | grep -v '^.ansible/roles/community.general/community.general/' \
+        | grep -v '^.ansible/roles/grml-config/files/.zshrc:' \
+        | grep -v '^.ansible/roles/trfore.mongodb_install/.pylintrc:' \
+        | grep -v '^.ansible/roles/trfore.omada_install/.pylintrc:' \
+        | grep -v '^.ansible/roles/trfore.omada_old/.pylintrc:' \
+        | grep -v '^Binary file .* matches' \
+        | grep -v '^bin/,find-TODOs:' \
+        | grep -v '^src/3dPrinting/github.com/julie777/Compatible-Bins/' \
+        | grep -v '^src/git.spwhitton.name/dotfiles/' \
+        | grep -v '^src/github.com/tomhoover/addons-source/' \
+        | grep -v '^src/github.com/tomhoover/fsnotes/' \
+        | grep -v '^src/github.com/tomhoover/jekyll-tomhoover/_sass/' \
+        | grep -v '^src/github.com/tomhoover/jekyll-tomhoover/assets/' \
+        | grep -v '^src/homelab/ansible/_apt_upgradeable.yml:' \
+        | grep -v '^src/homelab/ansible/bootstrap-pve.yml:' \
+        | grep -v '^src/homelab/ansible/templates/TODO.passwords.txt.j2:1:' \
+        | grep -v '^src/homelab/ansible/templates/TODO.upgradeable.txt.j2:1:' \
+        | grep -v '^src/mqttwarn/' \
+        | grep -v '^src/python-learning/automate/PythonStdioGames/' \
+        | grep -v '^src/zLinux-bin/PocketWisherman-2.0.0/' \
+        | grep -v '^src/zLinux-bin/birdseye.py:' \
+        | grep -v '^src/zLinux-bin/chrome-linux/resources/inspector/' \
+        | grep -v '^src/zLinux-bin/todo.sh:' \
+        | sort
+} >"$HOME/tmp/all-TODOs.txt"
 
 # cd && vi -c "copen" -q "$HOME/tmp/all-TODOs.txt"
 cd && vi -c "cwindow" -q "$HOME/tmp/all-TODOs.txt"

@@ -19,12 +19,12 @@ cd ${BOOKS} || exit 1
 mkdir -p "$BOOKS/dl"
 
 LAST_DL="1900-01-01"
-[[ -f .last_download ]] && read -r LAST_DL < .last_download
+[[ -f .last_download ]] && read -r LAST_DL <.last_download
 
 # audible download --output-dir dl --all --aax-fallback --pdf --cover --chapter --annotation --start-date "$LAST_DL" --no-confirm --overwrite --ignore-errors
-audible download --output-dir dl --all --aaxc         --pdf --cover --chapter --annotation --start-date "$LAST_DL" --no-confirm --overwrite --ignore-errors
+audible download --output-dir dl --all --aaxc --pdf --cover --chapter --annotation --start-date "$LAST_DL" --no-confirm --overwrite --ignore-errors
 
-date -u '+%Y-%m-%dT%H:%M:%SZ' > .last_download
+date -u '+%Y-%m-%dT%H:%M:%SZ' >.last_download
 
 # for asin in B093883QL4
 # do

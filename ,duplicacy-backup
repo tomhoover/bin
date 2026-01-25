@@ -14,7 +14,7 @@ source ~/bin/COLORS
 # uncomment the following line to delete logs older than 14 days (you may change '14' to whatever number of days you wish to keep)
 DELETE_LOGS=30
 
-MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+MYHOST=$(uname -n | sed 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
 DUPLICACY=duplicacy
 
@@ -78,7 +78,7 @@ backupRepository()
     fi
 }
 
-if   [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
+if [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
     ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology        "${SYNOLOGY_SFTP}"
     backupRepository /etc synology "${1}"
 elif [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ ^pvhost[0-9]$ ]]; then
@@ -170,7 +170,7 @@ if [[ "${MYHOST}" == "synology" ]]; then
     # "${DUPLICACY}" -log prune -storage b2       -all -keep 30:180 -keep 7:30 -keep 1:7 | tee "$DUPLICACY_LOGS/$DATETIME-prune-b2.log"
     # echo "${RED}# Done${RESET}"
 
-# TODO add prune/check for rsyncNet
+    # TODO add prune/check for rsyncNet
     if [[ "${1}" == "check" ]]; then
         cd /volume1/archive || exit
         echo ""

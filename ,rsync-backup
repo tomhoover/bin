@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2016
 
-MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+MYHOST=$(uname -n | sed 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
 pgrep -fq '^ssh -l tom .* rsync --server' && echo "An rsync process is already running." && exit 1
 
@@ -61,7 +61,7 @@ cd /Users && /opt/homebrew/bin/rsync -avzh --delete --delete-excluded \
     --exclude="/private/" \
     --exclude="/tmp/" \
     --exclude="/tmux-config/" \
-    tom/ tom@bethel:/Volumes/external/rsync/"${MYHOST}"/tom/ |grep -v '/$'
+    tom/ tom@bethel:/Volumes/external/rsync/"${MYHOST}"/tom/ | grep -v '/$'
 
 echo ""
 

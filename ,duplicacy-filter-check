@@ -11,12 +11,12 @@ source ~/bin/COLORS
 # duplicacy -d -log backup -enum-only -stats | tee .duplicacy/check-filters.log
 # exit
 
-if [ $# -eq 0  ]; then
+if [ $# -eq 0 ]; then
     echo "Please provide storage location as an argument"
     exit 1
 fi
 
-MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+MYHOST=$(uname -n | sed 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
 DUPLICACY=duplicacy
 if [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ ^pvhost[0-9]$ ]]; then
@@ -26,14 +26,14 @@ elif [[ "${MYHOST}" == "synology" ]]; then
 fi
 
 "${DUPLICACY}" -d -log backup -storage "${1}" -enum-only -stats | tee .duplicacy/check-filters.log
-grep PATTERN_EXCLUDE .duplicacy/check-filters.log > .duplicacy/check-filters-excluded.log
-grep PATTERN_INCLUDE .duplicacy/check-filters.log > .duplicacy/check-filters-included.log
+grep PATTERN_EXCLUDE .duplicacy/check-filters.log >.duplicacy/check-filters-excluded.log
+grep PATTERN_INCLUDE .duplicacy/check-filters.log >.duplicacy/check-filters-included.log
 
 cat .duplicacy/check-filters-excluded.log \
-    |grep -v '/.git/ is excluded by pattern e:\\.(svn|git|hg)/.*\$' \
-    |grep -v '/__pycache__/ is excluded by pattern -\*/__pycache__/' \
-    |grep -v 'is excluded by pattern e:\\.(rsls|rslsa|rslsd|rslsf|rslsi|rslsp|rslss|rslsv|rslsz)\$' \
-    > .duplicacy/check-filters-excluded-minimal.log
+    | grep -v '/.git/ is excluded by pattern e:\\.(svn|git|hg)/.*\$' \
+    | grep -v '/__pycache__/ is excluded by pattern -\*/__pycache__/' \
+    | grep -v 'is excluded by pattern e:\\.(rsls|rslsa|rslsd|rslsf|rslsi|rslsp|rslss|rslsv|rslsz)\$' \
+        >.duplicacy/check-filters-excluded-minimal.log
 
 {
     echo
@@ -42,27 +42,27 @@ cat .duplicacy/check-filters-excluded.log \
     echo '/.git/ is excluded by pattern e:\.(svn|git|hg)/.*$'
     echo '/__pycache__/ is excluded by pattern -*/__pycache__/'
     echo 'is excluded by pattern e:\.(rsls|rslsa|rslsd|rslsf|rslsi|rslsp|rslss|rslsv|rslsz)$'
-} >> .duplicacy/check-filters-excluded-minimal.log
+} >>.duplicacy/check-filters-excluded-minimal.log
 
 cat .duplicacy/check-filters-included.log \
-    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/OrcaSlicer.git/' \
-    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/QIDIStudio.git/' \
-    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/crontab.git/' \
-    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/dotfiles.git/' \
-    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/git.git/' \
-    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/mr.git/' \
-    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/private.git/' \
-    |grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/vault.git/' \
-    |grep -v 'PATTERN_INCLUDE Databases/' \
-    |grep -v 'PATTERN_INCLUDE Library/Application Support/DEVONthink 3/' \
-    |grep -v 'PATTERN_INCLUDE Library/Mail/V10/' \
-    |grep -v 'PATTERN_INCLUDE Library/Messages/Attachments/' \
-    |grep -v 'PATTERN_INCLUDE OrbStack/arch/' \
-    |grep -v 'PATTERN_INCLUDE OrbStack/docker/containers/' \
-    |grep -v 'PATTERN_INCLUDE OrbStack/docker/images/' \
-    |grep -v 'PATTERN_INCLUDE src.orig/' \
-    |grep -v 'PATTERN_INCLUDE src/' \
-    > .duplicacy/check-filters-included-minimal.log
+    | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/OrcaSlicer.git/' \
+    | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/QIDIStudio.git/' \
+    | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/crontab.git/' \
+    | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/dotfiles.git/' \
+    | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/git.git/' \
+    | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/mr.git/' \
+    | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/private.git/' \
+    | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/vault.git/' \
+    | grep -v 'PATTERN_INCLUDE Databases/' \
+    | grep -v 'PATTERN_INCLUDE Library/Application Support/DEVONthink 3/' \
+    | grep -v 'PATTERN_INCLUDE Library/Mail/V10/' \
+    | grep -v 'PATTERN_INCLUDE Library/Messages/Attachments/' \
+    | grep -v 'PATTERN_INCLUDE OrbStack/arch/' \
+    | grep -v 'PATTERN_INCLUDE OrbStack/docker/containers/' \
+    | grep -v 'PATTERN_INCLUDE OrbStack/docker/images/' \
+    | grep -v 'PATTERN_INCLUDE src.orig/' \
+    | grep -v 'PATTERN_INCLUDE src/' \
+        >.duplicacy/check-filters-included-minimal.log
 
 {
     echo
@@ -85,7 +85,7 @@ cat .duplicacy/check-filters-included.log \
     echo 'OrbStack/docker/images/'
     echo 'src.orig/'
     echo 'src/'
-} >> .duplicacy/check-filters-included-minimal.log
+} >>.duplicacy/check-filters-included-minimal.log
 
 rm .duplicacy/check-filters-excluded-cleaned.log 2>/dev/null
 rm .duplicacy/check-filters-included-cleaned.log 2>/dev/null

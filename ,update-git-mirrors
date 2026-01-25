@@ -15,8 +15,7 @@ updateMirror()
 listMirrors()
 {
     echo ""
-    cd "$1" && for DIR in *
-    do
+    cd "$1" && for DIR in *; do
         updateMirror "$1/$DIR"
     done
 }

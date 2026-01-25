@@ -5,7 +5,7 @@
 # set -u: treat unset variables as an error
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 
-if [ "$(pwd)" = "/Users/tom/src/3dPrinting" ] ; then
+if [ "$(pwd)" = "/Users/tom/src/3dPrinting" ]; then
     echo
     if [ $# -eq 0 ]; then
         find -s . -d 2 -type d | while read -r REPOSITORY; do
@@ -17,10 +17,10 @@ if [ "$(pwd)" = "/Users/tom/src/3dPrinting" ] ; then
                 || [ "${REPOSITORY}" = "./printables.com/417152-gridfinity-specification" ] \
                 || [ "${REPOSITORY}" = "./wiki.qidi3d.com/en" ] \
                 || [ "${REPOSITORY}" = "./stl/makita" ] \
-            ; then
+                ; then
                 continue
             fi
-            if compgen -G "${REPOSITORY}/*.zip" > /dev/null; then
+            if compgen -G "${REPOSITORY}/*.zip" >/dev/null; then
                 echo "${REPOSITORY}/*.zip file found"
                 echo
                 unzip -l "${REPOSITORY}/*.zip"
@@ -28,7 +28,7 @@ if [ "$(pwd)" = "/Users/tom/src/3dPrinting" ] ; then
             fi
 
             GIT_MISSING=""
-            if ! [ -d "${REPOSITORY}/.git" ] ; then
+            if ! [ -d "${REPOSITORY}/.git" ]; then
                 GIT_MISSING="True"
                 echo "${REPOSITORY} -- .git missing"
                 ls "${REPOSITORY}"
@@ -36,7 +36,7 @@ if [ "$(pwd)" = "/Users/tom/src/3dPrinting" ] ; then
                 echo "  pushd '${REPOSITORY}' && git init && git add -A && git commit -m 'Initial commit' && popd"
                 echo
             fi
-            if ! [ "${GIT_MISSING}" = "" ] ; then
+            if ! [ "${GIT_MISSING}" = "" ]; then
                 continue
             fi
 
@@ -66,7 +66,7 @@ if [ "$(pwd)" = "/Users/tom/src/3dPrinting" ] ; then
         echo
         echo "./printables.com/model/413761-gridfinity-refined"
         echo "./printables.com/model/417152-gridfinity-specification"
-    } > urls.sh
+    } >urls.sh
     {
         find -s ./cults3d.com/en/3d-model/tool/ -type dir -d 1 | sed -e 's/^./https:\//' \
             -e '/https:\/\/cults3d.com\/en\/3d-model\/tool\/en/d'
@@ -83,7 +83,7 @@ if [ "$(pwd)" = "/Users/tom/src/3dPrinting" ] ; then
         echo
         echo "https://printables.com/model/413761-gridfinity-refined"
         echo "https://printables.com/model/417152-gridfinity-specification"
-    } > urls.txt
+    } >urls.txt
 
     echo "vcsh list-untracked OrcaSlicer:"
     vcsh list-untracked OrcaSlicer

@@ -3,14 +3,14 @@
 # set -e: exit script immediately upon error
 set -e
 
-MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+MYHOST=$(uname -n | sed 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
 if [ $EUID != 0 ]; then
     sudo -H "$0" "$@"
     exit $?
 fi
 
-if [ ! -d "$HOME/.config-backup" ] ; then
+if [ ! -d "$HOME/.config-backup" ]; then
     cd && git clone ssh://root@lemuel:222/root/src/config-backup ".config-backup"
 fi
 
@@ -22,7 +22,7 @@ touch "$CONFIG_LIST"
 
 cd "$CONFIG_DIR" && git pull --rebase --autostash
 
-if [ "$1" != ""  ] ; then echo "$1" >> "$CONFIG_LIST" ; fi
+if [ "$1" != "" ]; then echo "$1" >>"$CONFIG_LIST"; fi
 sort -uo "$CONFIG_LIST" "$CONFIG_LIST"
 rsync -av --files-from="$CONFIG_LIST" / "$CONFIG_DIR/"
 cd "$CONFIG_DIR" && git add . && git commit -m "$(date)" && git push

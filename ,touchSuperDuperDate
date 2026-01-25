@@ -2,4 +2,4 @@
 
 [[ "$(uname)" = "Darwin" ]] || exit
 
-date '+%Y-%m-%d %H:%M:%S' >> "/Users/tom/.lastSuperDuperBackupDate"
+date '+%Y-%m-%d %H:%M:%S' >>"/Users/tom/.lastSuperDuperBackupDate"

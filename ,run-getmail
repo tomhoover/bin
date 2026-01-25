@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+MYHOST=$(uname -n | sed 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
 [[ "${MYHOST}" = "ariel" ]] || exit
 
@@ -17,10 +17,10 @@ touch /tmp/getmail.lock
 
 cd "${HOME}"/.getmail
 rcfiles=""
-for file in rc-* ; do
-  MAILDIRPATH=$(echo "${file}" | sed -e 's/rc-//' -e 's|:|/|' )
-  mkdir -p $BACKUPDIR/"$MAILDIRPATH"/{cur,new,tmp}
-  rcfiles="$rcfiles --rcfile $file"
+for file in rc-*; do
+    MAILDIRPATH=$(echo "${file}" | sed -e 's/rc-//' -e 's|:|/|')
+    mkdir -p $BACKUPDIR/"$MAILDIRPATH"/{cur,new,tmp}
+    rcfiles="$rcfiles --rcfile $file"
 done
 
 #exec /usr/local/bin/getmail $rcfiles $@
