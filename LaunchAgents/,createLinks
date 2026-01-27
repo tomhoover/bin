@@ -13,16 +13,18 @@ done
 
 cd /Library/LaunchDaemons || exit
 sudo cp /Users/tom/bin/LaunchDaemons-System/us.t0m.*.plist .
+
+if [ "$MYHOST" = "bethel" ]; then
+    for f in "${HOME}"/bin/LaunchDaemons-System/*.bethel; do
+        F=$(basename "${f//.bethel/}")
+        sudo cp "$f" "$F"
+    done
+fi
+
 for f in us.t0m.*.plist; do
     echo "$f"
     sudo launchctl bootout system /Library/LaunchDaemons/"$f"
     sudo launchctl bootstrap system /Library/LaunchDaemons/"$f"
 done
-
-if [ "$MYHOST" = "bethel" ]; then
-    sudo cp /Users/tom/bin/LaunchDaemons-System/us.t0m.sanoid.plist.bethel /Library/LaunchDaemons/us.t0m.sanoid.plist
-    sudo launchctl bootout system /Library/LaunchDaemons/us.t0m.sanoid.plist
-    sudo launchctl bootstrap system /Library/LaunchDaemons/us.t0m.sanoid.plist
-fi
 
 sudo launchctl list | grep us.t0m

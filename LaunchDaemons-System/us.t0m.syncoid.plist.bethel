@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>us.t0m.syncoid</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>HOME</key>
+      <string>/root</string>
+      <key>TZ</key>
+      <string>UTC</string>
+      <key>PATH</key>
+      <string>/opt/homebrew/bin:/usr/local/zfs/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/tom/bin/,syncoid-bethel-pull-from-theophilus</string>
+    </array>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/syncoid.stdout</string>
+
+    <key>StandardErrorPath</key>
+    <string>/tmp/syncoid.stderr</string>
+
+    <key>StartInterval</key>
+    <integer>3600</integer>
+  </dict>
+</plist>

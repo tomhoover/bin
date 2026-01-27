@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+/usr/local/sbin/syncoid --recursive --skip-parent --no-sync-snap --create-bookmark root@theophilus:pool external/backups/theophilus/pool
