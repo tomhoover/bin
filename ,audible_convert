@@ -20,7 +20,7 @@ else
 fi
 
 # shellcheck source=/dev/null
-[[ -f ${HOME}/bin/COLORS ]] && . "${HOME}"/bin/COLORS
+source ~/bin/colors.sh
 
 # shellcheck disable=SC2034
 VERSION_CONTROL=numbered

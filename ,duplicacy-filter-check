@@ -6,7 +6,7 @@
 set -o pipefail
 
 # shellcheck source=/dev/null
-source ~/bin/COLORS
+source ~/bin/colors.sh
 
 # duplicacy -d -log backup -enum-only -stats | tee .duplicacy/check-filters.log
 # exit

@@ -1,7 +1,5 @@
-# Usage example:
-#   # shellcheck source=/dev/null
-#   source ~/bin/COLORS
-#   echo "${RED}ABORTED!${RESET} ${REPOSITORY} does not exist!"
+# shellcheck shell=sh
+# shellcheck disable=SC2034
 
 # Only use colors in interactive shells, not from crontab
 if [ -t 1 ]; then
@@ -21,3 +19,8 @@ else
     CYAN=
     RESET=
 fi
+
+# Usage example:
+#   # shellcheck source=/dev/null
+#   source ~/bin/colors.sh
+#   echo "${RED}ABORTED!${RESET} ${REPOSITORY} does not exist!"

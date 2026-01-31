@@ -6,7 +6,7 @@
 set -eu -o pipefail
 
 # shellcheck source=/dev/null
-source ~/bin/COLORS
+source ~/bin/colors.sh
 
 git fetch --all --prune --tags
 
