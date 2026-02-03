@@ -16,6 +16,9 @@ syncAnnex()
 syncGit()
 {
     cd "$1" \
+        && echo \
+        && echo "***** git fetch ironkey: $1 *****" \
+        && git fetch ironkey \
         && echo "***** git push ironkey: $1 *****" \
         && git push ironkey
 }
@@ -34,14 +37,24 @@ listAnnex()
 # ~/bin/sync-annex.sh
 
 syncGit ~/.gnupg
+syncGit ~/.ssh
 
+echo
+echo "***** vcsh private fetch ironkey *****"
+vcsh private fetch ironkey
 echo "***** vcsh private push ironkey *****"
 vcsh private push ironkey
 
+echo
+echo "***** rsync paperless *****"
 # rsync -avz --rsync-path=/bin/rsync --delete --delete-excluded --exclude='@eaDir' --exclude='#recycle' --exclude='#snapshot' synology:/volume1/paperless/ /Volumes/IRONKEY64/paperless/
-rsync -avz --delete --delete-excluded --exclude .Spotlight-V100 --exclude .fseventsd bethel:/Volumes/external/rsync/synology/paperless/ /Volumes/IRONKEY64/paperless/
+rsync -az --delete --delete-excluded --exclude .Spotlight-V100 --exclude .fseventsd bethel:/Volumes/external/rsync/synology/paperless/ /Volumes/IRONKEY64/paperless/
 
-rsync -avz --delete --delete-excluded --exclude .Spotlight-V100 --exclude .fseventsd /Users/tom/doc/ /Volumes/IRONKEY64/doc/
+echo
+echo "***** rsync doc *****"
+rsync -az --delete --delete-excluded --exclude .Spotlight-V100 --exclude .fseventsd /Users/tom/doc/ /Volumes/IRONKEY64/doc/
 
+echo
+echo "***** rsync archive *****"
 # rsync -avz --delete --delete-excluded --exclude .Spotlight-V100 --exclude .fseventsd /Users/tom/data/archive/ /Volumes/IRONKEY64/archive/
-rsync -avz --delete --delete-excluded --exclude .Spotlight-V100 --exclude .fseventsd bethel:/Volumes/external/ResilioSync/archive/ /Volumes/IRONKEY64/archive/
+rsync -az --delete --delete-excluded --exclude .Spotlight-V100 --exclude .fseventsd bethel:/Volumes/external/ResilioSync/archive/ /Volumes/IRONKEY64/archive/
