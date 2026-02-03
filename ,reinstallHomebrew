@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-[[ "$(uname)" = "Darwin" ]] || exit
+# shellcheck source=/dev/null
+source ~/bin/get_os.sh
+
+isdarwin || exit
 
 # uncomment the following to install from scratch
 #ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"

@@ -22,12 +22,15 @@ fi
 # shellcheck source=/dev/null
 source ~/bin/colors.sh
 
+# shellcheck source=/dev/null
+source ~/bin/get_os.sh
+
 # shellcheck disable=SC2034
 VERSION_CONTROL=numbered
 
 CP="cp"
 MV="mv"
-if [[ "$(uname)" = Darwin ]]; then
+if isdarwin; then
     CP="gcp"
     MV="gmv"
 fi

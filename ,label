@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-[[ "$(uname)" = "Darwin" ]] || exit
+# shellcheck source=/dev/null
+source ~/bin/get_os.sh
+
+isdarwin || exit
 
 # Set Finder label color
 #   http://stackoverflow.com/questions/2435580/tagging-files-with-colors-in-os-x-finder-from-shell-scripts
