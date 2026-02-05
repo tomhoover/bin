@@ -12,8 +12,11 @@ cd && 2>/dev/null time find . \( -path './Library' -o -path './OrbStack' -o -pat
     | grep -v '^./.cache/AUR/' \
     | grep -v '^./.cache/cookiecutters/' \
     | grep -v '^./.cache/pre-commit/' \
+    | grep -v '^./.cache/prek/repos/' \
     | grep -v '^./.config/tmux/plugins/' \
+    | grep -v '^./.local/share/mise/plugins/fnox-env/' \
     | grep -v '^./.local/share/nvim/lazy/' \
+    | grep -v '^./.local/share/omarchy/' \
     | grep -v '^./.vim/plugged/' \
     | grep -v '^./Library$' \
     | grep -v '^./OrbStack$' \
