@@ -87,11 +87,11 @@ $SNAPRAID_BIN diff >>$TMP_OUTPUT
 wait
 echo "----------------------------------------" >>$TMP_OUTPUT
 echo "SnapRAID DIFF Job finished on $(date)" >>$TMP_OUTPUT
-DEL_COUNT=$(grep -w '^ \{1,\}[0-9]* removed$' $TMP_OUTPUT | sed 's/^ *//g' | cut -d ' ' -f1)
-ADD_COUNT=$(grep -w '^ \{1,\}[0-9]* added$' $TMP_OUTPUT | sed 's/^ *//g' | cut -d ' ' -f1)
-MOVE_COUNT=$(grep -w '^ \{1,\}[0-9]* moved$' $TMP_OUTPUT | sed 's/^ *//g' | cut -d ' ' -f1)
-COPY_COUNT=$(grep -w '^ \{1,\}[0-9]* copied$' $TMP_OUTPUT | sed 's/^ *//g' | cut -d ' ' -f1)
-UPDATE_COUNT=$(grep -w '^ \{1,\}[0-9]* updated$' $TMP_OUTPUT | sed 's/^ *//g' | cut -d ' ' -f1)
+DEL_COUNT=$(grep -w '^ \{1,\}[0-9]* removed$' $TMP_OUTPUT | sed -e 's/^ *//g' | cut -d ' ' -f1)
+ADD_COUNT=$(grep -w '^ \{1,\}[0-9]* added$' $TMP_OUTPUT | sed -e 's/^ *//g' | cut -d ' ' -f1)
+MOVE_COUNT=$(grep -w '^ \{1,\}[0-9]* moved$' $TMP_OUTPUT | sed -e 's/^ *//g' | cut -d ' ' -f1)
+COPY_COUNT=$(grep -w '^ \{1,\}[0-9]* copied$' $TMP_OUTPUT | sed -e 's/^ *//g' | cut -d ' ' -f1)
+UPDATE_COUNT=$(grep -w '^ \{1,\}[0-9]* updated$' $TMP_OUTPUT | sed -e 's/^ *//g' | cut -d ' ' -f1)
 echo "SUMMARY of changes - Added [$ADD_COUNT] - Deleted [$DEL_COUNT] - Moved [$MOVE_COUNT] - Copied [$COPY_COUNT] - Updated [$UPDATE_COUNT]" >>$TMP_OUTPUT
 # check if files have changed
 if [ "$DEL_COUNT" -gt 0 ] || [ "$ADD_COUNT" -gt 0 ] || [ "$MOVE_COUNT" -gt 0 ] || [ "$UPDATE_COUNT" -gt 0 ]; then

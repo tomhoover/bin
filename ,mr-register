@@ -15,7 +15,7 @@ echo
 echo "Searching for git repos..."
 
 cd && echo '' >~/tmp/tmp.mrconfig && /usr/bin/grep '^\[' ~/.mrconfig ~/src/.mrconfig ~/src/github.com/.mrconfig ~/.config/mr/* \
-    | sed -E 's/^(.*):(.*)/\2 ::: \1/' | sed -E 's/^#(.*)/\1#####/' | grep -v '^ ' | grep -v ^skip | grep -v ^.DEFAULT | sort | less
+    | sed -E -e 's/^(.*):(.*)/\2 ::: \1/' | sed -E -e 's/^#(.*)/\1#####/' | grep -v '^ ' | grep -v ^skip | grep -v ^.DEFAULT | sort | less
 
 echo "#!/bin/bash" >~/tmp/register.sh
 echo "cd || exit" >>~/tmp/register.sh

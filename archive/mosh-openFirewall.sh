@@ -6,7 +6,7 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -eu -o pipefail
 
-MOSH_SERVER=$(ls -l "$(which mosh-server)" | sed 's|^.*Cellar|/usr/local/Cellar|')
+MOSH_SERVER=$(ls -l "$(which mosh-server)" | sed -e 's|^.*Cellar|/usr/local/Cellar|')
 
 echo ""
 echo "enter sudo password when prompted:"

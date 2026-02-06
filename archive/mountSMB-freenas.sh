@@ -122,7 +122,7 @@ if ( ping -q -c 5 $PING ); then
         do
 
                 # Parse spaces for mkdir
-                SPACESHARE=$(echo $s|sed "s/%20/ /g")
+                SPACESHARE=$(echo $s|sed -e "s/%20/ /g")
 
                 # Check to see if mount doesn't exist, then mounts either AFP or SMB.
                 if [ ! -d "$MOUNT/$SPACESHARE" ]; then
@@ -190,7 +190,7 @@ if ( ping -q -c 5 $PING ); then
 else
 
         DATE=`date +%H`
-        DATE=`echo $DATE|sed 's/^0*//'`
+        DATE=`echo $DATE|sed -e 's/^0*//'`
         AVAILABLE="FALSE"
 
         # Loop through shares to unmount them, if mounted.
@@ -199,7 +199,7 @@ else
         do
 
                 # Parse spaces for umount
-                SPACESHARE=$(echo $s|sed "s/%20/ /g")
+                SPACESHARE=$(echo $s|sed -e "s/%20/ /g")
 
                 # Check to see if mount exists, then unmount
                 if [ -d "$MOUNT/$SPACESHARE" ]; then

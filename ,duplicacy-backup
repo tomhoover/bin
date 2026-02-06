@@ -14,7 +14,7 @@ source ~/bin/colors.sh
 # uncomment the following line to delete logs older than 14 days (you may change '14' to whatever number of days you wish to keep)
 DELETE_LOGS=30
 
-MYHOST=$(uname -n | sed 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
+MYHOST=$(uname -n | sed -e 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
 DUPLICACY=duplicacy
 

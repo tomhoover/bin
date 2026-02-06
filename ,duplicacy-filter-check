@@ -16,7 +16,7 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-MYHOST=$(uname -n | sed 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
+MYHOST=$(uname -n | sed -e 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
 DUPLICACY=duplicacy
 if [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ ^pvhost[0-9]$ ]]; then

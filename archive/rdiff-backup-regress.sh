@@ -133,7 +133,7 @@ REQOWNER=`ls -dl "$ARCHIVE/rdiff-backup-data/increments"|awk '{print $3":"$4}'`
 
 [ -z "$QUIET" ] && echo -e "Using repository: $ARCHIVE\nStarted `date`"
 for ((ITERATION=1; ITERATION<=$ITERATIONS; ITERATION++)); do
-	WHENLAST=$(find "$ARCHIVE/rdiff-backup-data" -maxdepth 1 -name "current_mirror*"|sed 's/.*current_mirror\.\([^.]*\).*/\1/')
+	WHENLAST=$(find "$ARCHIVE/rdiff-backup-data" -maxdepth 1 -name "current_mirror*"|sed -e 's/.*current_mirror\.\([^.]*\).*/\1/')
 	NUMCURRENT=`echo $WHENLAST|awk '{print NF}'`
 	if [ $NUMCURRENT -ne 2 ]; then
 		if [ $NUMCURRENT -ne 1 ]; then
@@ -146,7 +146,7 @@ for ((ITERATION=1; ITERATION<=$ITERATIONS; ITERATION++)); do
 		[ -z "$QUIET" -a $ITERATION -eq 1 ] && echo "Note: rdiff-backup recognises this archive as damaged"
 		WHENLAST=$(echo "$WHENLAST"|awk '{print $1}')
 	fi
-	PREVRUN=`ls $ARCHIVE/rdiff-backup-data/mirror_metadata*|tail -n2|head -n1|sed 's/.*mirror_metadata\.\([^.]*\).*/\1/'`
+	PREVRUN=`ls $ARCHIVE/rdiff-backup-data/mirror_metadata*|tail -n2|head -n1|sed -e 's/.*mirror_metadata\.\([^.]*\).*/\1/'`
 	if [ -z "$FORCE" -a $ITERATION -eq  1 ]; then
 		[ $ITERATIONS -gt 1 ] && echo -n "Regression 1/$ITERATIONS: "
 		read -n 1 -t 30 -p "About to regress $ARCHIVE archive from $WHENLAST to $PREVRUN: ok (y/-)? "

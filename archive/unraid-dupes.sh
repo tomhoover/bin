@@ -49,7 +49,7 @@ grep -v \/\.AppleDouble\/ /mnt/disk1/dupes_tmp0 \
 #	| grep -v \/mnt\/disk.\/resilio-sync\/bridgett_pics\ from\ Tom\ to\ Bridgett\/LindaStuff\/ \
 
 sort -n /mnt/disk1/dupes_tmp1 | awk '{ printf "%015d %s\n", $1, $0}' | cut -d" " -f1,3- |  uniq -D -w 15 | cut -d" " -f2- >/mnt/disk1/dupes_tmp2
-sed  "s/'/'\\\''/g" < /mnt/disk1/dupes_tmp2 | xargs -n 1 -I FiLeNaMeX sh -c "dd if='FiLeNaMeX' count=1 ibs=4M 2>/dev/null | md5sum -| tr -d '\n'; echo 'FiLeNaMeX'" >/mnt/disk1/dupes_tmp3
+sed -e "s/'/'\\\''/g" < /mnt/disk1/dupes_tmp2 | xargs -n 1 -I FiLeNaMeX sh -c "dd if='FiLeNaMeX' count=1 ibs=4M 2>/dev/null | md5sum -| tr -d '\n'; echo 'FiLeNaMeX'" >/mnt/disk1/dupes_tmp3
 sort /mnt/disk1/dupes_tmp3 | uniq -w32 --all-repeated| cut -c36- | sed -e 's/"/\\\"/g' -e 's/\(.*\)/"\1"/' >/mnt/disk1/dupes_tmp4
 xargs md5sum < /mnt/disk1/dupes_tmp4 >/mnt/disk1/dupes_tmp5
 sort /mnt/disk1/dupes_tmp5 | uniq -w32 -d --all-repeated=separate | cut -c35- >/mnt/disk1/dupes_out.txt

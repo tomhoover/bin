@@ -4,7 +4,7 @@
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 set -e -o pipefail
 
-MYHOST=$(uname -n | sed 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
+MYHOST=$(uname -n | sed -e 's/\..*//')     # alternative to $(hostname -s), as arch does not install 'hostname' by default
 
 syncContentAll()
 {
