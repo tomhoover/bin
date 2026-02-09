@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+mosh --server=/opt/homebrew/bin/mosh-server bethel -- /opt/homebrew/bin/tmux new -As tom

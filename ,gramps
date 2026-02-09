@@ -1,2 +1,3 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
+
 GRAMPSHOME=~/Syno-Shared/Genealogy /Applications/Gramps.app/Contents/MacOS/Gramps

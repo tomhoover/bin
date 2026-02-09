@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+mosh --server=/usr/local/bin/mosh-server synology -- /usr/local/bin/tmux new -As tom

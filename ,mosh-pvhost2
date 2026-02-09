@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+mosh root@pvhost2 -- tmux new -As root
