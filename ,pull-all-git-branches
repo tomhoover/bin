@@ -8,6 +8,12 @@ set -eu -o pipefail
 # shellcheck source=/dev/null
 source ~/bin/colors.sh
 
+# shellcheck source=/dev/null
+source ~/bin/get_os.sh
+
+# shellcheck disable=SC2034
+isdarwin && SED="gsed" || SED="sed"
+
 git fetch --all --prune --tags
 
 echo "${BLUE}"
@@ -43,17 +49,15 @@ for branch in $(git branch -r | grep -v 'HEAD ' | grep -Ev '  (gitea|localhost)/
     fi
 done
 
-echo "${RED}"
 # Remove branches that have already been merged with current branch
 git branch --merged | grep -v '\*' | grep -Ev '[/ ]+(dev|main|master)$' \
     | tee /tmp/merged-branches.txt | xargs --no-run-if-empty -n 1 git branch -d \
     && (
         echo "${CYAN}You may remove 'merged' branches from remote repos with:"
-        while IFS=/ read -r REMOTE_BRANCH; do
-            echo "     ${RED}git push <REMOTE_REPO> --delete ${REMOTE_BRANCH}"
+        while read -r REMOTE_BRANCH; do
+            echo "     ${RED}git push $(git branch -r | grep "${REMOTE_BRANCH}" | $SED -e 's/\s*\(\w*\)\/\(.*\)/\1 --delete \2/')${RESET}"
         done </tmp/merged-branches.txt
         echo
     )
 
-echo -n "${RESET}"
 git branch -avv
