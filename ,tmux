@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+SHLVL=0 tmux new -As default
