@@ -33,6 +33,7 @@ isomarchy() {
 }
 
 ~/.dotfiles/script/bootstrap update
+mise self-update && mise install && mise up
 
 if isdarwin; then
     brew upgrade
