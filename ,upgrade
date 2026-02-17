@@ -32,7 +32,7 @@ isomarchy() {
     isarch && grep -q '\[omarchy\]' /etc/pacman.conf
 }
 
-# curl https://raw.githubusercontent.com/tomhoover/dotfiles/master/script/bootstrap | bash
+~/.dotfiles/script/bootstrap update
 
 if isdarwin; then
     brew upgrade
