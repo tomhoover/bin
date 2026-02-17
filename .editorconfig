@@ -1,9 +1,6 @@
-# EditorConfig is awesome: https://editorconfig.org
-
 [[bash]]
 indent_size = 4
 indent_style = space
-keep_padding = false
 
 [,{audible_convert,duplicacy-backup,rsyncGenealogy,z_checksums}]
 keep_padding = true

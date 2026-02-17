@@ -1,0 +1,60 @@
+#!/usr/bin/env sh
+
+isdarwin() {
+    [ "$(uname -s)" = "Darwin" ]
+}
+
+islinux() {
+    [ "$(uname -s)" = "Linux" ]
+}
+
+isarch() {
+    if islinux && [ -f /etc/os-release ]; then
+        # shellcheck disable=SC1091
+        . /etc/os-release
+        # shellcheck disable=SC2078
+        [ "${ID}" = "arch" ] && return 0
+    fi
+    return 1
+}
+
+isdebian() {
+    if islinux && [ -f /etc/os-release ]; then
+        # shellcheck disable=SC1091
+        . /etc/os-release
+        # shellcheck disable=SC2078
+        [ "${ID}" = "debian" ] && return 0
+    fi
+    return 1
+}
+
+isomarchy() {
+    isarch && grep -q '\[omarchy\]' /etc/pacman.conf
+}
+
+# curl https://raw.githubusercontent.com/tomhoover/dotfiles/master/script/bootstrap | bash
+
+if isdarwin; then
+    brew upgrade
+    brew cleanup -s
+    brew doctor
+    echo
+    brew missing
+
+    echo
+    echo "$(tput setaf 5)Outdated apps from the app store:$(tput setaf 6)"
+    mas outdated
+    echo
+    echo "$(tput setaf 4)Upgrade with: $(tput setaf 1)mas upgrade$(tput sgr0)"
+    echo
+elif isomarchy; then
+    yay -Syu
+elif isarch; then
+    paru
+elif isproxmox; then
+    apt-get update && apt-get full-upgrade
+elif isdebian; then
+    apt-get update && apt-get upgrade
+fi
+
+cd && mr up
