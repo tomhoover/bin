@@ -1,5 +1,7 @@
 # shellcheck shell=sh
 
+# https://github.com/chef/os_release
+
 # Usage example:
 #   # shellcheck source=/dev/null
 #   . ~/bin/get_os.sh
@@ -41,6 +43,17 @@ isdebian()
         . /etc/os-release
         # shellcheck disable=SC2078
         [ "${ID}" = "debian" ] && return 0
+    fi
+    return 1
+}
+
+isfedora()
+{
+    if islinux && [ -f /etc/os-release ]; then
+        # shellcheck disable=SC1091
+        . /etc/os-release
+        # shellcheck disable=SC2078
+        [ "${ID}" = "fedora" ] && return 0
     fi
     return 1
 }
