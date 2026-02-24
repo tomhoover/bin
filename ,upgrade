@@ -51,8 +51,10 @@ if isdarwin; then
     echo
 elif isomarchy; then
     yay -Syu
+    pacdiff -b -s
 elif isarch; then
     paru
+    pacdiff -b -s
 elif isproxmox; then
     apt-get update && apt-get full-upgrade
 elif isdebian; then
