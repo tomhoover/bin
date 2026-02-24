@@ -96,12 +96,16 @@ elif [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" =~ ^pvhost[0-9]$ ]]; then
     ##### cd /home/tom        && duplicacy init -e -storage-name synology $(hostname -s)-tom--synology        "${SYNOLOGY_SFTP}"
     backupRepository /home/tom synology "${1}"
 elif [ "$(id -u)" -eq 0 ] && [[ "${MYHOST}" == "theophilus" ]]; then
-    ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology        "${SYNOLOGY_SFTP}"
-    backupRepository /etc synology
-    ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology       "${SYNOLOGY_SFTP}"
-    backupRepository /root synology
-    ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology  "${SYNOLOGY_SFTP}"
-    backupRepository /usr/local synology "${1}"
+    # ##### cd /etc             && duplicacy init -e -storage-name synology $(hostname -s)-etc--synology        "${SYNOLOGY_SFTP}"
+    # backupRepository /etc synology
+    # ##### cd /root            && duplicacy init -e -storage-name synology $(hostname -s)-root--synology       "${SYNOLOGY_SFTP}"
+    # backupRepository /root synology
+    # ##### cd /usr/local       && duplicacy init -e -storage-name synology $(hostname -s)-usr_local--synology  "${SYNOLOGY_SFTP}"
+    # backupRepository /usr/local synology "${1}"
+
+    backupRepository /etc rsyncNet
+    backupRepository /root rsyncNet
+    backupRepository /usr/local rsyncNet "${1}"
 elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
     if [[ "${MYHOST}" == "bethel" ]]; then
         backupRepository /Volumes/external/Databases rsyncNet
@@ -131,8 +135,10 @@ elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
     ##### cd                       && duplicacy init -e -storage-name rsyncNet                       $(hostname -s)-tom--rsyncNet "${RSYNCNET_SFTP}"
     backupRepository /Users/tom rsyncNet "${1}"
 elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" == "theophilus" ]]; then
-    ##### cd /home/tom        && duplicacy init -e -storage-name synology                            $(hostname -s)-tom--synology "${SYNOLOGY_SFTP}"
-    backupRepository /home/tom synology "${1}"
+    # ##### cd /home/tom        && duplicacy init -e -storage-name synology                            $(hostname -s)-tom--synology "${SYNOLOGY_SFTP}"
+    # backupRepository /home/tom synology "${1}"
+
+    backupRepository /home/tom rsyncNet "${1}"
 fi
 
 if [[ "${MYHOST}" == "synology" ]]; then
