@@ -48,6 +48,7 @@ if isdarwin; then
     mas outdated
     echo
     echo "$(tput setaf 4)Upgrade with: $(tput setaf 1)mas upgrade$(tput sgr0)"
+    osascript -e 'display notification "consider mas upgrade" with title "mas"'
     echo
 elif isomarchy; then
     yay -Syu
