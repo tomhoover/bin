@@ -1,6 +1,8 @@
 [[bash]]
 indent_size = 4
 indent_style = space
+binary_next_line   = true
+switch_case_indent = true
 
 [,{audible_convert,duplicacy-backup,rsyncGenealogy,z_checksums}]
 keep_padding = true

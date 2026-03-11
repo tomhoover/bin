@@ -50,7 +50,7 @@ repos:
     - id: check-executables-have-shebangs
     - id: check-shebang-scripts-are-executable
     - id: end-of-file-fixer
-      exclude: ',touchSuperDuperDate'
+      exclude: 'touchSuperDuperDate.sh'
 #    - id: file-contents-sorter
 #      files:
 #      args: [--unique]
@@ -90,10 +90,15 @@ repos:
     # Libraries must have a .sh extension and should not be executable
     - id: script-must-have-extension
       types: [shell, non-executable]
+      exclude: 'archive/'
     # Executables should have no extension (strongly preferred)
     - id: script-must-not-have-extension
       types: [shell, executable]
-      exclude: 'archive/'
+      exclude: |
+        (?x)^(
+          ^archive/.*\.sh$|
+          ^touchSuperDuperDate.sh$
+        )$
 
 # python
 
