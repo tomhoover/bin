@@ -23,8 +23,7 @@ DUPLICACY=duplicacy
 # duplicacy init -e -storage-name synology bethel-etc--synology "${SYNOLOGY_SFTP}"
 # cd /Volumes/USBAC && duplicacy add -e -bit-identical -copy synology rsyncNet USBAC--rsyncNet "${RSYNCNET_SFTP}"
 
-backupRepository()
-{
+backupRepository() {
     if [[ -d "${1}" ]]; then
         cd "${1}" || exit 1
     else

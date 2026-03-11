@@ -15,18 +15,15 @@
 #   os_name=$(get_os)
 #   echo "${os_name}"
 
-isdarwin()
-{
+isdarwin() {
     [ "$(uname -s)" = "Darwin" ]
 }
 
-islinux()
-{
+islinux() {
     [ "$(uname -s)" = "Linux" ]
 }
 
-isarch()
-{
+isarch() {
     if islinux && [ -f /etc/os-release ]; then
         # shellcheck disable=SC1091
         . /etc/os-release
@@ -36,8 +33,7 @@ isarch()
     return 1
 }
 
-isdebian()
-{
+isdebian() {
     if islinux && [ -f /etc/os-release ]; then
         # shellcheck disable=SC1091
         . /etc/os-release
@@ -47,8 +43,7 @@ isdebian()
     return 1
 }
 
-isfedora()
-{
+isfedora() {
     if islinux && [ -f /etc/os-release ]; then
         # shellcheck disable=SC1091
         . /etc/os-release
@@ -58,23 +53,19 @@ isfedora()
     return 1
 }
 
-isomarchy()
-{
+isomarchy() {
     isarch && grep -q '\[omarchy\]' /etc/pacman.conf
 }
 
-isfreebsd()
-{
+isfreebsd() {
     [ "$(uname -s)" = "FreeBSD" ]
 }
 
-isopenbsd()
-{
+isopenbsd() {
     [ "$(uname -s)" = "OpenBSD" ]
 }
 
-get_os()
-{
+get_os() {
     if [ "$(uname -s)" = "Darwin" ]; then
         echo "darwin"
     elif [ "$(uname -s)" = "Linux" ]; then
