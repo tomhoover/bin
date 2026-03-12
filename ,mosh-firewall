@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 # wrap in function to allow for local variables
-fix_mosh_server()
-{
+fix_mosh_server() {
 
     # local variables for convenience
     local fw mosh_sym mosh_abs

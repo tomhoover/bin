@@ -8,8 +8,7 @@
 # ./test-fonts.sh 8
 
 # Given an array of decimal numbers print all unicode codepoint.
-function print-decimal-unicode-range()
-{
+function print-decimal-unicode-range() {
     local originalSequence=("$@")
     local counter=0
     # Use alternating colors to see which symbols extend out of the bounding
@@ -114,8 +113,7 @@ function print-decimal-unicode-range()
 
 }
 
-function print-unicode-ranges()
-{
+function print-unicode-ranges() {
     echo ''
 
     local arr=("$@")
@@ -137,8 +135,7 @@ function print-unicode-ranges()
 
 }
 
-function test-fonts()
-{
+function test-fonts() {
     echo "Nerd Fonts - Pomicons"
     print-unicode-ranges e000 e00d
     echo

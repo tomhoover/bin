@@ -5,7 +5,7 @@
 # set -u: treat unset variables as an error
 # set -o pipefail: cause a pipeline to fail, if any command within it fails
 
-if [ $# -eq 0  ]; then
+if [ $# -eq 0 ]; then
     echo "No arguments provided"
     exit 1
 fi

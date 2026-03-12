@@ -6,25 +6,22 @@ cd /Volumes/IRONKEY64 || exit
 # set -u: treat unset variables as an error
 set -eu
 
-syncAnnex()
-{
-    cd "$1" && pwd \
-        && git annex sync \
-        && git annex sync --content
+syncAnnex() {
+    cd "$1" && pwd &&
+        git annex sync &&
+        git annex sync --content
 }
 
-syncGit()
-{
-    cd "$1" \
-        && echo \
-        && echo "***** git fetch ironkey: $1 *****" \
-        && git fetch ironkey \
-        && echo "***** git push ironkey: $1 *****" \
-        && git push ironkey
+syncGit() {
+    cd "$1" &&
+        echo &&
+        echo "***** git fetch ironkey: $1 *****" &&
+        git fetch ironkey &&
+        echo "***** git push ironkey: $1 *****" &&
+        git push ironkey
 }
 
-listAnnex()
-{
+listAnnex() {
     cd "$1" && for DIR in *; do
         syncAnnex "$1/$DIR"
     done
