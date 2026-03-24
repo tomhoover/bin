@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck source=/dev/null
-[[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
+# [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
 
 # vultr-cli os list
 # ID	NAME				ARCH	FAMILY

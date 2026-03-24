@@ -12,7 +12,7 @@ set -u -o pipefail
 [ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
 
 # shellcheck source=/dev/null
-[[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
+# [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
 
 # shellcheck source=/dev/null
 source ~/bin/get_os.sh

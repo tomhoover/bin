@@ -12,11 +12,16 @@ set -euo pipefail
 BOOKS="/Users/tom/data/books/audible"
 CALIBRE="/Users/tom/tmp/calibre_auto_upload"
 
-if [ ! -v AUDIBLE_ACTIVATION_BYTES ]; then
-    # shellcheck source=/dev/null
-    [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
-else
-    BOOKS="$(PWD)"
+# if [ ! -v AUDIBLE_ACTIVATION_BYTES ]; then
+#     # shellcheck source=/dev/null
+#     [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
+# else
+#     BOOKS="$(pwd)"
+# fi
+
+if grep -q AUDIBLE_ACTIVATION_BYTES "$(pwd)/fnox.toml"; then
+    BOOKS="$(pwd)"
+    CALIBRE="$(pwd)/calibre_auto_upload"
 fi
 
 # shellcheck source=/dev/null

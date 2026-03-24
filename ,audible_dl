@@ -10,8 +10,9 @@ set -euo pipefail
 # set -uo pipefail  # only needed for standalone executation -- not needed for pip install
 
 # shellcheck source=/dev/null
-[[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
+# [[ -f ${HOME}/.SECRETS ]] && . "${HOME}"/.SECRETS
 
+#TODO revise to use local ~/Music/... directory
 BOOKS="/Users/tom/data/books/audible"
 
 cd ${BOOKS} || exit 1
