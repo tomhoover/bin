@@ -21,12 +21,6 @@ mrpushv() {
     mr --verbose --jobs 1 push
 }
 
-vcsh crontab pull
-vcsh dotfiles pull
-vcsh git pull
-vcsh mr pull
-vcsh private pull
-
 if [ $# -eq 0 ]; then
     cd && mrpull && mrpush
     cd ~/src && mrpull && mrpush
