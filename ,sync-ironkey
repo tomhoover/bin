@@ -7,18 +7,18 @@ cd /Volumes/IRONKEY64 || exit
 set -eu
 
 syncAnnex() {
-    cd "$1" && pwd &&
-        git annex sync &&
-        git annex sync --content
+    cd "$1" && pwd \
+        && git annex sync \
+        && git annex sync --content
 }
 
 syncGit() {
-    cd "$1" &&
-        echo &&
-        echo "***** git fetch ironkey: $1 *****" &&
-        git fetch ironkey &&
-        echo "***** git push ironkey: $1 *****" &&
-        git push ironkey
+    cd "$1" \
+        && echo \
+        && echo "***** git fetch ironkey: $1 *****" \
+        && git fetch ironkey \
+        && echo "***** git push ironkey: $1 *****" \
+        && git push ironkey
 }
 
 listAnnex() {

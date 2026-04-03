@@ -35,20 +35,21 @@ isomarchy() {
 ~/.dotfiles/script/bootstrap update
 ! isomarchy && mise self-update
 mise install && mise up
+cd && mr up
 
 if isdarwin; then
-    brew upgrade
-    brew cleanup -s
-    brew doctor
-    echo
-    brew missing
-
-    echo
     echo "$(tput setaf 5)Outdated apps from the app store:$(tput setaf 6)"
     mas outdated
     echo
     echo "$(tput setaf 4)Upgrade with: $(tput setaf 1)mas upgrade$(tput sgr0)"
     osascript -e 'display notification "consider mas upgrade" with title "mas"'
+    echo
+
+    brew upgrade
+    brew cleanup -s
+    brew doctor
+    echo
+    brew missing
     echo
 elif isomarchy; then
     yay -Syu
@@ -61,5 +62,3 @@ elif isproxmox; then
 elif isdebian; then
     apt-get update && apt-get upgrade
 fi
-
-cd && mr up
