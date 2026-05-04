@@ -53,6 +53,7 @@ cat .duplicacy/check-filters-included.log \
     | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/mr.git/' \
     | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/private.git/' \
     | grep -v 'PATTERN_INCLUDE .config/vcsh/repo.d/vault.git/' \
+    | grep -v 'PATTERN_INCLUDE .wine/' \
     | grep -v 'PATTERN_INCLUDE Databases/' \
     | grep -v 'PATTERN_INCLUDE Library/Application Support/DEVONthink 3/' \
     | grep -v 'PATTERN_INCLUDE Library/Mail/V10/' \
@@ -76,6 +77,7 @@ cat .duplicacy/check-filters-included.log \
     echo '.config/vcsh/repo.d/mr.git/'
     echo '.config/vcsh/repo.d/private.git/'
     echo '.config/vcsh/repo.d/vault.git/'
+    echo '.wine/'
     echo 'Databases/'
     echo 'Library/Application Support/DEVONthink 3/'
     echo 'Library/Mail/V10/'
