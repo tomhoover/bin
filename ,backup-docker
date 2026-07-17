@@ -1,33 +1,190 @@
-#!/usr/bin/env sh
-# shellcheck disable=SC2029
+#!/usr/bin/env bash
 
-# set -e: exit script immediately upon error
-# set -u: treat unset variables as an error
-set -eu
+set -euo pipefail
 
 # shellcheck source=/dev/null
 [ -r "$HOME"/.keychain/"$(uname -n)"-sh ] && . "$HOME"/.keychain/"$(uname -n)"-sh
 
 MYHOST=$(uname -n | sed -e 's/\..*//') # alternative to $(hostname -s), as arch does not install 'hostname' by default
-BACKUPDIR=/Volumes/external/backups/docker/${MYHOST}
 BACKUPHOST=bethel
+BACKUPROOT=/Volumes/external/backups/docker
+BACKUPDIR=${BACKUPROOT}/${MYHOST}
+
+readonly MYHOST BACKUPHOST BACKUPROOT BACKUPDIR
+
+# Create a deterministic gzip-compressed tar archive.
+#
+# $1 = Docker volume or bind mount specification for `docker run -v`
+#      (e.g. "myvolume:/source:ro" or "/host/path:/source:ro")
+# $2 = Output filename, or "-" to write the archive to stdout.
+_create_archive() {
+    local mount=$1
+    local outfile=$2
+    local outdir
+    local tar_output
+    local backup_mount=()
+
+    if [[ $outfile == "-" ]]; then
+        tar_output=-
+    else
+        outdir=$(dirname "$outfile")
+        mkdir -p "$outdir"
+        backup_mount=(-v "$outdir:/backup")
+        tar_output="/backup/$(basename "$outfile")"
+    fi
+
+    docker run --rm \
+        -v "$mount" \
+        "${backup_mount[@]}" \
+        debian:bookworm-slim \
+        tar \
+        --sort=name \
+        --mtime='UTC 1970-01-01' \
+        --owner=0 \
+        --group=0 \
+        --numeric-owner \
+        -I 'gzip -n' \
+        -cf "$tar_output" \
+        -C /source .
+}
+
+backup_directory() {
+    [[ -d "$1" ]] || {
+        printf 'ERROR: directory does not exist: %s\n' "$1" >&2
+        return 1
+    }
+    _create_archive "$PWD/$1:/source:ro" "$2"
+}
+
+backup_volume() {
+    _create_archive "$1:/source:ro" "$2"
+}
+
+# cleanup() {
+#     rm -rf "$tmpdir"
+# }
+
+dedupe_keep_newest() {
+    local dir=${1:-.}
+    local delete=false
+    local hash_cmd f hash old key rel_dir
+
+    shift || true
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --delete)
+                delete=true
+                ;;
+            -h | --help)
+                printf 'Usage: dedupe_keep_newest DIRECTORY [--delete]\n'
+                return 0
+                ;;
+            *)
+                printf 'ERROR: unknown option: %s\n' "$1" >&2
+                printf 'Usage: dedupe_keep_newest DIRECTORY [--delete]\n' >&2
+                return 1
+                ;;
+        esac
+        shift
+    done
+
+    if command -v sha256sum >/dev/null 2>&1; then
+        hash_cmd='sha256sum'
+    elif command -v shasum >/dev/null 2>&1; then
+        hash_cmd='shasum -a 256'
+    else
+        printf 'ERROR: no SHA-256 utility found\n' >&2
+        return 1
+    fi
+
+    declare -A newest
+
+    while IFS= read -r -d '' f; do
+        hash=$($hash_cmd "$f" | awk '{print $1}')
+
+        # Include directory in key so duplicates only compare within same directory
+        rel_dir=$(dirname "$f")
+        key="$rel_dir/$hash"
+
+        if [[ -v newest[$key] ]]; then
+            old=${newest[$key]}
+
+            # Filename timestamp sorts chronologically
+            if [[ ${f##*/} > ${old##*/} ]]; then
+                if [[ $delete == true ]]; then
+                    printf 'Removing: %s\n' "$old"
+                    rm -f -- "$old"
+                else
+                    printf 'Would remove: %s\n' "$old"
+                fi
+                newest[$key]=$f
+            else
+                if [[ $delete == true ]]; then
+                    printf 'Removing: %s\n' "$f"
+                    rm -f -- "$f"
+                else
+                    printf 'Would remove: %s\n' "$f"
+                fi
+            fi
+        else
+            newest[$key]=$f
+        fi
+    done < <(find "$dir" -type f -print0)
+}
+
+command -v docker >/dev/null 2>&1 \
+    || {
+        printf 'ERROR: docker not found\n' >&2
+        exit 1
+    }
+
+docker info >/dev/null 2>&1 || {
+    printf 'ERROR: docker daemon not running\n' >&2
+    exit 1
+}
+
+docker image inspect debian:bookworm-slim >/dev/null 2>&1 \
+    || docker pull debian:bookworm-slim
 
 cd "${HOME}/data/docker" || exit
 
-# TODO: find -s . -maxdepth 1 -type d | while read -r dir; do
-#  the preceding line wasn't reading thru all dirs, so I substituted the
-#  following line for now:
-# shellcheck disable=SC2044
-for dir in $(find -s . -maxdepth 1 -type d); do
-    if [ "${dir}" = "." ]; then continue; fi
-    if [ "${dir}" = "./.fseventsd" ]; then continue; fi
-    if [ "${dir}" = "./.Spotlight-V100" ]; then continue; fi
-    DATADIR=$(echo "${dir}" | sed -e 's/^\.\///')
+while IFS= read -r -d '' dir; do
+    [[ $dir == . ]] && continue
+    [[ $dir == ./.fseventsd ]] && continue
+    [[ $dir == ./.Spotlight-V100 ]] && continue
+    DATADIR=${dir#./}
     FILENAME=$(date +%Y%m%d-%H%M%S)--${DATADIR}.tgz
-    ssh ${BACKUPHOST} "[ -d ${BACKUPDIR}/${DATADIR} ]" || ssh ${BACKUPHOST} "mkdir -pm 0700 ${BACKUPDIR}/${DATADIR}"
-    if [ "${MYHOST}" = "bethel" ]; then
-        tar -czf "${BACKUPDIR}/${DATADIR}/${FILENAME}" "${DATADIR}"
+    ssh -n "${BACKUPHOST}" "mkdir -pm 0700 ${BACKUPDIR}/${DATADIR}"
+    if [[ $MYHOST == bethel ]]; then
+        backup_directory "${DATADIR}" "${BACKUPDIR}/${DATADIR}/${FILENAME}"
     else
-        tar -czf - "${DATADIR}" | ssh ${BACKUPHOST} "cat > ${BACKUPDIR}/${DATADIR}/${FILENAME}"
+        # shellcheck disable=SC2029
+        backup_directory "${DATADIR}" - | ssh "${BACKUPHOST}" "cat > ${BACKUPDIR}/${DATADIR}/${FILENAME}"
+    fi
+done < <(find . -maxdepth 1 -type d -print0)
+
+cd "${HOME}/Orbstack/docker" || exit
+
+# mkdir -p "$HOME/tmp" || exit
+# tmpdir=$(mktemp -d "$HOME/tmp/orbstack.XXXXXX")
+# trap cleanup EXIT
+
+for vol_dir in "$HOME"/OrbStack/docker/volumes/*; do
+    [[ -d $vol_dir ]] || continue
+    vol_name=${vol_dir##*/}
+    # printf '%s\n' "$vol_name"
+    FILENAME="$(date +%Y%m%d-%H%M%S)--${vol_name}.tgz"
+    printf '  %s\n' "$FILENAME"
+    ssh -n "${BACKUPHOST}" "mkdir -pm 0700 ${BACKUPDIR}/${vol_name}"
+    if [[ $MYHOST == bethel ]]; then
+        backup_volume "${vol_name}" "${BACKUPDIR}/${vol_name}/${FILENAME}"
+    else
+        # shellcheck disable=SC2029
+        backup_volume "${vol_name}" - | ssh "${BACKUPHOST}" "cat > ${BACKUPDIR}/${vol_name}/${FILENAME}"
     fi
 done
+
+if [[ $MYHOST == bethel ]]; then
+    dedupe_keep_newest "${BACKUPROOT}"
+fi
