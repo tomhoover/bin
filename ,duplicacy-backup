@@ -110,7 +110,7 @@ elif [[ "$(whoami)" == "tom" ]] && [[ "${MYHOST}" =~ (ariel|bethel) ]]; then
         backupRepository /Volumes/external/Databases rsyncNet
         backupRepository /Volumes/external/Pictures rsyncNet
         backupRepository /Volumes/external/ResilioSync rsyncNet
-        backupRepository /Volumes/external/Sync rsyncNet
+        # backupRepository /Volumes/external/Sync rsyncNet
         backupRepository /Volumes/external/backups rsyncNet
         backupRepository /Volumes/external/docker rsyncNet
         backupRepository /Volumes/external/git rsyncNet
